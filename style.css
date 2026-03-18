@@ -124,3 +124,11 @@ body {
   transition: background 0.15s;
 }
 .continue-btn:hover { background: #3a8eef; }
+
+/* ===== LEDGER / INTRO ===== */
+.intro-card .situation { font-size: 0.95rem; }
+.ledger-card .situation { display: none; }
+.ledger-text { font-size: 0.9rem; line-height: 1.8; color: #ccc; margin: 1rem 0; font-style: italic; }
+.ledger-win { color: #4a4; }
+.ledger-loss { color: #e74c3c; }
+.ledger-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
