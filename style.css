@@ -15,3 +15,48 @@ body {
   max-width: 480px;
   padding: 1rem;
 }
+
+/* ===== RESOURCE BAR ===== */
+.resource-bar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #111114;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.resource {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1;
+  flex-direction: column;
+}
+
+.resource-icon { font-size: 1rem; }
+
+.resource-track {
+  width: 100%;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.resource-fill {
+  height: 100%;
+  background: #4a9eff;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.resource.warning .resource-fill { background: #f5a623; }
+.resource.danger .resource-fill { background: #e74c3c; }
+
+.resource-value {
+  font-size: 0.7rem;
+  color: #a0a0a0;
+}
+.resource.warning .resource-value { color: #f5a623; }
+.resource.danger .resource-value { color: #e74c3c; }
