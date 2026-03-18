@@ -59,6 +59,13 @@ describe('applyChoice', () => {
     const next = applyChoice(s, {}, {})
     expect(next.turnCount).toBe(1)
   })
+
+  it('does not mutate the input state', () => {
+    const s = createState()
+    const original = s.resources.gold
+    applyChoice(s, { gold: -20 }, {})
+    expect(s.resources.gold).toBe(original)
+  })
 })
 
 describe('checkEndCondition', () => {
@@ -79,5 +86,15 @@ describe('checkEndCondition', () => {
   it('uses resource table order for tie-breaking (gold before adventurers)', () => {
     const s = { ...createState(), resources: { gold: 0, adventurers: 100, quests: 50, equipment: 50 } }
     expect(checkEndCondition(s).resource).toBe('gold')
+  })
+
+  it('returns collapse when quests reaches 0', () => {
+    const s = { ...createState(), resources: { gold: 50, adventurers: 50, quests: 0, equipment: 50 } }
+    expect(checkEndCondition(s)).toEqual({ resource: 'quests', type: 'collapse' })
+  })
+
+  it('returns overflow when equipment reaches 100', () => {
+    const s = { ...createState(), resources: { gold: 50, adventurers: 50, quests: 50, equipment: 100 } }
+    expect(checkEndCondition(s)).toEqual({ resource: 'equipment', type: 'overflow' })
   })
 })

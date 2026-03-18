@@ -1,4 +1,5 @@
 const RESOURCE_ORDER = ['gold', 'adventurers', 'quests', 'equipment']
+const VALID_RESOURCES = new Set(RESOURCE_ORDER)
 
 export function createState() {
   return {
@@ -9,7 +10,7 @@ export function createState() {
     endCondition: null,
     arc: null,
     roster: [],
-    queuedCrisisResources: new Set(),
+    queuedCrisisResources: [],
     chainedEvents: [],
     pendingReplacement: null,
     ledgerEvents: [],
@@ -20,9 +21,10 @@ export function isInTensionZone(value) {
   return value < 20 || value > 80
 }
 
-export function applyChoice(state, deltas, opts = {}) {
+export function applyChoice(state, deltas, opts = {}) { // opts reserved for future use (repShift, eventId)
   const resources = { ...state.resources }
   for (const [key, delta] of Object.entries(deltas)) {
+    if (!VALID_RESOURCES.has(key)) continue
     resources[key] = Math.max(0, Math.min(100, resources[key] + delta))
   }
   return { ...state, resources, turnCount: state.turnCount + 1 }
