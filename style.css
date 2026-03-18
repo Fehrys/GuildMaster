@@ -132,3 +132,10 @@ body {
 .ledger-win { color: #4a4; }
 .ledger-loss { color: #e74c3c; }
 .ledger-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+
+/* ===== TRANSITIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card { animation: fadeIn 0.2s ease; }
