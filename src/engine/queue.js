@@ -12,17 +12,27 @@ export function createQueueState() {
     queuedChained: [],          // array of { firesAtTurn, cardId }
     queuedRumor: false,
     pendingReplacement: null,   // { card, windowClosesTurn } — named adventurer replacement
-    prevTensionZone: [],        // resource names that were in tension zone last turn
+    prevTensionZone: [],        // updated by game.js to detect zone transitions (not managed here)
   }
 }
 
 // Schedule a named adventurer replacement card to appear within 3–5 standard draws
 export function scheduleReplacement(q, card, currentTurn) {
   const window = randInt(3, 5)
-  return { ...q, pendingReplacement: { card, windowClosesTurn: currentTurn + window } }
+  return { ...q, pendingReplacement: { card, windowClosesTurn: currentTurn + window } } // inclusive
 }
 
-// Returns { nextCardType, updatedQueue }
+/**
+ * Returns { nextCardType, updatedQueue, chainedCardId? } for the next card to show.
+ *
+ * NOTE: This function signals what to play but does NOT consume queue state.
+ * The caller must call the appropriate dequeue/consume function after:
+ *   - 'arc'     → resetMilestoneCounter(q)
+ *   - 'crisis'  → dequeueCrisis(q)
+ *   - 'chained' → dequeueChained(q, chainedCardId)
+ *   - 'rumor'   → dequeueRumor(q)
+ *   - 'standard'→ recordStandardCardPlayed(q)
+ */
 export function advanceQueue(q, currentTurn) {
   // 1. Arc milestone
   if (q.standardCardsSinceLastMilestone >= q.nextMilestoneThreshold && q.milestonesCompleted < q.totalMilestones) {

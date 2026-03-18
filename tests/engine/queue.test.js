@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { createQueueState, advanceQueue, recordStandardCardPlayed } from '../../src/engine/queue.js'
+import {
+  createQueueState, advanceQueue, recordStandardCardPlayed,
+  resetMilestoneCounter, queueCrisis, dequeueCrisis,
+  queueChained, pushChainedBack
+} from '../../src/engine/queue.js'
 
 describe('createQueueState', () => {
   it('initialises with nextMilestoneThreshold between 4 and 7', () => {
@@ -46,5 +50,57 @@ describe('recordStandardCardPlayed', () => {
   it('increments standardCardsSinceLastMilestone', () => {
     const q = { ...createQueueState(), standardCardsSinceLastMilestone: 2 }
     expect(recordStandardCardPlayed(q).standardCardsSinceLastMilestone).toBe(3)
+  })
+})
+
+describe('resetMilestoneCounter', () => {
+  it('resets standardCardsSinceLastMilestone to 0', () => {
+    const q = { ...createQueueState(), standardCardsSinceLastMilestone: 5 }
+    expect(resetMilestoneCounter(q).standardCardsSinceLastMilestone).toBe(0)
+  })
+
+  it('increments milestonesCompleted', () => {
+    const q = { ...createQueueState(), milestonesCompleted: 2 }
+    expect(resetMilestoneCounter(q).milestonesCompleted).toBe(3)
+  })
+
+  it('picks a new threshold between 4 and 7', () => {
+    for (let i = 0; i < 20; i++) {
+      const q = resetMilestoneCounter(createQueueState())
+      expect(q.nextMilestoneThreshold).toBeGreaterThanOrEqual(4)
+      expect(q.nextMilestoneThreshold).toBeLessThanOrEqual(7)
+    }
+  })
+})
+
+describe('queueCrisis / dequeueCrisis', () => {
+  it('adds a resource to queuedCrisis', () => {
+    const q = queueCrisis(createQueueState(), 'gold')
+    expect(q.queuedCrisis).toContain('gold')
+  })
+
+  it('does not add duplicate resource', () => {
+    const q = queueCrisis(queueCrisis(createQueueState(), 'gold'), 'gold')
+    expect(q.queuedCrisis.filter(r => r === 'gold')).toHaveLength(1)
+  })
+
+  it('removes the first queued crisis', () => {
+    const q = dequeueCrisis(queueCrisis(createQueueState(), 'gold'))
+    expect(q.queuedCrisis).toHaveLength(0)
+  })
+})
+
+describe('pushChainedBack', () => {
+  it('increments firesAtTurn by 1 for matching cardId', () => {
+    const q = queueChained(createQueueState(), 'chain-foo', 5)
+    const pushed = pushChainedBack(q, 'chain-foo')
+    expect(pushed.queuedChained[0].firesAtTurn).toBe(6)
+  })
+
+  it('does not affect other chained events', () => {
+    let q = queueChained(createQueueState(), 'chain-a', 5)
+    q = queueChained(q, 'chain-b', 8)
+    const pushed = pushChainedBack(q, 'chain-a')
+    expect(pushed.queuedChained.find(e => e.cardId === 'chain-b').firesAtTurn).toBe(8)
   })
 })
