@@ -24,6 +24,7 @@ let ledger = null
 let progress = null
 let arc = null
 let roster = []
+let lastStandardCardId = null
 
 const app = document.getElementById('app')
 
@@ -150,9 +151,13 @@ function drawStandardCard() {
       return card
     }
   }
-  // Simple random draw from standard pool
-  // Note: full tension-zone and rep-tier weighting deferred to post-v1
-  return standardCards[Math.floor(Math.random() * standardCards.length)]
+  // Draw from standard pool, excluding the last played card to prevent repeats
+  const pool = lastStandardCardId
+    ? standardCards.filter(c => c.id !== lastStandardCardId)
+    : standardCards
+  const card = pool[Math.floor(Math.random() * pool.length)]
+  lastStandardCardId = card.id
+  return card
 }
 
 function showCard(card, isArc) {
