@@ -7,14 +7,16 @@ function fuzzyIndicator(delta) {
   return sign + sign + sign
 }
 
+const RESOURCE_ICONS = { gold: '💰', adventurers: '⚔️', quests: '📜', equipment: '🛡️' }
+
 function renderDeltasBefore(deltas) {
   const parts = []
   for (const [key, val] of Object.entries(deltas)) {
+    if (!RESOURCE_ICONS[key]) continue
     const ind = fuzzyIndicator(val)
     if (!ind) continue
-    const icons = { gold: '💰', adventurers: '⚔️', quests: '📜', equipment: '🛡️' }
     const cls = val > 0 ? 'delta-pos' : 'delta-neg'
-    parts.push(`<span class="delta">${icons[key]} <span class="${cls}">${ind}</span></span>`)
+    parts.push(`<span class="delta">${RESOURCE_ICONS[key]} <span class="${cls}">${ind}</span></span>`)
   }
   return parts.length ? `<div class="deltas">${parts.join('')}</div>` : ''
 }
@@ -22,11 +24,11 @@ function renderDeltasBefore(deltas) {
 function renderDeltasAfter(deltas) {
   const parts = []
   for (const [key, val] of Object.entries(deltas)) {
+    if (!RESOURCE_ICONS[key]) continue
     if (val === 0) continue
-    const icons = { gold: '💰', adventurers: '⚔️', quests: '📜', equipment: '🛡️' }
     const cls = val > 0 ? 'delta-pos' : 'delta-neg'
     const sign = val > 0 ? '+' : ''
-    parts.push(`<span class="delta">${icons[key]} <span class="${cls}">${sign}${val}</span></span>`)
+    parts.push(`<span class="delta">${RESOURCE_ICONS[key]} <span class="${cls}">${sign}${val}</span></span>`)
   }
   return parts.length ? `<div class="deltas">${parts.join('')}</div>` : ''
 }

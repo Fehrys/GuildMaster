@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C C:/Projets/GuildMaster log --oneline -10)",
+      "Skill(update-config)",
+      "Bash(ls ~/.claude/*.json)",
+      "Read(//c/Users/micka/**)",
+      "Bash(npx -y @modelcontextprotocol/server-sequential-thinking --version)",
+      "Bash(bash \"C:/Users/micka/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.5/skills/brainstorming/scripts/start-server.sh\" --project-dir \"C:/Projets/GuildMaster\")",
+      "Bash(cat C:/Projets/GuildMaster/.superpowers/brainstorm/*/.server-info)",
+      "Bash(xargs cat:*)",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(npm install:*)",
+      "Bash(npm audit:*)",
+      "Bash(npm test:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(node:*)",
+      "Bash(python -c \"import json; d=json.load\\(open\\(''package-lock.json''\\)\\); print\\(d.get\\(''packages'',{}\\).get\\(''node_modules/vitest'',{}\\).get\\(''version'',''not found''\\)\\)\")",
+      "Bash(git:*)",
+      "Bash(npx vitest:*)"
+    ]
+  }
+}
