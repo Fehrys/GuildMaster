@@ -133,6 +133,46 @@ body {
 .ledger-loss { color: #e74c3c; }
 .ledger-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
 
+/* ===== MODIFIER BAR ===== */
+.modifier-bar {
+  display: flex; gap: 0.4rem; padding: 0.5rem 0.75rem;
+  background: #16161b; border-radius: 8px;
+  align-items: center; flex-wrap: wrap; margin-bottom: 1rem;
+}
+.mod-label {
+  font-size: 0.7rem; color: #555; text-transform: uppercase;
+  letter-spacing: 0.05em; margin-right: 0.25rem;
+}
+.mod-pill {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  border-radius: 6px; padding: 0.3rem 0.55rem; font-size: 0.85rem;
+}
+.mod-pill-negative { background: #2a1a1a; border: 1px solid #552222; }
+.mod-pill-positive { background: #1a2a1a; border: 1px solid #225522; }
+.mod-pill-permanent { background: #1a1a2a; border: 1px solid #333388; }
+.mod-negative { color: #e74c3c; }
+.mod-positive { color: #5b5; }
+.mod-duration { color: #e7a04c; font-size: 0.8rem; font-weight: 600; border-left: 1px solid #444; padding-left: 0.35rem; }
+.mod-permanent { color: #8888ff; }
+
+/* ===== NPC TIER BADGE ===== */
+.npc-tier {
+  font-size: 0.8rem; font-weight: 400; margin-left: 0.3rem;
+  border-radius: 4px; padding: 0.1rem 0.4rem;
+}
+.npc-tier-friendly, .npc-tier-ally { color: #5b5; border: 1px solid #3a5a3a; }
+.npc-tier-rival, .npc-tier-hostile { color: #e7a04c; border: 1px solid #5a4a2a; }
+
+/* ===== ATTRIBUTION ===== */
+.attribution { font-size: 0.85rem; color: #7a7a9a; font-style: italic; margin-bottom: 1rem; }
+
+/* ===== THIRD CHOICE ===== */
+.choices-three .choices-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+.choices-third .choice-btn { width: 100%; }
+
+/* ===== GUILD NAME ===== */
+.guild-name { text-align: center; font-size: 0.8rem; color: #555; margin-bottom: 0.4rem; letter-spacing: 0.05em; }
+
 /* ===== TRANSITIONS ===== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
