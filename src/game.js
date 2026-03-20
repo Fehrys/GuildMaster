@@ -1,13 +1,14 @@
 import { createState, applyChoice, checkEndCondition, isInTensionZone } from './engine/state.js'
 import { createQueueState, advanceQueue, recordStandardCardPlayed, resetMilestoneCounter,
          queueCrisis, dequeueCrisis, queueChained, dequeueChained, pushChainedBack,
-         queueRumor, dequeueRumor, scheduleReplacement } from './engine/queue.js'
+         queueRumor, dequeueRumor, scheduleReplacement,
+         scheduleNpc, clearNpcSchedule } from './engine/queue.js'
 import { getRepTier, applyRepShift } from './engine/reputation.js'
 import { createLedger, recordEvent, updateAdventurerStatus, buildLedgerText } from './engine/ledger.js'
 import { loadProgress, saveProgress, unlockArc, completeArc, setLegacyTrait, addAdventurer } from './engine/progression.js'
 import { renderResourceBar } from './ui/resource-bar.js'
-import { renderCard, renderCardResult, renderRumorCard } from './ui/card-view.js'
-import { renderGuildIntro, renderArcIntro } from './ui/intro-view.js'
+import { renderCard, renderCardResult, renderRumorCard, renderModifierBar } from './ui/card-view.js'
+import { renderGuildIntro, renderArcIntro, renderGuildNaming, renderNpcSelection } from './ui/intro-view.js'
 import { renderLedgerScreen, renderTraitSelection } from './ui/ledger-view.js'
 import { buildBasePool } from './data/cards/registry.js'
 import { chainedCards as standardChained } from './data/cards/standard.js'
@@ -15,9 +16,23 @@ import { crisisCards } from './data/cards/crisis.js'
 import { banditWar } from './data/arcs/bandit-war.js'
 import { baseAdventurers } from './data/adventurers.js'
 import { traits } from './data/traits.js'
+import { createModifierState, addModifier, tickModifiers, applyModifiers, getActiveModifiers } from './engine/modifiers.js'
+import { createRelationshipState, updateRelationship, getLevel, getFlags, resolveNpcCard, getNextNpc } from './engine/relationships.js'
+import { createPoolState, drawCard, markPlayed, injectCards, removeCards, resetCycle, checkThirdChoice } from './engine/pool.js'
+import { createFactionState, updateStance, getStance } from './engine/factions.js'
+import { serializeRunState, deserializeRunState } from './engine/save.js'
+import { npcRegistry, allNpcIds } from './data/cards/npcs/index.js'
+import { banditWarThirdChoices } from './data/cards/third-choices.js'
+import { thievesGuildAllied, thievesGuildOpposed } from './data/cards/factions/thieves-guild.js'
+import { templeAllied, templeOpposed } from './data/cards/factions/temple.js'
 
 const ALL_ARCS = { 'bandit-war': banditWar }
 const ALL_CHAINED = [...standardChained, ...Object.values(ALL_ARCS).flatMap(a => a.chainedCards ?? [])]
+
+const FACTION_CARDS = {
+  'thieves-guild': { allied: thievesGuildAllied, opposed: thievesGuildOpposed },
+  'temple': { allied: templeAllied, opposed: templeOpposed },
+}
 
 let gameState = null
 let queueState = null
@@ -25,7 +40,13 @@ let ledger = null
 let progress = null
 let arc = null
 let roster = []
-let lastStandardCardId = null
+let modifierState = null
+let relationshipState = null
+let poolState = null
+let factionState = null
+let guildName = 'Iron Hearth Guild'
+let selectedNpcs = []
+let npcEncounterCount = 0
 
 const app = document.getElementById('app')
 
@@ -49,9 +70,58 @@ function pickArc() {
   return unlocked[unlocked.length - 1]
 }
 
+function buildHeader() {
+  const guildLine = `<div class="guild-name">⚜️ ${guildName}</div>`
+  const resBar = renderResourceBar(gameState.resources)
+  const modBar = renderModifierBar(modifierState)
+  return guildLine + resBar + modBar
+}
+
 function startRun() {
   progress = loadProgress()
   arc = pickArc()
+  showGuildNaming()
+}
+
+function showGuildNaming() {
+  const prev = progress.lastGuildName || 'Iron Hearth Guild'
+  mount(renderGuildNaming(prev))
+  document.getElementById('continue-btn').onclick = () => {
+    guildName = document.getElementById('guild-name-input').value.trim() || prev
+    progress = { ...progress, lastGuildName: guildName }
+    saveProgress(progress)
+    showNpcSelection()
+  }
+}
+
+function showNpcSelection() {
+  const npcList = allNpcIds.map(id => npcRegistry[id])
+  mount(renderNpcSelection(npcList))
+
+  let selected = []
+  document.querySelectorAll('.npc-select-card').forEach(card => {
+    card.onclick = () => {
+      const npcId = card.dataset.npcId
+      if (selected.includes(npcId)) {
+        selected = selected.filter(id => id !== npcId)
+        card.classList.remove('selected')
+      } else if (selected.length < 2) {
+        selected.push(npcId)
+        card.classList.add('selected')
+      }
+      const btn = document.getElementById('npc-confirm-btn')
+      btn.disabled = selected.length !== 2
+      btn.textContent = selected.length === 2 ? 'Begin →' : 'Select 2 to continue →'
+    }
+  })
+
+  document.getElementById('npc-confirm-btn').onclick = () => {
+    selectedNpcs = selected
+    initializeRun()
+  }
+}
+
+function initializeRun() {
   gameState = createState()
 
   // Apply legacy trait
@@ -59,7 +129,6 @@ function startRun() {
     const trait = traits.find(t => t.id === progress.activeLegacyTrait)
     if (trait?.effect) {
       const deltas = { ...trait.effect }
-      // reputation delta handled separately
       const repShift = deltas.reputation ?? 0
       delete deltas.reputation
       gameState = applyChoice(gameState, deltas, {})
@@ -69,30 +138,39 @@ function startRun() {
 
   // Build roster
   const pool = [...baseAdventurers, ...progress.unlockedAdventurers]
-  const rosterSize = Math.min(Math.floor(Math.random() * 3) + 3, pool.length) // random 3–5
+  const rosterSize = Math.min(Math.floor(Math.random() * 3) + 3, pool.length)
   roster = pool.sort(() => Math.random() - 0.5).slice(0, rosterSize)
-  roster.forEach(name => { gameState.resources; }) // roster tracked separately
 
   ledger = createLedger()
   roster.forEach(name => { ledger = updateAdventurerStatus(ledger, name, 'alive') })
 
   queueState = { ...createQueueState(), totalMilestones: arc.totalMilestones }
 
+  // V2 state
+  modifierState = createModifierState()
+  relationshipState = createRelationshipState(selectedNpcs)
+  poolState = createPoolState(buildBasePool())
+  factionState = createFactionState(['thieves-guild', 'temple'])
+  npcEncounterCount = 0
+
   showGuildIntro()
 }
 
 function showGuildIntro() {
-  mount(renderResourceBar(gameState.resources) + renderGuildIntro())
+  mount(buildHeader() + renderGuildIntro())
   document.getElementById('continue-btn').onclick = () => showArcIntro()
 }
 
 function showArcIntro() {
-  mount(renderResourceBar(gameState.resources) + renderArcIntro(arc))
+  mount(buildHeader() + renderArcIntro(arc))
   document.getElementById('continue-btn').onclick = () => nextTurn()
 }
 
 function nextTurn() {
-  // Detect tension zone transitions (only fire Crisis on crossing the boundary, not while staying in zone)
+  // Tick modifiers
+  modifierState = tickModifiers(modifierState)
+
+  // Detect tension zone transitions
   const RESOURCES = ['gold', 'adventurers', 'quests', 'equipment']
   const prev = queueState.prevTensionZone ?? []
   for (const res of RESOURCES) {
@@ -109,61 +187,82 @@ function nextTurn() {
   if (nextCardType === 'arc') {
     const milestone = arc.milestones[queueState.milestonesCompleted]
     queueState = resetMilestoneCounter(queueState)
-    // Push back any chained events due this turn (spec: arc fires first, chained pushed back 1 turn)
+    poolState = resetCycle(poolState)
+
+    // Push back chained events due this turn
     queueState = {
       ...queueState,
       queuedChained: queueState.queuedChained.map(e =>
         e.firesAtTurn <= gameState.turnCount ? { ...e, firesAtTurn: gameState.turnCount + 1 } : e
       ),
     }
-    showCard(milestone, true)
+
+    // Check for third choice
+    const thirdChoiceDefs = banditWarThirdChoices.filter(tc => tc.cardId === milestone.id)
+    let cardWithThird = { ...milestone, choices: [...milestone.choices] }
+    for (const tc of thirdChoiceDefs) {
+      const extra = checkThirdChoice(tc.conditions, tc.choice, relationshipState, gameState, factionState)
+      if (extra) cardWithThird.choices.push(extra)
+    }
+
+    // Schedule NPC for this new cycle
+    queueState = scheduleNpc(queueState)
+
+    showCard(cardWithThird, true)
+
+  } else if (nextCardType === 'npc') {
+    const npcId = getNextNpc(selectedNpcs, npcEncounterCount)
+    const npcData = npcRegistry[npcId]
+    const encounterNum = Math.floor(npcEncounterCount / 2) + 1
+    const level = getLevel(relationshipState, npcId)
+    const card = resolveNpcCard(npcData.cards, encounterNum, level)
+
+    // Add display metadata
+    const displayCard = { ...card, npcTier: level }
+
+    npcEncounterCount++
+    queueState = clearNpcSchedule(queueState)
+    showCard(displayCard, false)
+
   } else if (nextCardType === 'crisis') {
     const res = queueState.queuedCrisis[0]
     const extreme = gameState.resources[res] < 20 ? 'low' : 'high'
     const card = crisisCards[res][extreme]
     queueState = dequeueCrisis(queueState)
     showCard(card, false)
+
   } else if (nextCardType === 'chained') {
     const card = ALL_CHAINED.find(c => c.id === chainedCardId)
     queueState = dequeueChained(queueState, chainedCardId)
     if (card) showCard(card, false)
     else nextTurn()
+
   } else if (nextCardType === 'rumor') {
     const rumorText = arc.rumorTexts[Math.floor(Math.random() * arc.rumorTexts.length)]
     queueState = dequeueRumor(queueState)
     showRumor(rumorText)
+
   } else {
-    // Standard draw
+    // Standard draw from pool engine
     queueState = recordStandardCardPlayed(queueState)
-    // Check replacement adventurer
-    const card = drawStandardCard()
+
+    // Check replacement adventurer first
+    if (queueState.pendingReplacement) {
+      const rep = queueState.pendingReplacement
+      const card = rep.card
+      queueState = { ...queueState, pendingReplacement: null }
+      showCard(card, false)
+      return
+    }
+
+    const { card, updatedState } = drawCard(poolState)
+    poolState = updatedState
     showCard(card, false)
   }
 }
 
-function drawStandardCard() {
-  // Check if a replacement adventurer card should fire
-  if (queueState.pendingReplacement) {
-    const rep = queueState.pendingReplacement
-    const withinWindow = gameState.turnCount <= rep.windowClosesTurn
-    if (withinWindow || true) { // fires even after window closes — never discarded
-      const card = rep.card
-      queueState = { ...queueState, pendingReplacement: null }
-      return card
-    }
-  }
-  // Draw from standard pool, excluding the last played card to prevent repeats
-  const basePool = buildBasePool()
-  const pool = lastStandardCardId
-    ? basePool.filter(c => c.id !== lastStandardCardId)
-    : basePool
-  const card = pool[Math.floor(Math.random() * pool.length)]
-  lastStandardCardId = card.id
-  return card
-}
-
 function showCard(card, isArc) {
-  const html = renderResourceBar(gameState.resources) + renderCard(card, null)
+  const html = buildHeader() + renderCard(card, null)
   mount(html)
 
   if (isArc) {
@@ -179,24 +278,53 @@ function showCard(card, isArc) {
 }
 
 function showRumor(text) {
-  mount(renderResourceBar(gameState.resources) + renderRumorCard(text))
+  mount(buildHeader() + renderRumorCard(text))
   document.getElementById('continue-btn').onclick = () => nextTurn()
 }
 
 function handleChoice(card, chosenIdx, isArc) {
   const choice = card.choices[chosenIdx]
 
-  // Apply resource deltas
-  gameState = applyChoice(gameState, choice.deltas, {})
+  // Apply modifiers to deltas before applying
+  const adjustedDeltas = applyModifiers(choice.deltas, modifierState)
+  gameState = applyChoice(gameState, adjustedDeltas, {})
 
   // Apply reputation shift
   if (choice.reputation) {
     gameState = { ...gameState, reputation: applyRepShift(gameState.reputation, choice.reputation) }
   }
 
+  // V2: Process modifier effects from choice
+  if (choice.modifiers) {
+    for (const mod of choice.modifiers) {
+      modifierState = addModifier(modifierState, { ...mod, source: card.id })
+    }
+  }
+
+  // V2: Process relationship shifts
+  // Format: { 'npc-id': shiftValue } — plain object, NOT array
+  if (choice.relationships) {
+    for (const [npcId, shift] of Object.entries(choice.relationships)) {
+      relationshipState = updateRelationship(relationshipState, npcId, shift)
+    }
+  }
+
+  // V2: Process faction stance changes
+  // Format: { 'faction-id': 'stance' } — plain object
+  if (choice.factions) {
+    for (const [factionId, stance] of Object.entries(choice.factions)) {
+      const oldStance = getStance(factionState, factionId)
+      factionState = updateStance(factionState, factionId, stance)
+      if (oldStance === 'neutral' && stance !== 'neutral') {
+        const factionCards = FACTION_CARDS[factionId]?.[stance]
+        if (factionCards) poolState = injectCards(poolState, factionCards)
+      }
+    }
+  }
+
   // Queue chained event
   if (choice.chains) {
-    const delay = Math.floor(Math.random() * 3) + 3 // 3–5 turns
+    const delay = Math.floor(Math.random() * 3) + 3
     queueState = queueChained(queueState, choice.chains, gameState.turnCount + delay)
   }
 
@@ -210,7 +338,7 @@ function handleChoice(card, chosenIdx, isArc) {
     ledger = recordEvent(ledger, `${card.npc.name}: "${choice.label}"`)
   }
 
-  // If a named adventurer was lost (card explicitly sets lostAdventurer), schedule replacement
+  // If a named adventurer was lost, schedule replacement
   if (card.lostAdventurer) {
     ledger = updateAdventurerStatus(ledger, card.lostAdventurer, 'lost')
     const replacementCard = {
@@ -226,16 +354,18 @@ function handleChoice(card, chosenIdx, isArc) {
     queueState = scheduleReplacement(queueState, replacementCard, gameState.turnCount)
   }
 
-  // Arc completion is checked BEFORE resource limits (spec: win overrides loss)
+  // Auto-save
+  autoSave()
+
+  // Arc completion check (win overrides loss)
   if (isArc && card.isFinal) {
     handleWin(choice)
     return
   }
 
-  // Show result then advance — but check arc completion first, then resource limits
-  mount(renderResourceBar(gameState.resources) + renderCardResult(card, chosenIdx))
+  // Show result then advance
+  mount(buildHeader() + renderCardResult(card, chosenIdx))
   document.getElementById('continue-btn').onclick = () => {
-    // Arc completion check applies to all arc cards, not just isFinal
     if (isArc && queueState.milestonesCompleted >= arc.totalMilestones) {
       handleWin(choice)
       return
@@ -249,7 +379,21 @@ function handleChoice(card, chosenIdx, isArc) {
   }
 }
 
+function autoSave() {
+  const runState = {
+    gameState, queueState, modifierState, relationshipState,
+    poolState, factionState, ledger,
+    arcId: arc.id, guildName, selectedNpcs, npcEncounterCount,
+  }
+  localStorage.setItem('guildmaster_run', serializeRunState(runState))
+}
+
+function clearRunSave() {
+  localStorage.removeItem('guildmaster_run')
+}
+
 function handleWin(lastChoice) {
+  clearRunSave()
   progress = completeArc(progress, arc.id)
 
   // Unlock new arcs
@@ -266,6 +410,10 @@ function handleWin(lastChoice) {
     arcOutcome: 'won',
     endCondition: null,
     turnCount: gameState.turnCount,
+    guildName,
+    relationships: relationshipState,
+    factionStances: factionState,
+    permanentModifiers: getActiveModifiers(modifierState).filter(m => m.duration === null),
   })
   const ledgerText = buildLedgerText(arcLedger)
 
@@ -276,11 +424,16 @@ function handleWin(lastChoice) {
 }
 
 function handleLoss(endCond) {
+  clearRunSave()
   const arcLedger = Object.assign({}, ledger, {
     arcName: arc.title,
     arcOutcome: 'abandoned',
     endCondition: endCond,
     turnCount: gameState.turnCount,
+    guildName,
+    relationships: relationshipState,
+    factionStances: factionState,
+    permanentModifiers: getActiveModifiers(modifierState).filter(m => m.duration === null),
   })
   const ledgerText = buildLedgerText(arcLedger)
 
@@ -309,4 +462,27 @@ function showTraitSelection() {
 }
 
 // Boot
-startRun()
+const savedRun = localStorage.getItem('guildmaster_run')
+if (savedRun) {
+  const restored = deserializeRunState(savedRun)
+  if (restored) {
+    gameState = restored.gameState
+    queueState = restored.queueState
+    modifierState = restored.modifierState
+    relationshipState = restored.relationshipState
+    poolState = restored.poolState
+    factionState = restored.factionState
+    ledger = restored.ledger
+    guildName = restored.guildName
+    selectedNpcs = restored.selectedNpcs
+    npcEncounterCount = restored.npcEncounterCount
+    arc = ALL_ARCS[restored.arcId]
+    progress = loadProgress()
+    // Resume at next turn
+    nextTurn()
+  } else {
+    startRun()
+  }
+} else {
+  startRun()
+}
