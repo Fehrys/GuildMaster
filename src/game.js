@@ -9,7 +9,8 @@ import { renderResourceBar } from './ui/resource-bar.js'
 import { renderCard, renderCardResult, renderRumorCard } from './ui/card-view.js'
 import { renderGuildIntro, renderArcIntro } from './ui/intro-view.js'
 import { renderLedgerScreen, renderTraitSelection } from './ui/ledger-view.js'
-import { standardCards, chainedCards as standardChained } from './data/cards/standard.js'
+import { buildBasePool } from './data/cards/registry.js'
+import { chainedCards as standardChained } from './data/cards/standard.js'
 import { crisisCards } from './data/cards/crisis.js'
 import { banditWar } from './data/arcs/bandit-war.js'
 import { baseAdventurers } from './data/adventurers.js'
@@ -152,9 +153,10 @@ function drawStandardCard() {
     }
   }
   // Draw from standard pool, excluding the last played card to prevent repeats
+  const basePool = buildBasePool()
   const pool = lastStandardCardId
-    ? standardCards.filter(c => c.id !== lastStandardCardId)
-    : standardCards
+    ? basePool.filter(c => c.id !== lastStandardCardId)
+    : basePool
   const card = pool[Math.floor(Math.random() * pool.length)]
   lastStandardCardId = card.id
   return card
