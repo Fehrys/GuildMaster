@@ -99,7 +99,6 @@ export const criminalCards = [
       { label: 'Expose him to the city council', deltas: { quests: 8, gold: 8 }, major: false, reputation: 12, chains: null, rumorText: 'A magistrate is being investigated. Someone fed the council some very detailed evidence.' },
       { label: 'Quietly blackmail Harrow yourself', deltas: { gold: 15, quests: 5 }, major: false, reputation: -10, chains: null, rumorText: null },
     ],
-    modifiers: [{ id: 'council-favor', label: 'Council Favor', effects: { quests: 8 }, duration: 3 }],
   },
   {
     id: 'std-pit-fight-ring',
@@ -120,7 +119,6 @@ export const criminalCards = [
       { label: 'Buy the ledger', deltas: { gold: -22, quests: 15 }, major: true, reputation: -5, chains: null, rumorText: 'Rumour has it a certain guild has been making very bold requests of the nobility lately.' },
       { label: 'Pass — too dangerous', deltas: { quests: -3 }, major: false, reputation: 3, chains: null, rumorText: null },
     ],
-    modifiers: [{ id: 'noble-leverage', label: 'Noble Leverage', effects: { gold: 15 }, duration: 4 }],
   },
   {
     id: 'std-counterfeit-coin',
@@ -173,7 +171,6 @@ export const criminalCards = [
       { label: 'Decline entirely', deltas: { quests: -5 }, major: false, reputation: 8, chains: null, rumorText: null },
     ],
     factions: { 'thieves-guild': 'allied' },
-    modifiers: [{ id: 'street-cred', label: 'Street Credibility', effects: { quests: 10 }, duration: 3 }],
   },
   {
     id: 'std-undercover-op',

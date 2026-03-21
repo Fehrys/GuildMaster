@@ -105,7 +105,7 @@ export const guildLifeCards = [
     npc: { emoji: '🩺', name: 'Medic Hessa', role: 'Guild Healer' },
     situation: 'Two members got carried away in a sparring session. One is nursing a cracked rib. Hessa says they can rest and heal properly, or push through at the risk of a worse injury.',
     choices: [
-      { label: 'Rest them properly', deltas: { adventurers: -5 }, major: false, reputation: 0, chains: null, rumorText: null, modifiers: [{ id: 'careful-recovery', label: 'Careful Recovery', effects: { adventurers: 8 }, duration: 3 }] },
+      { label: 'Rest them properly', deltas: { adventurers: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Back on their feet', deltas: { adventurers: -10 }, major: false, reputation: 0, chains: null, rumorText: 'Word gets out: your guild pushes its people too hard.' },
     ],
   },
@@ -145,7 +145,7 @@ export const guildLifeCards = [
     npc: { emoji: '🍖', name: 'Cook Brenna', role: 'Guild Cook' },
     situation: 'The Harvest Festival is tomorrow. Brenna is asking whether to throw a proper feast for the whole guild — it would cost a fair chunk of gold but morale is low after a rough month.',
     choices: [
-      { label: 'Throw the feast', deltas: { gold: -15, adventurers: 8 }, major: false, reputation: 5, chains: null, rumorText: 'The smell of roasted boar drifted across the whole district last night.', modifiers: [{ id: 'feast-morale', label: 'Post-Feast Morale', effects: { adventurers: 5 }, duration: 3 }] },
+      { label: 'Throw the feast', deltas: { gold: -15, adventurers: 8 }, major: false, reputation: 5, chains: null, rumorText: 'The smell of roasted boar drifted across the whole district last night.' },
       { label: 'Keep it simple', deltas: { gold: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
@@ -175,7 +175,7 @@ export const guildLifeCards = [
     npc: { emoji: '🏆', name: 'Herald Aston', role: 'City Tournament Organizer' },
     situation: 'An inter-guild combat tournament has been announced. Entry costs gold and risks injuries, but winning would raise your standing in the city considerably.',
     choices: [
-      { label: 'Enter the tournament', deltas: { gold: -12, adventurers: -8, quests: 15 }, major: true, reputation: 15, chains: null, rumorText: 'Crowds lined the square to watch your fighters compete. They put on a show.', modifiers: [{ id: 'tournament-edge', label: 'Tournament Edge', effects: { adventurers: 8 }, duration: 4 }] },
+      { label: 'Enter the tournament', deltas: { gold: -12, adventurers: -8, quests: 15 }, major: true, reputation: 15, chains: null, rumorText: 'Crowds lined the square to watch your fighters compete. They put on a show.' },
       { label: 'Sit it out', deltas: { quests: -5, adventurers: 5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
@@ -215,7 +215,7 @@ export const guildLifeCards = [
     npc: { emoji: '🎓', name: 'Veteran Solla', role: 'Senior Adventurer' },
     situation: 'Solla proposes pairing each new recruit with a senior member for a month. Veterans will have less capacity for contracts, but recruits would develop faster.',
     choices: [
-      { label: 'Launch the program', deltas: { adventurers: 15, quests: -10 }, major: false, reputation: 0, chains: null, rumorText: null, modifiers: [{ id: 'mentorship-cohesion', label: 'Mentorship Cohesion', effects: { adventurers: 5 }, duration: 5 }] },
+      { label: 'Launch the program', deltas: { adventurers: 15, quests: -10 }, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Sink-or-swim approach', deltas: { adventurers: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
@@ -285,7 +285,7 @@ export const guildLifeCards = [
     npc: { emoji: '😞', name: 'Veteran Solla', role: 'Senior Adventurer' },
     situation: 'After a string of low-paying jobs and one failed mission, morale in the hall is visibly low. Solla suggests organizing team activities and lighter duties for a week. The alternative is driving through it.',
     choices: [
-      { label: 'Give them a breather', deltas: { quests: -8, gold: -5 }, major: false, reputation: 0, chains: null, rumorText: null, modifiers: [{ id: 'morale-rebound', label: 'Morale Rebound', effects: { adventurers: 10 }, duration: 4 }] },
+      { label: 'Give them a breather', deltas: { quests: -8, gold: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Work through it', deltas: { adventurers: -8 }, major: false, reputation: 0, chains: null, rumorText: 'Three members handed in their resignation this week. No explanation.' },
     ],
   },

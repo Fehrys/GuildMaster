@@ -95,7 +95,7 @@ export const merchantCards = [
     npc: { emoji: '🌶️', name: 'Serafine Duskhollow', role: 'Exotic Goods Importer' },
     situation: 'A trader from the southern ports has docked with rare spices — the kind nobles pay fortunes for. She\'ll sell your guild a resale stake at a steep upfront cost.',
     choices: [
-      { label: 'Buy a resale stake', deltas: { gold: -20, quests: 12 }, major: false, reputation: 5, chains: null, rumorText: null, modifiers: [{ id: 'spice-trade-windfall', label: 'Spice Trade', effects: { gold: 10 }, duration: 3 }] },
+      { label: 'Buy a resale stake', deltas: { gold: -20, quests: 12 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Negotiate a smaller cut', deltas: { gold: -8, quests: 5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
@@ -125,7 +125,7 @@ export const merchantCards = [
     npc: { emoji: '🌍', name: 'Envoy Rashida Khalvon', role: 'Foreign Trade Delegate' },
     situation: 'A delegate from a distant merchant confederation proposes a formal trade agreement — they\'ll supply discounted exotic equipment, but expect your guild to guarantee safe passage for their caravans.',
     choices: [
-      { label: 'Sign the agreement', deltas: { equipment: 15, adventurers: -8 }, major: false, reputation: 5, chains: null, rumorText: null, modifiers: [{ id: 'foreign-trade-pact', label: 'Foreign Trade Pact', effects: { gold: 8 }, duration: 4 }] },
+      { label: 'Sign the agreement', deltas: { equipment: 15, adventurers: -8 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Counter-offer: equipment only, no commitment', deltas: { equipment: 8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
@@ -175,7 +175,7 @@ export const merchantCards = [
     npc: { emoji: '💰', name: 'Banker Orveth', role: 'Royal Mint Agent' },
     situation: 'The crown has quietly debased its coinage — your guild\'s treasury is worth less than it was yesterday. Orveth offers a scheme to convert your gold into foreign currency before the news becomes public.',
     choices: [
-      { label: 'Convert gold now', deltas: { gold: -15 }, major: false, reputation: 0, chains: null, rumorText: null, modifiers: [{ id: 'currency-hedge', label: 'Currency Hedge', effects: { gold: 20 }, duration: 2 }] },
+      { label: 'Convert gold now', deltas: { gold: -15 }, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Report the insider tip to the magistrate', deltas: { gold: -8 }, major: false, reputation: 12, chains: null, rumorText: 'The guild refused to profit from royal financial manipulation.' },
     ],
   },
@@ -195,7 +195,7 @@ export const merchantCards = [
     npc: { emoji: '🏗️', name: 'Developer Yssara', role: 'Real Estate Investor' },
     situation: 'A developer is building a new trade district and pitches your guild as an early investor. Returns will take months, but the location is prime. It\'s a long game.',
     choices: [
-      { label: 'Invest heavily', deltas: { gold: -20, quests: 10 }, major: true, reputation: 5, chains: null, rumorText: null, modifiers: [{ id: 'trade-district-investment', label: 'Trade District Stake', effects: { gold: 18 }, duration: 5 }] },
+      { label: 'Invest heavily', deltas: { gold: -20, quests: 10 }, major: true, reputation: 5, chains: null, rumorText: null },
       { label: 'Invest modestly', deltas: { gold: -10, quests: 5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },

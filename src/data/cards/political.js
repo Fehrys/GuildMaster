@@ -105,7 +105,7 @@ export const politicalCards = [
     npc: { emoji: '🕊️', name: 'Ambassador Lira', role: 'Foreign Envoy' },
     situation: 'A diplomatic envoy from a neighbouring kingdom passes through. Hosting them is expensive but could open foreign contract routes. Ignoring them may close those doors for years.',
     choices: [
-      { label: 'Host them lavishly', deltas: { gold: -20, quests: 15 }, major: false, reputation: 10, chains: null, rumorText: null, modifiers: [{ id: 'foreign-contacts', label: 'Foreign Contacts', effects: { quests: 8 }, duration: 3 }] },
+      { label: 'Host them lavishly', deltas: { gold: -20, quests: 15 }, major: false, reputation: 10, chains: null, rumorText: null },
       { label: 'Offer modest hospitality', deltas: { gold: -8, quests: 5 }, major: false, reputation: 5, chains: null, rumorText: null },
     ],
   },
@@ -175,7 +175,7 @@ export const politicalCards = [
     npc: { emoji: '📋', name: 'Royal Envoy Mira', role: 'Crown Messenger' },
     situation: 'A new royal decree requires all guilds to register a secondary office in the capital within two months — or pay a hefty annual exemption fee. The capital is far and costly.',
     choices: [
-      { label: 'Open the capital office', deltas: { gold: -25, adventurers: -8, quests: 15 }, major: true, reputation: 10, chains: null, rumorText: null, modifiers: [{ id: 'capital-presence', label: 'Capital Presence', effects: { quests: 12 }, duration: 5 }] },
+      { label: 'Open the capital office', deltas: { gold: -25, adventurers: -8, quests: 15 }, major: true, reputation: 10, chains: null, rumorText: null },
       { label: 'Contest the decree legally', deltas: { gold: -10, quests: -8 }, major: false, reputation: 5, chains: 'chain-decree-contested', rumorText: 'Your guild\'s legal challenge to the crown drew attention — for better and worse.' },
     ],
   },
@@ -205,7 +205,7 @@ export const politicalCards = [
     npc: { emoji: '🏛️', name: 'Alderman Pryce', role: 'City Council Chair' },
     situation: 'A seat on the city council has unexpectedly opened. Your guild is nominated as a candidate — an honour, but the role demands time, gold, and staff commitment for a full season.',
     choices: [
-      { label: 'Accept the council seat', deltas: { gold: -20, adventurers: -10, quests: 18 }, major: true, reputation: 15, chains: null, rumorText: null, modifiers: [{ id: 'council-seat', label: 'Council Seat', effects: { quests: 10, gold: 5 }, duration: 4 }] },
+      { label: 'Accept the council seat', deltas: { gold: -20, adventurers: -10, quests: 18 }, major: true, reputation: 15, chains: null, rumorText: null },
       { label: 'Decline and recommend an ally', deltas: { quests: 5, gold: 8 }, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'merchants': 'allied' } },
     ],
   },

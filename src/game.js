@@ -7,7 +7,7 @@ import { getRepTier, applyRepShift } from './engine/reputation.js'
 import { createLedger, recordEvent, updateAdventurerStatus, buildLedgerText } from './engine/ledger.js'
 import { loadProgress, saveProgress, unlockArc, completeArc, setLegacyTrait, addAdventurer } from './engine/progression.js'
 import { renderResourceBar } from './ui/resource-bar.js'
-import { renderCard, renderCardResult, renderRumorCard, renderModifierBar } from './ui/card-view.js'
+import { renderCard, renderCardResult, renderRumorCard } from './ui/card-view.js'
 import { tryStartMusic, toggleMusic, isMusicEnabled, playClick } from './ui/audio.js'
 import { renderGuildIntro, renderArcIntro, renderGuildNaming, renderNpcSelection } from './ui/intro-view.js'
 import { renderLedgerScreen, renderTraitSelection } from './ui/ledger-view.js'
@@ -17,7 +17,6 @@ import { crisisCards } from './data/cards/crisis.js'
 import { banditWar } from './data/arcs/bandit-war.js'
 import { baseAdventurers } from './data/adventurers.js'
 import { traits } from './data/traits.js'
-import { createModifierState, addModifier, tickModifiers, applyModifiers, getActiveModifiers } from './engine/modifiers.js'
 import { createRelationshipState, updateRelationship, getLevel, getFlags, resolveNpcCard, getNextNpc } from './engine/relationships.js'
 import { createPoolState, drawCard, markPlayed, injectCards, removeCards, resetCycle, checkThirdChoice } from './engine/pool.js'
 import { createFactionState, updateStance, getStance } from './engine/factions.js'
@@ -41,7 +40,6 @@ let ledger = null
 let progress = null
 let arc = null
 let roster = []
-let modifierState = null
 let relationshipState = null
 let poolState = null
 let factionState = null
@@ -85,8 +83,7 @@ function buildHeader() {
   const musicIcon = isMusicEnabled() ? '🎵' : '🔇'
   const guildLine = `<div class="guild-name">⚜️ ${guildName}<button id="music-toggle" class="music-btn" title="Toggle music">${musicIcon}</button></div>`
   const resBar = renderResourceBar(gameState.resources)
-  const modBar = renderModifierBar(modifierState)
-  return guildLine + resBar + modBar
+  return guildLine + resBar
 }
 
 function startRun() {
@@ -159,7 +156,6 @@ function initializeRun() {
   queueState = { ...createQueueState(), totalMilestones: arc.totalMilestones }
 
   // V2 state
-  modifierState = createModifierState()
   relationshipState = createRelationshipState(selectedNpcs)
   poolState = createPoolState(buildBasePool())
   factionState = createFactionState(['thieves-guild', 'temple'])
@@ -179,9 +175,6 @@ function showArcIntro() {
 }
 
 function nextTurn() {
-  // Tick modifiers
-  modifierState = tickModifiers(modifierState)
-
   // Detect tension zone transitions
   const RESOURCES = ['gold', 'adventurers', 'quests', 'equipment']
   const prev = queueState.prevTensionZone ?? []
@@ -305,20 +298,11 @@ function showRumor(text) {
 function handleChoice(card, chosenIdx, isArc) {
   const choice = card.choices[chosenIdx]
 
-  // Apply modifiers to deltas before applying
-  const adjustedDeltas = applyModifiers(choice.deltas, modifierState)
-  gameState = applyChoice(gameState, adjustedDeltas, {})
+  gameState = applyChoice(gameState, choice.deltas, {})
 
   // Apply reputation shift
   if (choice.reputation) {
     gameState = { ...gameState, reputation: applyRepShift(gameState.reputation, choice.reputation) }
-  }
-
-  // V2: Process modifier effects from choice
-  if (choice.modifiers) {
-    for (const mod of choice.modifiers) {
-      modifierState = addModifier(modifierState, { ...mod, source: card.id })
-    }
   }
 
   // V2: Process relationship shifts
@@ -401,7 +385,7 @@ function handleChoice(card, chosenIdx, isArc) {
 
 function autoSave() {
   const runState = {
-    gameState, queueState, modifierState, relationshipState,
+    gameState, queueState, relationshipState,
     poolState, factionState, ledger,
     arcId: arc.id, guildName, selectedNpcs, npcEncounterCount,
     currentCard, currentIsArc,
@@ -434,7 +418,6 @@ function handleWin(lastChoice) {
     guildName,
     relationships: relationshipState,
     factionStances: factionState,
-    permanentModifiers: getActiveModifiers(modifierState).filter(m => m.duration === null),
   })
   const ledgerText = buildLedgerText(arcLedger)
 
@@ -454,7 +437,6 @@ function handleLoss(endCond) {
     guildName,
     relationships: relationshipState,
     factionStances: factionState,
-    permanentModifiers: getActiveModifiers(modifierState).filter(m => m.duration === null),
   })
   const ledgerText = buildLedgerText(arcLedger)
 
@@ -489,7 +471,6 @@ if (savedRun) {
   if (restored) {
     gameState = restored.gameState
     queueState = restored.queueState
-    modifierState = restored.modifierState
     relationshipState = restored.relationshipState
     poolState = restored.poolState
     factionState = restored.factionState

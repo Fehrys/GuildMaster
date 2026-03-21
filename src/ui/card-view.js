@@ -46,32 +46,6 @@ function renderChoiceBtn(choice, idx) {
   </button>`
 }
 
-export function renderModifierBar(modifierState) {
-  const mods = modifierState.active
-  if (mods.length === 0) return ''
-
-  const pills = mods.map(mod => {
-    const entries = Object.entries(mod.effects)
-    const parts = entries.map(([res, pct]) => {
-      const icon = RESOURCE_ICONS[res] || res
-      const sign = pct > 0 ? '+' : ''
-      const cls = pct > 0 ? 'mod-positive' : 'mod-negative'
-      return `<span class="${cls}">${icon} ${sign}${pct}%</span>`
-    }).join(' ')
-
-    const durationText = mod.duration === null
-      ? '<span class="mod-duration mod-permanent">∞</span>'
-      : `<span class="mod-duration">${mod.duration} ⏱</span>`
-
-    const cls = mod.duration === null ? 'mod-pill mod-pill-permanent' :
-      Object.values(mod.effects).some(v => v > 0) ? 'mod-pill mod-pill-positive' : 'mod-pill mod-pill-negative'
-
-    return `<div class="${cls}">${parts} ${durationText}</div>`
-  }).join('')
-
-  return `<div class="modifier-bar"><span class="mod-label">Effects</span>${pills}</div>`
-}
-
 export function renderCard(card, onChoose) {
   const tierBadge = card.npcTier && card.npcTier !== 0
     ? ` <span class="npc-tier npc-tier-${TIER_CLASSES[String(card.npcTier)]}">${TIER_LABELS[String(card.npcTier)]}</span>`
