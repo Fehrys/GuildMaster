@@ -24,7 +24,7 @@ export const banditWar = {
       situation: 'Your scouts return with maps of three bandit camps. Attacking all three costs lives and coin. But leaving any intact risks retaliation.',
       choices: [
         { label: 'Full assault — take all three', deltas: { adventurers: -20, equipment: -5, quests: 22, gold: 0 }, major: true, reputation: 5, chains: null, rumorText: 'Three camps taken. But the survivors scattered. Where do outlaws go?' },
-        { label: 'Target the largest camp only', deltas: { adventurers: -10, equipment: -5, quests: 12, gold: 0 }, major: true, reputation: 0, chains: 'chain-bw-survivors', rumorText: 'The largest camp fell. Two smaller ones watched from the treeline.' },
+        { label: 'Target the largest camp only', deltas: { adventurers: -20, equipment: -5, quests: 22, gold: 0 }, major: true, reputation: 0, chains: 'chain-bw-survivors', rumorText: 'The largest camp fell. Two smaller ones watched from the treeline.' },
       ],
     },
     {
