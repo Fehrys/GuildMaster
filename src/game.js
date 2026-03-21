@@ -47,6 +47,8 @@ let factionState = null
 let guildName = 'Iron Hearth Guild'
 let selectedNpcs = []
 let npcEncounterCount = 0
+let currentCard = null
+let currentIsArc = false
 
 const app = document.getElementById('app')
 
@@ -262,6 +264,10 @@ function nextTurn() {
 }
 
 function showCard(card, isArc) {
+  currentCard = card
+  currentIsArc = isArc
+  autoSave()
+
   const html = buildHeader() + renderCard(card, null)
   mount(html)
 
@@ -384,6 +390,7 @@ function autoSave() {
     gameState, queueState, modifierState, relationshipState,
     poolState, factionState, ledger,
     arcId: arc.id, guildName, selectedNpcs, npcEncounterCount,
+    currentCard, currentIsArc,
   }
   localStorage.setItem('guildmaster_run', serializeRunState(runState))
 }
@@ -477,9 +484,14 @@ if (savedRun) {
     selectedNpcs = restored.selectedNpcs
     npcEncounterCount = restored.npcEncounterCount
     arc = ALL_ARCS[restored.arcId]
+    currentCard = restored.currentCard ?? null
+    currentIsArc = restored.currentIsArc ?? false
     progress = loadProgress()
-    // Resume at next turn
-    nextTurn()
+    if (currentCard) {
+      showCard(currentCard, currentIsArc)
+    } else {
+      nextTurn()
+    }
   } else {
     startRun()
   }

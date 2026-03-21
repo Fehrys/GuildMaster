@@ -21,7 +21,7 @@ export const jolenFenceCards = {
         },
         {
           label: 'Tell him you run a legitimate operation',
-          deltas: {},
+          deltas: { equipment: -3 },
           major: false,
           reputation: 5,
           chains: null,
@@ -82,7 +82,7 @@ export const jolenFenceCards = {
         },
         {
           label: 'Too risky — pass on this one',
-          deltas: {},
+          deltas: { gold: -5 },
           major: false,
           reputation: 0,
           chains: null,
@@ -114,12 +114,12 @@ export const jolenFenceCards = {
         },
         {
           label: 'Let him sort out his own problems',
-          deltas: {},
+          deltas: { quests: -5 },
           major: false,
           reputation: 5,
           chains: null,
           rumorText: null,
-          relationships: { [npcId]: 0 },
+          relationships: { [npcId]: -1 },
         },
       ],
     },

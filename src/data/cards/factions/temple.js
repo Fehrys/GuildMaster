@@ -26,7 +26,7 @@ export const templeAllied = [
     situation: 'The High Cleric asks your guild to enforce a public morality edict in the guild district — no gambling dens, no unlicensed medicine sellers. It would improve your standing with the temple considerably. But it will make you unpopular with half your neighbors and cut off some cheap sources.',
     choices: [
       { label: 'Enforce the edict', deltas: { quests: -8, adventurers: 5 }, major: true, reputation: 15, chains: null, rumorText: 'The guild has been acting as the temple\'s street arm. Not everyone is grateful.' },
-      { label: 'Politely decline the enforcement role', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Politely decline the enforcement role', deltas: { quests: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -36,7 +36,7 @@ export const templeAllied = [
     situation: 'A young acolyte arrives bearing a sealed request from the temple: a holy relic has gone missing and the temple suspects a local thief ring. They want your guild to recover it quietly, without involving the city watch. Reward is access to the temple vault for equipment repairs.',
     choices: [
       { label: 'Take on the recovery quietly', deltas: { adventurers: -5, equipment: 15, gold: -5 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Suggest they go through proper channels', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Suggest they go through proper channels', deltas: { equipment: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {

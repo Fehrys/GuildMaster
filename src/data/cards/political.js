@@ -16,7 +16,7 @@ export const politicalCards = [
     situation: 'A local lord wants to hire six of your best for a season — good pay, but your roster will be thin for weeks.',
     choices: [
       { label: 'Accept the contract', deltas: { gold: 25, adventurers: -15, quests: 8 }, major: true, reputation: 5, chains: null, rumorText: 'Lord Hestan\'s gold came with strings. You\'ll feel the absence of your people soon.' },
-      { label: 'Decline', deltas: { quests: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Decline', deltas: { quests: -5, adventurers: 5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -26,7 +26,7 @@ export const politicalCards = [
     situation: 'The local temple is rebuilding after a fire. A donation would be noticed — and remembered.',
     choices: [
       { label: 'Donate generously', deltas: { gold: -12 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Decline politely', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Decline politely', deltas: { quests: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -46,7 +46,7 @@ export const politicalCards = [
     situation: 'A noblewoman invites your guild master to a banquet. It\'s a social game — showing up costs time and a gift, but the connections are real.',
     choices: [
       { label: 'Attend with a gift', deltas: { gold: -8, quests: 10 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Send apologies', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Send apologies', deltas: { quests: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -56,7 +56,7 @@ export const politicalCards = [
     situation: 'A drought is crippling nearby farmlands. The villages can\'t pay much — but the whole city will hear about whoever helped.',
     choices: [
       { label: 'Send aid', deltas: { gold: -10, adventurers: -5, quests: 8 }, major: false, reputation: 15, chains: null, rumorText: null },
-      { label: 'Not your concern', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Not your concern', deltas: { quests: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -66,7 +66,7 @@ export const politicalCards = [
     situation: 'The city guard needs to borrow equipment for a week-long exercise. They\'ll compensate — but you\'ll be short in the meantime.',
     choices: [
       { label: 'Lend the equipment', deltas: { gold: 15, equipment: -15 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Refuse', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Refuse', deltas: { quests: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -136,7 +136,7 @@ export const politicalCards = [
     situation: 'The crown is holding a grand ceremony to celebrate a military victory. Guilds that parade under the royal banner gain prestige — but the mandatory donation is steep.',
     choices: [
       { label: 'Participate fully', deltas: { gold: -22, quests: 14 }, major: false, reputation: 15, chains: null, rumorText: null },
-      { label: 'Skip the ceremony', deltas: {}, major: false, reputation: -10, chains: null, rumorText: 'Your absence at the royal parade did not go unnoticed at court.' },
+      { label: 'Skip the ceremony', deltas: { quests: -10 }, major: false, reputation: -10, chains: null, rumorText: 'Your absence at the royal parade did not go unnoticed at court.' },
     ],
   },
   {
@@ -166,7 +166,7 @@ export const politicalCards = [
     situation: 'Skirmishes along the eastern border are disrupting trade routes your guild relies on. The border legion requests guild support — mercenaries or supplies — to resolve things faster.',
     choices: [
       { label: 'Send adventurers to assist', deltas: { adventurers: -10, quests: 12 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Wait it out', deltas: { quests: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Wait it out', deltas: { quests: -8, adventurers: 8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -186,7 +186,7 @@ export const politicalCards = [
     situation: 'A minor noble family proposes a symbolic "guild alliance" to coincide with a high-profile marriage — your guild crest alongside theirs in public ceremony, in exchange for introductions to their merchant network.',
     choices: [
       { label: 'Accept the alliance', deltas: { gold: -10, quests: 14 }, major: false, reputation: 8, chains: null, rumorText: null, factions: { 'noble-south': 'allied' } },
-      { label: 'Decline gracefully', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Decline gracefully', deltas: { quests: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -206,7 +206,7 @@ export const politicalCards = [
     situation: 'A seat on the city council has unexpectedly opened. Your guild is nominated as a candidate — an honour, but the role demands time, gold, and staff commitment for a full season.',
     choices: [
       { label: 'Accept the council seat', deltas: { gold: -20, adventurers: -10, quests: 18 }, major: true, reputation: 15, chains: null, rumorText: null, modifiers: [{ id: 'council-seat', label: 'Council Seat', effects: { quests: 10, gold: 5 }, duration: 4 }] },
-      { label: 'Decline and recommend an ally', deltas: { quests: 5 }, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'merchants': 'allied' } },
+      { label: 'Decline and recommend an ally', deltas: { quests: 5, gold: 8 }, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'merchants': 'allied' } },
     ],
   },
   {
@@ -216,7 +216,7 @@ export const politicalCards = [
     situation: 'The thieves\' guild requests a quiet favour: use your guild\'s political contacts to smooth over an arrest warrant for one of their members. In return, they promise reduced "interference" with your contracts.',
     choices: [
       { label: 'Pull the strings', deltas: { quests: 12 }, major: false, reputation: -8, chains: null, rumorText: 'Whispers suggest your guild has ties to the criminal underworld.', factions: { 'thieves-guild': 'allied', 'city-guard': 'opposed' } },
-      { label: 'Refuse firmly', deltas: {}, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'thieves-guild': 'opposed' } },
+      { label: 'Refuse firmly', deltas: { quests: -5 }, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'thieves-guild': 'opposed' } },
     ],
   },
   {

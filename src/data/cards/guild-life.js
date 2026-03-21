@@ -6,7 +6,7 @@ export const guildLifeCards = [
     situation: 'A battered mercenary collapses at your door. She asks only for a place to rest and heal. It will cost nothing but space.',
     choices: [
       { label: 'Take her in', deltas: { adventurers: 5 }, major: false, reputation: 5, chains: 'chain-merc-healed', rumorText: null },
-      { label: 'Turn her away', deltas: {}, major: false, reputation: -5, chains: null, rumorText: 'Word spreads. The wounded remember those who turned them away.' },
+      { label: 'Turn her away', deltas: { adventurers: -3 }, major: false, reputation: -5, chains: null, rumorText: 'Word spreads. The wounded remember those who turned them away.' },
     ],
   },
   {
@@ -16,7 +16,7 @@ export const guildLifeCards = [
     situation: 'A bright-eyed kid walks in off the street wanting to join your guild. No skills to speak of, but plenty of enthusiasm.',
     choices: [
       { label: 'Take a chance', deltas: { adventurers: 8, gold: -3 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Send them away', deltas: {}, major: false, reputation: -3, chains: null, rumorText: 'Word gets out that your guild turned away an eager young recruit.' },
+      { label: 'Send them away', deltas: { adventurers: -3 }, major: false, reputation: -3, chains: null, rumorText: 'Word gets out that your guild turned away an eager young recruit.' },
     ],
   },
   {
@@ -36,7 +36,7 @@ export const guildLifeCards = [
     situation: 'Three quests are running overdue. You can send extra people to resolve them fast, or let clients wait and risk reputation.',
     choices: [
       { label: 'Send reinforcements', deltas: { adventurers: -10, quests: 15 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Let them wait', deltas: { quests: -10 }, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Let them wait', deltas: { quests: -10, adventurers: 5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -56,7 +56,7 @@ export const guildLifeCards = [
     situation: 'Reports of a large creature near the valley farms. Nobody else will go. Eliminating it would be a boon for your reputation — if your team returns.',
     choices: [
       { label: 'Take the job', deltas: { adventurers: -10, equipment: -8, quests: 18 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Decline the risk', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Decline the risk', deltas: { quests: -5, adventurers: 5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -66,7 +66,7 @@ export const guildLifeCards = [
     situation: 'An alchemist wants to run experiments on some of your equipment — temporarily. In return: upgraded gear when done.',
     choices: [
       { label: 'Agree', deltas: { equipment: -10 }, major: false, reputation: 0, chains: 'chain-alchemist-done', rumorText: null },
-      { label: 'Decline', deltas: {}, major: false, reputation: -3, chains: null, rumorText: null },
+      { label: 'Decline', deltas: { quests: -3 }, major: false, reputation: -3, chains: null, rumorText: null },
     ],
   },
   {
@@ -76,7 +76,7 @@ export const guildLifeCards = [
     situation: 'A scholar needs an escort to a remote ruin for research. The pay is modest, but he promises useful maps of the region.',
     choices: [
       { label: 'Take the contract', deltas: { gold: 8, adventurers: -5, quests: 8 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Too low-paying', deltas: {}, major: false, reputation: -3, chains: null, rumorText: null },
+      { label: 'Too low-paying', deltas: { quests: -5 }, major: false, reputation: -3, chains: null, rumorText: null },
     ],
   },
   {
@@ -125,8 +125,8 @@ export const guildLifeCards = [
     npc: { emoji: '⚔️', name: 'Drill Sergeant Varn', role: 'Combat Trainer' },
     situation: 'Varn wants to run a week of dawn-to-dusk combat drills. The roster will be exhausted and unavailable for quests, but he promises they\'ll be noticeably sharper afterward.',
     choices: [
-      { label: 'Approve the drills', deltas: { quests: -8, adventurers: 12 }, major: false, reputation: 0, chains: null, rumorText: null, relationships: { 'sergeant-brek': 1 } },
-      { label: 'Too much downtime', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null, relationships: { 'sergeant-brek': -1 } },
+      { label: 'Approve the drills', deltas: { quests: -8, adventurers: 12 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Too much downtime', deltas: { adventurers: -5 }, major: false, reputation: -5, chains: null, rumorText: 'Word is the guild has been skipping training. Standards are slipping.' },
     ],
   },
   {
@@ -136,7 +136,7 @@ export const guildLifeCards = [
     situation: 'A new recruit reports being hazed by senior members — left overnight in the crypts as a "tradition." He\'s humiliated but unhurt. The veterans think it\'s harmless fun.',
     choices: [
       { label: 'Reprimand the veterans', deltas: { adventurers: -3 }, major: false, reputation: 5, chains: null, rumorText: 'The guild\'s new recruits look noticeably less rattled these days.' },
-      { label: 'Let tradition stand', deltas: {}, major: false, reputation: -5, chains: null, rumorText: 'Rumor has it your guild\'s hazing rituals are driving away promising recruits.' },
+      { label: 'Let tradition stand', deltas: { adventurers: -5 }, major: false, reputation: -5, chains: null, rumorText: 'Rumor has it your guild\'s hazing rituals are driving away promising recruits.' },
     ],
   },
   {
@@ -155,8 +155,8 @@ export const guildLifeCards = [
     npc: { emoji: '🕊️', name: 'Healer Josse', role: 'Temple Volunteer' },
     situation: 'A temple healer offers to bless the guild hall and tend to any injuries free of charge — she asks only that your members donate a day of labor to the temple district in return.',
     choices: [
-      { label: 'Accept graciously', deltas: { adventurers: -5, equipment: 8 }, major: false, reputation: 5, chains: null, rumorText: null, relationships: { 'sister-maren': 1 } },
-      { label: 'Politely decline', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null, relationships: { 'sister-maren': -1 } },
+      { label: 'Accept graciously', deltas: { adventurers: -5, equipment: 8 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Politely decline', deltas: { equipment: -5 }, major: false, reputation: -3, chains: null, rumorText: null },
     ],
   },
   {
@@ -176,7 +176,7 @@ export const guildLifeCards = [
     situation: 'An inter-guild combat tournament has been announced. Entry costs gold and risks injuries, but winning would raise your standing in the city considerably.',
     choices: [
       { label: 'Enter the tournament', deltas: { gold: -12, adventurers: -8, quests: 15 }, major: true, reputation: 15, chains: null, rumorText: 'Crowds lined the square to watch your fighters compete. They put on a show.', modifiers: [{ id: 'tournament-edge', label: 'Tournament Edge', effects: { adventurers: 8 }, duration: 4 }] },
-      { label: 'Sit it out', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Sit it out', deltas: { quests: -5, adventurers: 5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -185,7 +185,7 @@ export const guildLifeCards = [
     npc: { emoji: '🕵️', name: 'Daveth the Ear', role: 'City Gossip' },
     situation: 'An informant slips you a tip: a rival guild is poaching your clients with undercut prices. He can spread counter-rumors for a fee, or you can simply outperform them on your next jobs.',
     choices: [
-      { label: 'Pay him to spread word', deltas: { gold: -10 }, major: false, reputation: 5, chains: null, rumorText: 'Word around the taverns is that the other guild has been cutting corners.', relationships: { 'jolen-fence': 1 } },
+      { label: 'Pay him to spread word', deltas: { gold: -10 }, major: false, reputation: 5, chains: null, rumorText: 'Word around the taverns is that the other guild has been cutting corners.' },
       { label: 'Win on merit alone', deltas: { quests: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
@@ -245,8 +245,8 @@ export const guildLifeCards = [
     npc: { emoji: '🎩', name: 'Overseer Cayne', role: 'City Guild Overseer' },
     situation: 'The city guild overseer announces a formal inspection of all licensed guilds next week. You can spend gold polishing the hall and briefing your people, or take your chances with what you have.',
     choices: [
-      { label: 'Prepare thoroughly', deltas: { gold: -10, quests: 10 }, major: false, reputation: 10, chains: null, rumorText: 'The overseer left the guild hall looking quietly impressed.', relationships: { 'lord-farwick': 1 } },
-      { label: 'Wing it', deltas: { quests: -5 }, major: false, reputation: -8, chains: null, rumorText: 'The inspection notes were... not favorable.', relationships: { 'lord-farwick': -1 } },
+      { label: 'Prepare thoroughly', deltas: { gold: -10, quests: 10 }, major: false, reputation: 10, chains: null, rumorText: 'The overseer left the guild hall looking quietly impressed.' },
+      { label: 'Wing it', deltas: { quests: -5 }, major: false, reputation: -8, chains: null, rumorText: 'The inspection notes were... not favorable.' },
     ],
   },
   {
@@ -265,7 +265,7 @@ export const guildLifeCards = [
     npc: { emoji: '🦽', name: 'Renn', role: 'Recovering Fighter' },
     situation: 'Renn was badly hurt on the last job. Your healer says a proper recovery will take three weeks — paid downtime. Pushing him back into the field risks permanent damage.',
     choices: [
-      { label: 'Full paid recovery', deltas: { gold: -8, adventurers: -5 }, major: false, reputation: 5, chains: null, rumorText: null, relationships: { 'sister-maren': 1 } },
+      { label: 'Full paid recovery', deltas: { gold: -8, adventurers: -5 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Light duty only', deltas: { adventurers: -10 }, major: false, reputation: -5, chains: null, rumorText: 'Renn is limping through jobs. People have noticed.' },
     ],
   },
@@ -276,7 +276,7 @@ export const guildLifeCards = [
     situation: 'Cael of the Ironveil Guild publicly challenges your members to a timed dungeon run. Winning means bragging rights and a bounty; losing could embarrass you in front of major clients.',
     choices: [
       { label: 'Accept the challenge', deltas: { adventurers: -8, equipment: -5, quests: 12 }, major: false, reputation: 10, chains: null, rumorText: 'Your team beat Ironveil\'s time by a quarter-hour. The whole district heard about it.' },
-      { label: 'Decline publicly', deltas: {}, major: false, reputation: -8, chains: null, rumorText: 'Cael has been telling anyone who will listen that you were afraid to compete.' },
+      { label: 'Decline publicly', deltas: { quests: -8, adventurers: 5 }, major: false, reputation: -8, chains: null, rumorText: 'Cael has been telling anyone who will listen that you were afraid to compete.' },
     ],
   },
   {
@@ -295,8 +295,8 @@ export const guildLifeCards = [
     npc: { emoji: '📜', name: 'City Clerk Nata', role: 'Municipal Official' },
     situation: 'A clerk informs you that one of your operating licenses lapsed last month. You can pay the renewal fee now and avoid trouble, or bribe her to look the other way.',
     choices: [
-      { label: 'Pay the renewal fee', deltas: { gold: -10 }, major: false, reputation: 5, chains: null, rumorText: null, relationships: { 'lord-farwick': 1 } },
-      { label: 'Offer a quiet bribe', deltas: { gold: -5 }, major: false, reputation: -5, chains: null, rumorText: 'A city clerk was seen pocketing something outside your hall. People talk.', relationships: { 'lord-farwick': -1 } },
+      { label: 'Pay the renewal fee', deltas: { gold: -10 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Offer a quiet bribe', deltas: { gold: -5 }, major: false, reputation: -5, chains: null, rumorText: 'A city clerk was seen pocketing something outside your hall. People talk.' },
     ],
   },
 ]

@@ -6,7 +6,7 @@ export const thievesGuildAllied = [
     situation: 'Dax slides a manifest across your desk — stolen military-grade supplies, freshly liberated from a noble\'s convoy. He\'s offering them at a fraction of market price. Your name won\'t appear anywhere. But if the noble traces it back, the guild gets implicated too.',
     choices: [
       { label: 'Buy the stolen supplies', deltas: { gold: -8, equipment: 15 }, major: false, reputation: -5, chains: null, rumorText: 'Someone has been acquiring suspiciously cheap equipment lately.' },
-      { label: 'Pass — too close to the original theft', deltas: {}, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Pass — too close to the original theft', deltas: { equipment: -3 }, major: false, reputation: 5, chains: null, rumorText: null },
     ],
   },
   {
@@ -16,7 +16,7 @@ export const thievesGuildAllied = [
     situation: 'Vessa has embedded herself in a rival guild\'s operation and is ready to hand you their client roster — names, contracts, everything. All she asks is that you quietly shelter three of her people for two weeks while things cool down.',
     choices: [
       { label: 'Take the roster and hide her people', deltas: { quests: 15, adventurers: -5 }, major: true, reputation: -5, chains: null, rumorText: 'Strangers have been seen coming and going from the guild hall after dark.' },
-      { label: 'Too much heat — decline', deltas: {}, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Too much heat — decline', deltas: { quests: -5 }, major: false, reputation: 5, chains: null, rumorText: null },
     ],
   },
   {
@@ -36,7 +36,7 @@ export const thievesGuildAllied = [
     situation: 'A city guard on the Thieves\' Guild payroll tips you off: a competitor\'s warehouse will be raided tomorrow. She\'s offering you first pick of anything your adventurers can claim before the official seizure. The window is tonight.',
     choices: [
       { label: 'Send a crew in tonight', deltas: { gold: 12, equipment: 10, adventurers: -3 }, major: true, reputation: -10, chains: null, rumorText: 'A guild crew was spotted near the warehouse district before last night\'s raid.' },
-      { label: 'Stay out of it entirely', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Stay out of it entirely', deltas: { gold: -5 }, major: false, reputation: -5, chains: null, rumorText: 'Word got back that the guild passed on a sure thing. The Guild isn\'t impressed.' },
     ],
   },
   {
@@ -69,7 +69,7 @@ export const thievesGuildOpposed = [
     situation: 'The city magistrate approaches you quietly. He\'s building a case against the Thieves\' Guild and wants testimony from a guild master who\'s had direct dealings — or refusals. You\'d be protected. But the guild will know who talked.',
     choices: [
       { label: 'Testify against the guild', deltas: { quests: 15, adventurers: -5 }, major: true, reputation: 10, chains: null, rumorText: 'A guild master testified before the city magistrate. The streets are tense.' },
-      { label: 'Stay out of the magistrate\'s war', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Stay out of the magistrate\'s war', deltas: { quests: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -79,7 +79,7 @@ export const thievesGuildOpposed = [
     situation: 'A low-level guild runner wants out and comes to you for protection. In exchange, she\'ll give you the guild\'s current safe house locations. She\'s genuine — you can tell — but sheltering her is an act of war against the guild.',
     choices: [
       { label: 'Protect her and take the information', deltas: { adventurers: 8, gold: -10, quests: 10 }, major: true, reputation: 5, chains: null, rumorText: 'Someone is sheltering a guild defector. The guild is not pleased.' },
-      { label: 'Send her away — it\'s not your fight', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Send her away — it\'s not your fight', deltas: { adventurers: -3 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -89,7 +89,7 @@ export const thievesGuildOpposed = [
     situation: 'The city guard captain offers you a contract: help her flush guild operatives out of the dock district using your adventurers as plainclothes support. The pay is decent. If the operation succeeds, the guild loses a major node. If it fails, your people are exposed.',
     choices: [
       { label: 'Take the contract', deltas: { gold: 15, adventurers: -7, quests: 10 }, major: true, reputation: 10, chains: null, rumorText: 'A guild company was working alongside city guards in the docks.' },
-      { label: 'Decline — too dangerous for your people', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Decline — too dangerous for your people', deltas: { quests: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {

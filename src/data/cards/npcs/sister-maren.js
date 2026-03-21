@@ -82,7 +82,7 @@ export const sisterMarenCards = {
         },
         {
           label: 'Decline respectfully — too many commitments',
-          deltas: {},
+          deltas: { quests: -5 },
           major: false,
           reputation: -5,
           chains: null,
@@ -114,12 +114,12 @@ export const sisterMarenCards = {
         },
         {
           label: 'Refuse — too much heat for any price',
-          deltas: {},
+          deltas: { quests: -3 },
           major: false,
           reputation: 5,
           chains: null,
           rumorText: null,
-          relationships: { [npcId]: 0 },
+          relationships: { [npcId]: -1 },
         },
       ],
     },

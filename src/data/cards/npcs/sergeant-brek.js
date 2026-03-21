@@ -119,7 +119,7 @@ export const sergeantBrekCards = {
           reputation: 0,
           chains: null,
           rumorText: null,
-          relationships: { [npcId]: 0 },
+          relationships: { [npcId]: -1 },
         },
       ],
     },

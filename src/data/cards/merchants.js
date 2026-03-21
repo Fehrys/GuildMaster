@@ -26,7 +26,7 @@ export const merchantCards = [
     situation: 'A wealthy trade consortium needs a full escort across dangerous roads. High pay, high cost in manpower.',
     choices: [
       { label: 'Take the contract', deltas: { gold: 30, adventurers: -18 }, major: true, reputation: 5, chains: null, rumorText: null },
-      { label: 'Decline', deltas: { quests: -5 }, major: false, reputation: -5, chains: null, rumorText: 'The consortium hired another guild. Word gets around who turns down high-profile work.' },
+      { label: 'Decline', deltas: { quests: -5, adventurers: 5 }, major: false, reputation: -5, chains: null, rumorText: 'The consortium hired another guild. Word gets around who turns down high-profile work.' },
     ],
   },
   {
@@ -46,7 +46,7 @@ export const merchantCards = [
     situation: 'Scavengers found a cache of arms abandoned in the forest — origin unknown. They\'ll sell cheap. Might be stolen, might be cursed, might be a windfall.',
     choices: [
       { label: 'Buy the cache', deltas: { gold: -10, equipment: 22 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Leave it', deltas: {}, major: false, reputation: 0, chains: null, rumorText: 'The scavengers sold the cache to another buyer by morning.' },
+      { label: 'Leave it', deltas: { quests: -3 }, major: false, reputation: 0, chains: null, rumorText: 'The scavengers sold the cache to another buyer by morning.' },
     ],
   },
   {
@@ -56,7 +56,7 @@ export const merchantCards = [
     situation: 'A moneylender wants you to collect a debt from a struggling family — not violent, just persuasive. The pay is good but the work is grim.',
     choices: [
       { label: 'Take the job', deltas: { gold: 18, quests: 5 }, major: false, reputation: -5, chains: null, rumorText: null },
-      { label: 'Refuse', deltas: {}, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Refuse', deltas: { quests: -5 }, major: false, reputation: 5, chains: null, rumorText: null },
     ],
   },
   {
@@ -66,7 +66,7 @@ export const merchantCards = [
     situation: 'A shady contact offers discounted arms — clearly stolen, but functional. Cheap equipment, high risk.',
     choices: [
       { label: 'Buy anyway', deltas: { gold: -8, equipment: 20 }, major: false, reputation: -5, chains: null, rumorText: 'Some of your new equipment has unfamiliar maker\'s marks on it.' },
-      { label: 'Refuse', deltas: {}, major: false, reputation: 3, chains: null, rumorText: null },
+      { label: 'Refuse', deltas: { equipment: -3 }, major: false, reputation: 3, chains: null, rumorText: null },
     ],
   },
   {
@@ -146,7 +146,7 @@ export const merchantCards = [
     situation: 'A ship captain asks your guild to warehouse "unregistered cargo" for three nights — no questions asked. The fee is generous, but the city watch has been patrolling the docks.',
     choices: [
       { label: 'Take the deal', deltas: { gold: 20 }, major: false, reputation: -10, chains: null, rumorText: 'Strange crates were seen being moved into the guild hall after dark.', factions: { 'thieves-guild': 'allied' } },
-      { label: 'Report it to the watch', deltas: {}, major: false, reputation: 10, chains: null, rumorText: null },
+      { label: 'Report it to the watch', deltas: { quests: 5, gold: 5 }, major: false, reputation: 10, chains: null, rumorText: null },
     ],
   },
   {
@@ -176,7 +176,7 @@ export const merchantCards = [
     situation: 'The crown has quietly debased its coinage — your guild\'s treasury is worth less than it was yesterday. Orveth offers a scheme to convert your gold into foreign currency before the news becomes public.',
     choices: [
       { label: 'Convert gold now', deltas: { gold: -15 }, major: false, reputation: 0, chains: null, rumorText: null, modifiers: [{ id: 'currency-hedge', label: 'Currency Hedge', effects: { gold: 20 }, duration: 2 }] },
-      { label: 'Report the insider tip to the magistrate', deltas: {}, major: false, reputation: 12, chains: null, rumorText: 'The guild refused to profit from royal financial manipulation.' },
+      { label: 'Report the insider tip to the magistrate', deltas: { gold: -8 }, major: false, reputation: 12, chains: null, rumorText: 'The guild refused to profit from royal financial manipulation.' },
     ],
   },
   {
@@ -216,7 +216,7 @@ export const merchantCards = [
     situation: 'A trader has imported a caged wyvern hatchling — highly illegal, extraordinarily valuable. She asks your guild to quietly arrange its transfer to a private buyer outside the city.',
     choices: [
       { label: 'Handle the transfer', deltas: { gold: 22, adventurers: -6 }, major: false, reputation: -8, chains: null, rumorText: 'Strange growling sounds were heard from the guild\'s stable last night.', factions: { 'thieves-guild': 'allied' } },
-      { label: 'Report the illegal import', deltas: {}, major: false, reputation: 10, chains: null, rumorText: null },
+      { label: 'Report the illegal import', deltas: { quests: 5, gold: 5 }, major: false, reputation: 10, chains: null, rumorText: null },
     ],
   },
   {
@@ -246,7 +246,7 @@ export const merchantCards = [
     situation: 'The city\'s main temple is tendering out its annual supply contract — pilgrimage supplies, candles, and provisions. A modest but steady job, and the temple\'s favour opens other doors.',
     choices: [
       { label: 'Bid for the contract', deltas: { gold: 12, quests: 8 }, major: false, reputation: 8, chains: null, rumorText: null, factions: { 'temple': 'allied' } },
-      { label: 'Skip it — not worth the admin', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Skip it — not worth the admin', deltas: { quests: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
 ]
