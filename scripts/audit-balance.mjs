@@ -18,7 +18,9 @@ const FILES = [
   { path: '../src/data/cards/political.js',          export: 'politicalCards',       source: 'array' },
   { path: '../src/data/cards/standard.js',           export: 'chainedCards',         source: 'array' },
   { path: '../src/data/cards/factions/temple.js',    export: 'templeAllied',         source: 'array' },
+  { path: '../src/data/cards/factions/temple.js',    export: 'templeOpposed',        source: 'array' },
   { path: '../src/data/cards/factions/thieves-guild.js', export: 'thievesGuildAllied', source: 'array' },
+  { path: '../src/data/cards/factions/thieves-guild.js', export: 'thievesGuildOpposed', source: 'array' },
   { path: '../src/data/arcs/bandit-war.js',          export: 'banditWar',            source: 'object.milestones' },
   // events.js may not exist — handled with skipIfMissing
   { path: '../src/data/cards/events.js',             export: 'eventCards',           source: 'array', skipIfMissing: true },
