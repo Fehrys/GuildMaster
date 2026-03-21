@@ -22,7 +22,9 @@
       "Bash(unzip:*)",
       "Bash(find C:ProjetsGuildMastersrcdataarcs -type f -name *.js)",
       "Bash(find C:/Projets/GuildMaster -name audit* -o -name *audit*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(echo \"exit: $?\")"
     ]
   }
 }
