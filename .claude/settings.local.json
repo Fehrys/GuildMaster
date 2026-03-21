@@ -18,7 +18,11 @@
       "Bash(node:*)",
       "Bash(python -c \"import json; d=json.load\\(open\\(''package-lock.json''\\)\\); print\\(d.get\\(''packages'',{}\\).get\\(''node_modules/vitest'',{}\\).get\\(''version'',''not found''\\)\\)\")",
       "Bash(git:*)",
-      "Bash(npx vitest:*)"
+      "Bash(npx vitest:*)",
+      "Bash(unzip:*)",
+      "Bash(find C:ProjetsGuildMastersrcdataarcs -type f -name *.js)",
+      "Bash(find C:/Projets/GuildMaster -name audit* -o -name *audit*)",
+      "Bash(python3:*)"
     ]
   }
 }

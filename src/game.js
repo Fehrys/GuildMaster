@@ -8,6 +8,7 @@ import { createLedger, recordEvent, updateAdventurerStatus, buildLedgerText } fr
 import { loadProgress, saveProgress, unlockArc, completeArc, setLegacyTrait, addAdventurer } from './engine/progression.js'
 import { renderResourceBar } from './ui/resource-bar.js'
 import { renderCard, renderCardResult, renderRumorCard, renderModifierBar } from './ui/card-view.js'
+import { tryStartMusic, toggleMusic, isMusicEnabled, playClick } from './ui/audio.js'
 import { renderGuildIntro, renderArcIntro, renderGuildNaming, renderNpcSelection } from './ui/intro-view.js'
 import { renderLedgerScreen, renderTraitSelection } from './ui/ledger-view.js'
 import { buildBasePool } from './data/cards/registry.js'
@@ -54,6 +55,14 @@ const app = document.getElementById('app')
 
 function mount(html) { app.innerHTML = html }
 
+app.addEventListener('click', e => {
+  if (e.target.id === 'music-toggle') {
+    toggleMusic()
+    const btn = document.getElementById('music-toggle')
+    if (btn) btn.textContent = isMusicEnabled() ? '🎵' : '🔇'
+  }
+})
+
 function renderBar() {
   const existing = document.querySelector('.resource-bar')
   if (existing) existing.outerHTML = renderResourceBar(gameState.resources)
@@ -73,7 +82,8 @@ function pickArc() {
 }
 
 function buildHeader() {
-  const guildLine = `<div class="guild-name">⚜️ ${guildName}</div>`
+  const musicIcon = isMusicEnabled() ? '🎵' : '🔇'
+  const guildLine = `<div class="guild-name">⚜️ ${guildName}<button id="music-toggle" class="music-btn" title="Toggle music">${musicIcon}</button></div>`
   const resBar = renderResourceBar(gameState.resources)
   const modBar = renderModifierBar(modifierState)
   return guildLine + resBar + modBar
@@ -160,7 +170,7 @@ function initializeRun() {
 
 function showGuildIntro() {
   mount(buildHeader() + renderGuildIntro())
-  document.getElementById('continue-btn').onclick = () => showArcIntro()
+  document.getElementById('continue-btn').onclick = () => { tryStartMusic(); showArcIntro() }
 }
 
 function showArcIntro() {
@@ -279,7 +289,11 @@ function showCard(card, isArc) {
   }
 
   document.querySelectorAll('.choice-btn').forEach(btn => {
-    btn.onclick = () => handleChoice(card, parseInt(btn.dataset.idx), isArc)
+    btn.onclick = () => {
+      tryStartMusic()
+      playClick()
+      handleChoice(card, parseInt(btn.dataset.idx), isArc)
+    }
   })
 }
 
