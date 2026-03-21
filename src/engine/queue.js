@@ -11,6 +11,7 @@ export function createQueueState() {
     queuedCrisis: [],           // array of resource names
     queuedChained: [],          // array of { firesAtTurn, cardId }
     queuedRumor: false,
+    npcScheduledThisCycle: false,
     pendingReplacement: null,   // { card, windowClosesTurn } — named adventurer replacement
     prevTensionZone: [],        // updated by game.js to detect zone transitions (not managed here)
   }
@@ -47,7 +48,11 @@ export function advanceQueue(q, currentTurn) {
   if (dueChained) {
     return { nextCardType: 'chained', updatedQueue: q, chainedCardId: dueChained.cardId }
   }
-  // 4. Rumor
+  // 4. NPC
+  if (q.npcScheduledThisCycle && q.standardCardsSinceLastMilestone >= 1) {
+    return { nextCardType: 'npc', updatedQueue: q }
+  }
+  // 5. Rumor
   if (q.queuedRumor) {
     return { nextCardType: 'rumor', updatedQueue: q }
   }
@@ -100,4 +105,12 @@ export function queueRumor(q) {
 
 export function dequeueRumor(q) {
   return { ...q, queuedRumor: false }
+}
+
+export function scheduleNpc(q) {
+  return { ...q, npcScheduledThisCycle: true }
+}
+
+export function clearNpcSchedule(q) {
+  return { ...q, npcScheduledThisCycle: false }
 }

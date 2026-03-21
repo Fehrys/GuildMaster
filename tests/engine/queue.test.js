@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   createQueueState, advanceQueue, recordStandardCardPlayed,
   resetMilestoneCounter, queueCrisis, dequeueCrisis,
-  queueChained, pushChainedBack
+  queueChained, pushChainedBack, scheduleNpc, clearNpcSchedule
 } from '../../src/engine/queue.js'
 
 describe('createQueueState', () => {
@@ -43,6 +43,16 @@ describe('advanceQueue', () => {
   it('returns standard when nothing else queued', () => {
     const q = { ...createQueueState(), nextMilestoneThreshold: 10, standardCardsSinceLastMilestone: 0, milestonesCompleted: 0, totalMilestones: 6, queuedCrisis: [], queuedChained: [], queuedRumor: false }
     expect(advanceQueue(q, 1).nextCardType).toBe('standard')
+  })
+
+  it('returns npc when npcScheduledThisCycle is true and at least 1 standard card played', () => {
+    const q = { ...createQueueState(), nextMilestoneThreshold: 10, standardCardsSinceLastMilestone: 1, milestonesCompleted: 0, totalMilestones: 6, queuedCrisis: [], queuedChained: [], queuedRumor: false, npcScheduledThisCycle: true }
+    expect(advanceQueue(q, 1).nextCardType).toBe('npc')
+  })
+
+  it('does not return npc when npcScheduledThisCycle is false', () => {
+    const q = { ...createQueueState(), nextMilestoneThreshold: 10, standardCardsSinceLastMilestone: 1, milestonesCompleted: 0, totalMilestones: 6, queuedCrisis: [], queuedChained: [], queuedRumor: false, npcScheduledThisCycle: false }
+    expect(advanceQueue(q, 1).nextCardType).not.toBe('npc')
   })
 })
 
@@ -102,5 +112,17 @@ describe('pushChainedBack', () => {
     q = queueChained(q, 'chain-b', 8)
     const pushed = pushChainedBack(q, 'chain-a')
     expect(pushed.queuedChained.find(e => e.cardId === 'chain-b').firesAtTurn).toBe(8)
+  })
+})
+
+describe('scheduleNpc / clearNpcSchedule', () => {
+  it('sets npcScheduledThisCycle to true', () => {
+    const q = scheduleNpc(createQueueState())
+    expect(q.npcScheduledThisCycle).toBe(true)
+  })
+
+  it('sets npcScheduledThisCycle to false', () => {
+    const q = clearNpcSchedule({ ...createQueueState(), npcScheduledThisCycle: true })
+    expect(q.npcScheduledThisCycle).toBe(false)
   })
 })

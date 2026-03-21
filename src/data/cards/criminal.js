@@ -1,0 +1,206 @@
+export const criminalCards = [
+  {
+    id: 'std-rival-spy',
+    type: 'standard',
+    npc: { emoji: '🕵️', name: 'Unknown Figure', role: 'Suspicious Stranger' },
+    situation: 'A stranger offers coin to "share" your client list. You suspect a rival guild is behind this.',
+    choices: [
+      { label: 'Take the coin', deltas: { gold: 20, quests: -18 }, major: true, reputation: -5, chains: null, rumorText: 'Some bridges burn slowly. This one is now smouldering.' },
+      { label: 'Show them the door', deltas: { quests: -6, adventurers: 8 }, major: false, reputation: 5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-protection-racket',
+    type: 'standard',
+    npc: { emoji: '😤', name: 'Thieves\' Guild Enforcer', role: 'Street Muscle' },
+    situation: 'A city gang demands monthly "protection" fees. Pay them off, or refuse and deal with the harassment.',
+    choices: [
+      { label: 'Pay the fee', deltas: { gold: -10, quests: 8 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Refuse and hire guards', deltas: { gold: -8, adventurers: 6 }, major: false, reputation: 5, chains: null, rumorText: 'Word spreads that your guild doesn\'t bow to street thugs.' },
+    ],
+  },
+  {
+    id: 'std-escaped-prisoner',
+    type: 'standard',
+    npc: { emoji: '⛓️', name: 'Escaped Prisoner', role: 'Fugitive' },
+    situation: 'A shackled prisoner begs for sanctuary. She claims she was falsely convicted. The city watch will come asking.',
+    choices: [
+      { label: 'Hide her', deltas: { adventurers: 8, gold: -5 }, major: false, reputation: -5, chains: null, rumorText: 'Rumour has it someone is sheltering a fugitive near the guild district.' },
+      { label: 'Turn her over', deltas: { gold: 8, quests: -6 }, major: false, reputation: 5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-prison-break',
+    type: 'standard',
+    npc: { emoji: '🚔', name: 'City Warden Crale', role: 'Prison Authority' },
+    situation: 'The city prison had a break-in — someone helped a prisoner escape. The warden suspects your guild. Cooperate with the investigation or stonewall it.',
+    choices: [
+      { label: 'Cooperate fully', deltas: { quests: -8, gold: 6 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Deny everything', deltas: { quests: -8, adventurers: 6 }, major: false, reputation: -5, chains: null, rumorText: 'The warden has been asking questions. Someone is talking.' },
+    ],
+  },
+  {
+    id: 'std-rival-smear',
+    type: 'standard',
+    npc: { emoji: '📣', name: 'Rival Guild Herald', role: 'Enemy Mouthpiece' },
+    situation: 'A rival guild has been spreading lies about your guild\'s reliability in the market square. You can ignore it or fight back.',
+    choices: [
+      { label: 'Launch a counter-campaign', deltas: { gold: -12, quests: 10 }, major: false, reputation: 10, chains: null, rumorText: null },
+      { label: 'Ignore the noise', deltas: { quests: -8, adventurers: 6 }, major: false, reputation: -5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-haunted-job',
+    type: 'standard',
+    npc: { emoji: '👻', name: 'Superstitious Client', role: 'Spooked Merchant' },
+    situation: 'A merchant\'s warehouse is "haunted" — his workers refuse to enter. Probably rats. Your people investigate for a small fee.',
+    choices: [
+      { label: 'Take the job', deltas: { gold: 10, adventurers: -8, quests: 3 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Too small a job', deltas: { quests: -8, equipment: 6 }, major: false, reputation: 0, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-smuggler-route',
+    type: 'standard',
+    npc: { emoji: '🚢', name: 'Dockmaster Pellin', role: 'Corrupt Harbor Official' },
+    situation: 'A dockmaster offers you a cut of a smuggling operation — exotic goods, no questions asked. The money is good, but the city guard has been tightening its net at the harbor.',
+    choices: [
+      { label: 'Take the cut', deltas: { gold: 20, quests: -10, adventurers: -8 }, major: false, reputation: -8, chains: null, rumorText: 'Dockside whispers say someone is moving untaxed goods through the harbor district.' },
+      { label: 'Report it to the watch', deltas: { quests: 8, gold: -5 }, major: false, reputation: 10, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-witness-silence',
+    type: 'standard',
+    npc: { emoji: '👁️', name: 'Nervous Witness Bram', role: 'Reluctant Informant' },
+    situation: 'A frightened man witnessed a Thieves\' Guild assassination and wants your guild to help him disappear before the killers find him. Sheltering him will cost resources — and make you an enemy.',
+    choices: [
+      { label: 'Set him up with a safe house', deltas: { gold: -15, adventurers: -5, quests: 15 }, major: false, reputation: 8, chains: null, rumorText: 'Someone is hiding a witness. The guild killers are asking around.' },
+      { label: 'Turn him away', deltas: { quests: -8, equipment: 6 }, major: false, reputation: -8, chains: null, rumorText: null },
+    ],
+    factions: { 'thieves-guild': 'hostile' },
+  },
+  {
+    id: 'std-gang-war',
+    type: 'standard',
+    npc: { emoji: '⚔️', name: 'Scar-faced Lena', role: 'Gang Lieutenant' },
+    situation: 'Two rival street gangs are going to war over territory that runs right past your guild hall. Both sides want you to stay neutral — and both have threatened consequences if you don\'t pick their side.',
+    choices: [
+      { label: 'Back the Ironhands', deltas: { gold: 15, adventurers: -8, quests: -10 }, major: true, reputation: -5, chains: null, rumorText: 'The guild has thrown in with the Ironhands. The Ash Dogs won\'t forget.' },
+      { label: 'Declare strict neutrality', deltas: { gold: -10, quests: 8 }, major: false, reputation: 5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-corrupt-magistrate',
+    type: 'standard',
+    npc: { emoji: '⚖️', name: 'Magistrate Harrow', role: 'Bent Judge' },
+    situation: 'A city magistrate is openly extorting merchants for favorable rulings. One of those merchants is a steady quest-giver of yours. You could bribe Harrow to back off, expose him, or use the information for leverage.',
+    choices: [
+      { label: 'Expose him to the city council', deltas: { quests: 8, gold: -5 }, major: false, reputation: 12, chains: null, rumorText: 'A magistrate is being investigated. Someone fed the council some very detailed evidence.' },
+      { label: 'Quietly blackmail Harrow yourself', deltas: { gold: 15, quests: -12 }, major: false, reputation: -10, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-pit-fight-ring',
+    type: 'standard',
+    npc: { emoji: '🥊', name: 'Promoter Dox', role: 'Underground Fight Organizer' },
+    situation: 'An underground fighting ring wants to recruit one of your seasoned adventurers as a pit fighter. The pay is excellent, but injuries are common and the city watch occasionally raids the venue.',
+    choices: [
+      { label: 'Let them fight for the money', deltas: { gold: 18, adventurers: -15 }, major: false, reputation: -5, chains: null, rumorText: 'One of the guild\'s fighters has been seen bleeding in a back-alley arena.' },
+      { label: 'Invest in the ring itself', deltas: { gold: -20, quests: 18 }, major: false, reputation: -8, chains: null, rumorText: 'Word is the guild has money in the pit fights now.' },
+    ],
+  },
+  {
+    id: 'std-blackmail-ledger',
+    type: 'standard',
+    npc: { emoji: '📒', name: 'Forger Silas', role: 'Information Broker' },
+    situation: 'A broker offers you a ledger containing damaging secrets about several noble houses. The price is steep, but the leverage could be invaluable — or catastrophically backfire.',
+    choices: [
+      { label: 'Buy the ledger', deltas: { gold: -22, quests: 18 }, major: true, reputation: -5, chains: null, rumorText: 'Rumour has it a certain guild has been making very bold requests of the nobility lately.' },
+      { label: 'Pass — too dangerous', deltas: { quests: -6, gold: 8 }, major: false, reputation: 3, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-counterfeit-coin',
+    type: 'standard',
+    npc: { emoji: '🪙', name: 'Minter Voss', role: 'Counterfeit Coinsmith' },
+    situation: 'Someone has been paying your guild in expertly faked silver — and your quartermaster only just noticed. You can trace it back to a small counterfeit operation. Turn them in, demand compensation, or quietly pass the fake coins along.',
+    choices: [
+      { label: 'Demand compensation from the forger', deltas: { gold: 15, quests: -12 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Report the operation to the mint', deltas: { quests: 8, gold: -5 }, major: false, reputation: 10, chains: null, rumorText: 'A counterfeiting ring was broken up. The tip came from somewhere.' },
+    ],
+  },
+  {
+    id: 'std-guild-informant',
+    type: 'standard',
+    npc: { emoji: '🤫', name: 'Snitch Torren', role: 'City Watch Informant' },
+    situation: 'You discover one of your newer adventurers has been feeding information to the city watch. He claims he was coerced. The watch now has partial details about two active guild operations.',
+    choices: [
+      { label: 'Dismiss him and go quiet', deltas: { adventurers: -5, quests: -8, equipment: 8 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Turn him into a double agent', deltas: { adventurers: -3, quests: 10, gold: -5 }, major: false, reputation: -5, chains: null, rumorText: 'The watch thinks it has a source inside the guild. They might be wrong.' },
+    ],
+  },
+  {
+    id: 'std-pickpocket-ring',
+    type: 'standard',
+    npc: { emoji: '✋', name: 'Fingersmith Nell', role: 'Pickpocket Boss' },
+    situation: 'A pickpocket ring operating near your guild is scooping coins from your own clients. You could shut them down, absorb them into your operation, or cut a deal with their boss.',
+    choices: [
+      { label: 'Absorb the ring into the guild', deltas: { adventurers: 8, gold: -10 }, major: false, reputation: -5, chains: null, rumorText: 'The guild seems to have a new crowd of street-level contacts.' },
+      { label: 'Shut them down hard', deltas: { adventurers: -8, quests: 6 }, major: false, reputation: 8, chains: null, rumorText: 'The pickpockets near the guild district have gone quiet.' },
+    ],
+    factions: { 'thieves-guild': 'neutral' },
+  },
+  {
+    id: 'std-contraband-cache',
+    type: 'standard',
+    npc: { emoji: '📦', name: 'Panicked Porter', role: 'Accidental Courier' },
+    situation: 'One of your guild members accidentally received a shipment meant for someone else — crates packed with illicit alchemical substances. The original buyer will come looking. So will the watch.',
+    choices: [
+      { label: 'Sell the goods quickly', deltas: { gold: 22, quests: -18 }, major: false, reputation: -10, chains: null, rumorText: 'Someone moved a suspicious shipment through the market last night. Very quickly.' },
+      { label: 'Hold them and negotiate a finder\'s fee', deltas: { gold: 12, adventurers: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-thieves-guild-pact',
+    type: 'standard',
+    npc: { emoji: '🗝️', name: 'Guildmaster Shade', role: 'Thieves\' Guild Leader' },
+    situation: 'The Thieves\' Guild proposes a formal arrangement: they handle the city\'s shadow economy, you handle contracts and muscle. Shared contacts, shared profits — and shared heat from the watch.',
+    choices: [
+      { label: 'Sign the pact', deltas: { gold: 15, quests: 12, adventurers: -8, equipment: -15 }, major: true, reputation: -10, chains: null, rumorText: 'The guild has gone into business with some very shady partners, they say.' },
+      { label: 'Decline entirely', deltas: { quests: -8, adventurers: 6 }, major: false, reputation: 8, chains: null, rumorText: null },
+    ],
+    factions: { 'thieves-guild': 'allied' },
+  },
+  {
+    id: 'std-undercover-op',
+    type: 'standard',
+    npc: { emoji: '🎭', name: 'Agent Mira', role: 'Undercover Watch Officer' },
+    situation: 'A watch officer approaches in secret: she wants to embed herself in your guild as a regular adventurer to gather evidence on a crime lord. In exchange: immunity for two past guild incidents on the record.',
+    choices: [
+      { label: 'Accept the arrangement', deltas: { quests: 12, adventurers: -5, gold: -5 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Warn the crime lord for a price', deltas: { gold: 20, quests: -18 }, major: false, reputation: -12, chains: null, rumorText: 'Someone tipped off a major criminal. The watch operation collapsed overnight.' },
+    ],
+  },
+  {
+    id: 'std-safe-house-request',
+    type: 'standard',
+    npc: { emoji: '🏚️', name: 'Courier Dain', role: 'Fugitive Middleman' },
+    situation: 'A middleman asks you to rent out a disused guild storage room as a safe house for a week. He won\'t say who it\'s for. The coin offered is generous, and questions are clearly unwelcome.',
+    choices: [
+      { label: 'Rent the room, no questions', deltas: { gold: 18, quests: -15 }, major: false, reputation: -8, chains: null, rumorText: 'Strange faces have been going in and out of the guild\'s back entrance at odd hours.' },
+      { label: 'Agree but have someone watch who uses it', deltas: { gold: 12, adventurers: -5, quests: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-heist-invitation',
+    type: 'standard',
+    npc: { emoji: '💎', name: 'Maestro Croft', role: 'Master Thief' },
+    situation: 'A legendary thief invites your guild to provide cover for a heist on a noble\'s vault — your people create the distraction, he does the actual theft, and you split whatever is inside. High reward, high risk.',
+    choices: [
+      { label: 'Provide the distraction crew', deltas: { gold: 25, adventurers: -10, quests: -8, equipment: -5 }, major: true, reputation: -10, chains: null, rumorText: 'Lord Vayne\'s vault was robbed during a very convenient street brawl. Questions are being asked.' },
+      { label: 'Tip off the noble and pocket a reward instead', deltas: { gold: 15, quests: -12 }, major: false, reputation: 8, chains: null, rumorText: 'The heist never happened. Croft is furious and looking for whoever talked.' },
+    ],
+    factions: { 'thieves-guild': 'neutral' },
+  },
+]

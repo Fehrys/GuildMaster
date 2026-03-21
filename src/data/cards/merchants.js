@@ -1,0 +1,252 @@
+export const merchantCards = [
+  {
+    id: 'std-equipment-merchant',
+    type: 'standard',
+    npc: { emoji: '⚒️', name: 'Greta the Ironmonger', role: 'Equipment Merchant' },
+    situation: 'A travelling merchant offers a bulk deal on arms and armour. Quality is good, price is fair — but it cleans out your stock budget.',
+    choices: [
+      { label: 'Buy the lot', deltas: { gold: -20, equipment: 18 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Pass', deltas: { quests: -6, gold: 8 }, major: false, reputation: 0, chains: null, rumorText: 'The merchant sold to your rival guild instead.' },
+    ],
+  },
+  {
+    id: 'std-unhappy-client',
+    type: 'standard',
+    npc: { emoji: '😠', name: 'Merchant Peldan', role: 'Disgruntled Client' },
+    situation: 'A merchant returns furious — the quest your guild completed left his cargo damaged. He demands compensation.',
+    choices: [
+      { label: 'Compensate him', deltas: { gold: -15, quests: 12 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Refuse', deltas: { quests: -15, adventurers: 10 }, major: false, reputation: -5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-caravan-escort',
+    type: 'standard',
+    npc: { emoji: '🐪', name: 'Merchant Consortium', role: 'Trade Guild' },
+    situation: 'A wealthy trade consortium needs a full escort across dangerous roads. High pay, high cost in manpower.',
+    choices: [
+      { label: 'Take the contract', deltas: { gold: 25, adventurers: -18, equipment: -5 }, major: true, reputation: 5, chains: null, rumorText: null },
+      { label: 'Decline', deltas: { quests: -8, adventurers: 6 }, major: false, reputation: -5, chains: null, rumorText: 'The consortium hired another guild. Word gets around who turns down high-profile work.' },
+    ],
+  },
+  {
+    id: 'std-bad-batch',
+    type: 'standard',
+    npc: { emoji: '⚙️', name: 'Outfitter Hess', role: 'Equipment Supplier' },
+    situation: 'Your regular supplier admits the last batch of gear was defective. He\'ll replace half — but you\'re owed an apology and a refund.',
+    choices: [
+      { label: 'Accept partial replacement', deltas: { equipment: 10, quests: -8 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Demand full refund', deltas: { gold: 10, equipment: -10 }, major: false, reputation: 0, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-abandoned-supplies',
+    type: 'standard',
+    npc: { emoji: '📦', name: 'Scavenger Crew', role: 'Freelance Salvagers' },
+    situation: 'Scavengers found a cache of arms abandoned in the forest — origin unknown. They\'ll sell cheap. Might be stolen, might be cursed, might be a windfall.',
+    choices: [
+      { label: 'Buy the cache', deltas: { gold: -10, equipment: 15 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Leave it', deltas: { quests: -6, gold: 8 }, major: false, reputation: 0, chains: null, rumorText: 'The scavengers sold the cache to another buyer by morning.' },
+    ],
+  },
+  {
+    id: 'std-debt-collection',
+    type: 'standard',
+    npc: { emoji: '💼', name: 'Moneylender Vas', role: 'City Creditor' },
+    situation: 'A moneylender wants you to collect a debt from a struggling family — not violent, just persuasive. The pay is good but the work is grim.',
+    choices: [
+      { label: 'Take the job', deltas: { gold: 15, quests: -12 }, major: false, reputation: -5, chains: null, rumorText: null },
+      { label: 'Refuse', deltas: { quests: -8, adventurers: 6 }, major: false, reputation: 5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-fence',
+    type: 'standard',
+    npc: { emoji: '🕶️', name: 'Aldis Greyhand', role: 'Black Market Dealer' },
+    situation: 'A shady contact offers discounted arms — clearly stolen, but functional. Cheap equipment, high risk.',
+    choices: [
+      { label: 'Buy anyway', deltas: { gold: -8, equipment: 12 }, major: false, reputation: -5, chains: null, rumorText: 'Some of your new equipment has unfamiliar maker\'s marks on it.' },
+      { label: 'Refuse', deltas: { equipment: -6, gold: 8 }, major: false, reputation: 3, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-rumored-treasure',
+    type: 'standard',
+    npc: { emoji: '🪙', name: 'Excited Prospector', role: 'Amateur Treasure Hunter' },
+    situation: 'A prospector claims to have found signs of a buried hoard. He wants your muscle; you split the take. High risk, potential windfall.',
+    choices: [
+      { label: 'Fund the dig', deltas: { gold: -8, adventurers: -8, equipment: 12 }, major: true, reputation: 0, chains: 'chain-treasure-dig', rumorText: 'A team was spotted heading north with shovels and high hopes.' },
+      { label: 'Pass', deltas: { quests: -6, gold: 8 }, major: false, reputation: 0, chains: null, rumorText: 'Word spread you turned down the dig. Some think you know something.' },
+    ],
+  },
+  {
+    id: 'std-caravan-ambush-warning',
+    type: 'standard',
+    npc: { emoji: '🛤️', name: 'Darro Whitepath', role: 'Caravan Master' },
+    situation: 'A caravan master warns you that his next route passes through bandit territory. He asks your guild to send scouts ahead — modest pay, but he\'ll remember the favour.',
+    choices: [
+      { label: 'Send scouts', deltas: { gold: 8, adventurers: -5 }, major: false, reputation: 10, chains: null, rumorText: null },
+      { label: 'Offer a full armed escort instead', deltas: { gold: 18, adventurers: -15 }, major: false, reputation: 5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-rare-spice-shipment',
+    type: 'standard',
+    npc: { emoji: '🌶️', name: 'Serafine Duskhollow', role: 'Exotic Goods Importer' },
+    situation: 'A trader from the southern ports has docked with rare spices — the kind nobles pay fortunes for. She\'ll sell your guild a resale stake at a steep upfront cost.',
+    choices: [
+      { label: 'Buy a resale stake', deltas: { gold: -20, quests: 18 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Negotiate a smaller cut', deltas: { gold: -8, quests: 6 }, major: false, reputation: 0, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-trade-dispute',
+    type: 'standard',
+    npc: { emoji: '⚖️', name: 'Arbiter Holken', role: 'Trade Court Mediator' },
+    situation: 'Two merchant houses are locked in a bitter dispute over a warehouse fire. Both want your guild to arbitrate — whoever you side with will owe you a debt, and the other will hold a grudge.',
+    choices: [
+      { label: 'Side with the larger house', deltas: { gold: 12, quests: -8 }, major: false, reputation: -5, chains: null, rumorText: 'Word is the guild chose coin over principle.' },
+      { label: 'Side with the smaller house', deltas: { gold: -5, quests: 8 }, major: false, reputation: 10, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-supply-shortage',
+    type: 'standard',
+    npc: { emoji: '📉', name: 'Outfitter Brenn', role: 'Supply Broker' },
+    situation: 'A road collapse has cut off your primary equipment supplier for two weeks. Brenn can source replacements from a rival supplier — at a 30% markup.',
+    choices: [
+      { label: 'Pay the markup', deltas: { gold: -18, equipment: 15 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Send adventurers to clear the road', deltas: { adventurers: -6, equipment: 8 }, major: false, reputation: 5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-foreign-merchant-guild',
+    type: 'standard',
+    npc: { emoji: '🌍', name: 'Envoy Rashida Khalvon', role: 'Foreign Trade Delegate' },
+    situation: 'A delegate from a distant merchant confederation proposes a formal trade agreement — they\'ll supply discounted exotic equipment, but expect your guild to guarantee safe passage for their caravans.',
+    choices: [
+      { label: 'Sign the agreement', deltas: { equipment: 15, adventurers: -12 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Counter-offer: equipment only, no commitment', deltas: { equipment: 8, gold: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-market-crash',
+    type: 'standard',
+    npc: { emoji: '📊', name: 'Investor Torvan', role: 'Market Speculator' },
+    situation: 'The city\'s grain futures have collapsed overnight. Torvan says some guilds saw it coming and shorted the market — he hints your guild could profit from the chaos if you act fast.',
+    choices: [
+      { label: 'Speculate on the crash', deltas: { gold: 25, quests: -22 }, major: false, reputation: -10, chains: null, rumorText: 'Rumours fly that some guilds profited suspiciously from the grain crash.' },
+      { label: 'Donate surplus gold to food relief', deltas: { gold: -12, quests: 10 }, major: false, reputation: 15, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-smuggling-offer',
+    type: 'standard',
+    npc: { emoji: '🚢', name: 'Captain Lirenne Voss', role: 'Ship Captain' },
+    situation: 'A ship captain asks your guild to warehouse "unregistered cargo" for three nights — no questions asked. The fee is generous, but the city watch has been patrolling the docks.',
+    choices: [
+      { label: 'Take the deal', deltas: { gold: 20, quests: -18 }, major: false, reputation: -10, chains: null, rumorText: 'Strange crates were seen being moved into the guild hall after dark.', factions: { 'thieves-guild': 'allied' } },
+      { label: 'Report it to the watch', deltas: { quests: 8, gold: -5 }, major: false, reputation: 10, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-bidding-war',
+    type: 'standard',
+    npc: { emoji: '🏷️', name: 'Auctioneer Melas', role: 'Guild Auction House' },
+    situation: 'A rare lot of masterwork weapons has come to auction. Two rival guilds are bidding against each other — and against you. Winning means excellent equipment; losing means watching your rivals gear up.',
+    choices: [
+      { label: 'Bid aggressively', deltas: { gold: -22, equipment: 18 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Place a modest bid', deltas: { gold: -10, equipment: 8 }, major: false, reputation: 0, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-trade-route-disruption',
+    type: 'standard',
+    npc: { emoji: '🗺️', name: 'Merchant Syndara', role: 'Overland Trader' },
+    situation: 'Monster activity has closed the eastern trade road for a week. Syndara needs an alternate route scouted and, if possible, cleared. The pay is tied to how fast your people can do it.',
+    choices: [
+      { label: 'Scout a new route (fast)', deltas: { gold: 15, adventurers: -12 }, major: false, reputation: 5, chains: null, rumorText: null },
+      { label: 'Clear the original road instead', deltas: { gold: 15, adventurers: -14, equipment: -5 }, major: false, reputation: 10, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-currency-debasement',
+    type: 'standard',
+    npc: { emoji: '💰', name: 'Banker Orveth', role: 'Royal Mint Agent' },
+    situation: 'The crown has quietly debased its coinage — your guild\'s treasury is worth less than it was yesterday. Orveth offers a scheme to convert your gold into foreign currency before the news becomes public.',
+    choices: [
+      { label: 'Convert gold now', deltas: { gold: -15, equipment: 12 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Report the insider tip to the magistrate', deltas: { gold: -8, quests: 6 }, major: false, reputation: 12, chains: null, rumorText: 'The guild refused to profit from royal financial manipulation.' },
+    ],
+  },
+  {
+    id: 'std-warehouse-fire',
+    type: 'standard',
+    npc: { emoji: '🔥', name: 'Factor Gennick', role: 'Warehouse Manager' },
+    situation: 'A fire has gutted a key city warehouse — your guild\'s stored equipment took losses. Gennick suspects arson and points to a rival trading house. You can investigate or cut your losses.',
+    choices: [
+      { label: 'Investigate the arson', deltas: { adventurers: -5, quests: 8 }, major: false, reputation: 8, chains: 'chain-arson-investigation', rumorText: null },
+      { label: 'Accept the loss and move on', deltas: { equipment: -12, gold: 8 }, major: false, reputation: 0, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-investment-opportunity',
+    type: 'standard',
+    npc: { emoji: '🏗️', name: 'Developer Yssara', role: 'Real Estate Investor' },
+    situation: 'A developer is building a new trade district and pitches your guild as an early investor. Returns will take months, but the location is prime. It\'s a long game.',
+    choices: [
+      { label: 'Invest heavily', deltas: { gold: -20, quests: 15 }, major: true, reputation: 5, chains: null, rumorText: null },
+      { label: 'Invest modestly', deltas: { gold: -10, quests: 8 }, major: false, reputation: 0, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-merchant-guild-politics',
+    type: 'standard',
+    npc: { emoji: '🏛️', name: 'Guildmaster Parveth', role: 'Merchant Guild Head' },
+    situation: 'The city\'s merchant guild is electing a new leader. The reformist candidate wants lower tariffs; the incumbent wants stability. Both ask for your guild\'s public endorsement.',
+    choices: [
+      { label: 'Endorse the reformist', deltas: { quests: 10, gold: -8 }, major: false, reputation: -5, chains: null, rumorText: 'The guild has thrown its weight behind the reformist merchant faction.' },
+      { label: 'Endorse the incumbent', deltas: { quests: 8, gold: -5 }, major: false, reputation: 5, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-exotic-creature-import',
+    type: 'standard',
+    npc: { emoji: '🦎', name: 'Zoologist Fenna Marsh', role: 'Exotic Animal Trader' },
+    situation: 'A trader has imported a caged wyvern hatchling — highly illegal, extraordinarily valuable. She asks your guild to quietly arrange its transfer to a private buyer outside the city.',
+    choices: [
+      { label: 'Handle the transfer', deltas: { gold: 18, adventurers: -10, quests: -5 }, major: false, reputation: -8, chains: null, rumorText: 'Strange growling sounds were heard from the guild\'s stable last night.', factions: { 'thieves-guild': 'allied' } },
+      { label: 'Report the illegal import', deltas: { quests: 8, gold: -5 }, major: false, reputation: 10, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-overdue-shipment',
+    type: 'standard',
+    npc: { emoji: '⏳', name: 'Factor Imriell', role: 'Logistics Coordinator' },
+    situation: 'A critical equipment shipment is three days overdue. The factor suspects either bandit interference or an incompetent shipping agent. He needs someone to find out which — and recover the goods if possible.',
+    choices: [
+      { label: 'Send a search party', deltas: { adventurers: -10, equipment: 14 }, major: false, reputation: 8, chains: null, rumorText: null },
+      { label: 'Buy replacement stock locally', deltas: { gold: -15, equipment: 12 }, major: false, reputation: 0, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-travelling-peddler-windfall',
+    type: 'standard',
+    npc: { emoji: '🎒', name: 'Old Morwith', role: 'Wandering Peddler' },
+    situation: 'A weathered old peddler rolls into the guild hall with a cartload of odds and ends — second-hand weapons, old maps, mysterious trinkets. He\'s selling the whole cart for a flat rate before nightfall.',
+    choices: [
+      { label: 'Buy the whole cart', deltas: { gold: -10, equipment: 8, quests: 6 }, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Haggle for just the weapons', deltas: { gold: -5, equipment: 8 }, major: false, reputation: 0, chains: null, rumorText: null },
+    ],
+  },
+  {
+    id: 'std-temple-trade-contract',
+    type: 'standard',
+    npc: { emoji: '⛪', name: 'Steward Aldric', role: 'Temple Quartermaster' },
+    situation: 'The city\'s main temple is tendering out its annual supply contract — pilgrimage supplies, candles, and provisions. A modest but steady job, and the temple\'s favour opens other doors.',
+    choices: [
+      { label: 'Bid for the contract', deltas: { gold: 8, quests: -5 }, major: false, reputation: 8, chains: null, rumorText: null, factions: { 'temple': 'allied' } },
+      { label: 'Skip it — not worth the admin', deltas: { quests: -8, adventurers: 6 }, major: false, reputation: -5, chains: null, rumorText: null },
+    ],
+  },
+]
