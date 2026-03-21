@@ -56,7 +56,7 @@ export const criminalCards = [
     situation: 'A merchant\'s warehouse is "haunted" — his workers refuse to enter. Probably rats. Your people investigate for a small fee.',
     choices: [
       { label: 'Take the job', deltas: { gold: 10, adventurers: -3, quests: 5 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Too small a job', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Too small a job', deltas: { quests: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -67,7 +67,6 @@ export const criminalCards = [
     choices: [
       { label: 'Take the cut', deltas: { gold: 20, quests: -10 }, major: false, reputation: -8, chains: null, rumorText: 'Dockside whispers say someone is moving untaxed goods through the harbor district.' },
       { label: 'Report it to the watch', deltas: { quests: 8 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Stay out of it', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -88,7 +87,6 @@ export const criminalCards = [
     situation: 'Two rival street gangs are going to war over territory that runs right past your guild hall. Both sides want you to stay neutral — and both have threatened consequences if you don\'t pick their side.',
     choices: [
       { label: 'Back the Ironhands', deltas: { gold: 15, adventurers: -8, quests: -10 }, major: true, reputation: -5, chains: null, rumorText: 'The guild has thrown in with the Ironhands. The Ash Dogs won\'t forget.' },
-      { label: 'Back the Ash Dogs', deltas: { quests: 12, adventurers: -8 }, major: true, reputation: -5, chains: null, rumorText: 'The guild has sided with the Ash Dogs. The Ironhands are furious.' },
       { label: 'Declare strict neutrality', deltas: { gold: -10 }, major: false, reputation: 5, chains: null, rumorText: null },
     ],
   },
@@ -98,7 +96,6 @@ export const criminalCards = [
     npc: { emoji: '⚖️', name: 'Magistrate Harrow', role: 'Bent Judge' },
     situation: 'A city magistrate is openly extorting merchants for favorable rulings. One of those merchants is a steady quest-giver of yours. You could bribe Harrow to back off, expose him, or use the information for leverage.',
     choices: [
-      { label: 'Bribe Harrow to leave your client alone', deltas: { gold: -18, quests: 10 }, major: false, reputation: -5, chains: null, rumorText: null },
       { label: 'Expose him to the city council', deltas: { quests: 8 }, major: false, reputation: 12, chains: null, rumorText: 'A magistrate is being investigated. Someone fed the council some very detailed evidence.' },
       { label: 'Quietly blackmail Harrow yourself', deltas: { gold: 15, quests: 5 }, major: false, reputation: -10, chains: null, rumorText: null },
     ],
@@ -111,7 +108,6 @@ export const criminalCards = [
     situation: 'An underground fighting ring wants to recruit one of your seasoned adventurers as a pit fighter. The pay is excellent, but injuries are common and the city watch occasionally raids the venue.',
     choices: [
       { label: 'Let them fight for the money', deltas: { gold: 18, adventurers: -5 }, major: false, reputation: -5, chains: null, rumorText: 'One of the guild\'s fighters has been seen bleeding in a back-alley arena.' },
-      { label: 'Decline — too risky', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Invest in the ring itself', deltas: { gold: -20, quests: 12 }, major: false, reputation: -8, chains: null, rumorText: 'Word is the guild has money in the pit fights now.' },
     ],
   },
@@ -122,7 +118,7 @@ export const criminalCards = [
     situation: 'A broker offers you a ledger containing damaging secrets about several noble houses. The price is steep, but the leverage could be invaluable — or catastrophically backfire.',
     choices: [
       { label: 'Buy the ledger', deltas: { gold: -22, quests: 15 }, major: true, reputation: -5, chains: null, rumorText: 'Rumour has it a certain guild has been making very bold requests of the nobility lately.' },
-      { label: 'Pass — too dangerous', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Pass — too dangerous', deltas: {}, major: false, reputation: 3, chains: null, rumorText: null },
     ],
     modifiers: [{ id: 'noble-leverage', label: 'Noble Leverage', effects: { gold: 15 }, duration: 4 }],
   },
@@ -134,7 +130,6 @@ export const criminalCards = [
     choices: [
       { label: 'Demand compensation from the forger', deltas: { gold: 15 }, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Report the operation to the mint', deltas: { quests: 8 }, major: false, reputation: 10, chains: null, rumorText: 'A counterfeiting ring was broken up. The tip came from somewhere.' },
-      { label: 'Quietly spend the fake coins', deltas: { gold: 12 }, major: false, reputation: -12, chains: null, rumorText: 'Fake silver has been traced back to the guild district.' },
     ],
   },
   {
@@ -145,7 +140,6 @@ export const criminalCards = [
     choices: [
       { label: 'Dismiss him and go quiet', deltas: { adventurers: -5, quests: -8 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Turn him into a double agent', deltas: { adventurers: -3, quests: 10 }, major: false, reputation: -5, chains: null, rumorText: 'The watch thinks it has a source inside the guild. They might be wrong.' },
-      { label: 'Make an example of him', deltas: { adventurers: -8 }, major: false, reputation: -10, chains: null, rumorText: 'A guild member was found beaten badly behind the Crossed Keys tavern.' },
     ],
   },
   {
@@ -156,7 +150,6 @@ export const criminalCards = [
     choices: [
       { label: 'Absorb the ring into the guild', deltas: { adventurers: 8, gold: -10 }, major: false, reputation: -5, chains: null, rumorText: 'The guild seems to have a new crowd of street-level contacts.' },
       { label: 'Shut them down hard', deltas: { adventurers: -5 }, major: false, reputation: 8, chains: null, rumorText: 'The pickpockets near the guild district have gone quiet.' },
-      { label: 'Cut a deal — they work elsewhere', deltas: { gold: 5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
     factions: { 'thieves-guild': 'neutral' },
   },
@@ -167,7 +160,6 @@ export const criminalCards = [
     situation: 'One of your guild members accidentally received a shipment meant for someone else — crates packed with illicit alchemical substances. The original buyer will come looking. So will the watch.',
     choices: [
       { label: 'Sell the goods quickly', deltas: { gold: 22, reputation: -10 }, major: false, reputation: -10, chains: null, rumorText: 'Someone moved a suspicious shipment through the market last night. Very quickly.' },
-      { label: 'Dump the crates in the river', deltas: { gold: -5 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Hold them and negotiate a finder\'s fee', deltas: { gold: 12, adventurers: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
@@ -178,7 +170,6 @@ export const criminalCards = [
     situation: 'The Thieves\' Guild proposes a formal arrangement: they handle the city\'s shadow economy, you handle contracts and muscle. Shared contacts, shared profits — and shared heat from the watch.',
     choices: [
       { label: 'Sign the pact', deltas: { gold: 15, quests: 12, adventurers: -8 }, major: true, reputation: -10, chains: null, rumorText: 'The guild has gone into business with some very shady partners, they say.' },
-      { label: 'Negotiate limited cooperation only', deltas: { gold: 8, quests: 5 }, major: false, reputation: -5, chains: null, rumorText: null },
       { label: 'Decline entirely', deltas: {}, major: false, reputation: 8, chains: null, rumorText: null },
     ],
     factions: { 'thieves-guild': 'allied' },
@@ -191,7 +182,6 @@ export const criminalCards = [
     situation: 'A watch officer approaches in secret: she wants to embed herself in your guild as a regular adventurer to gather evidence on a crime lord. In exchange: immunity for two past guild incidents on the record.',
     choices: [
       { label: 'Accept the arrangement', deltas: { quests: 12, adventurers: -3 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Refuse and say nothing', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Warn the crime lord for a price', deltas: { gold: 20 }, major: false, reputation: -12, chains: null, rumorText: 'Someone tipped off a major criminal. The watch operation collapsed overnight.' },
     ],
   },
@@ -202,7 +192,6 @@ export const criminalCards = [
     situation: 'A middleman asks you to rent out a disused guild storage room as a safe house for a week. He won\'t say who it\'s for. The coin offered is generous, and questions are clearly unwelcome.',
     choices: [
       { label: 'Rent the room, no questions', deltas: { gold: 18 }, major: false, reputation: -8, chains: null, rumorText: 'Strange faces have been going in and out of the guild\'s back entrance at odd hours.' },
-      { label: 'Refuse flat out', deltas: {}, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Agree but have someone watch who uses it', deltas: { gold: 18, adventurers: -3, quests: 8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
@@ -213,7 +202,6 @@ export const criminalCards = [
     situation: 'A legendary thief invites your guild to provide cover for a heist on a noble\'s vault — your people create the distraction, he does the actual theft, and you split whatever is inside. High reward, high risk.',
     choices: [
       { label: 'Provide the distraction crew', deltas: { gold: 25, adventurers: -10, quests: -8 }, major: true, reputation: -10, chains: null, rumorText: 'Lord Vayne\'s vault was robbed during a very convenient street brawl. Questions are being asked.' },
-      { label: 'Decline — too much exposure', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Tip off the noble and pocket a reward instead', deltas: { gold: 15 }, major: false, reputation: 8, chains: null, rumorText: 'The heist never happened. Croft is furious and looking for whoever talked.' },
     ],
     factions: { 'thieves-guild': 'neutral' },

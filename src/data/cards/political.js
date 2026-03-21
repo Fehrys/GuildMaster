@@ -12,21 +12,21 @@ export const politicalCards = [
   {
     id: 'std-minor-lord',
     type: 'standard',
-    npc: { emoji: '👑', name: 'Lord Farwick', role: 'Minor Nobleman' },
+    npc: { emoji: '👑', name: 'Lord Hestan', role: 'Minor Nobleman' },
     situation: 'A local lord wants to hire six of your best for a season — good pay, but your roster will be thin for weeks.',
     choices: [
-      { label: 'Accept the contract', deltas: { gold: 25, adventurers: -15, quests: 8 }, major: true, reputation: 5, chains: null, rumorText: 'Lord Farwick\'s gold came with strings. You\'ll feel the absence of your people soon.' },
+      { label: 'Accept the contract', deltas: { gold: 25, adventurers: -15, quests: 8 }, major: true, reputation: 5, chains: null, rumorText: 'Lord Hestan\'s gold came with strings. You\'ll feel the absence of your people soon.' },
       { label: 'Decline', deltas: { quests: -5 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
     id: 'std-donation',
     type: 'standard',
-    npc: { emoji: '🙏', name: 'Sister Maren', role: 'Temple Priest' },
+    npc: { emoji: '🙏', name: 'Brother Aldwyn', role: 'Temple Deacon' },
     situation: 'The local temple is rebuilding after a fire. A donation would be noticed — and remembered.',
     choices: [
       { label: 'Donate generously', deltas: { gold: -12 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Decline politely', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Decline politely', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -36,7 +36,7 @@ export const politicalCards = [
     situation: 'The city is holding its annual harvest festival. Sponsoring it costs coin but puts your guild banner front and centre.',
     choices: [
       { label: 'Sponsor the festival', deltas: { gold: -15, quests: 12 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Skip it', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Skip it', deltas: { quests: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -87,7 +87,6 @@ export const politicalCards = [
     choices: [
       { label: 'Back the guild-friendly candidate', deltas: { quests: 10, gold: -8 }, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'merchants': 'allied', 'city-guard': 'opposed' } },
       { label: 'Back the contracts candidate', deltas: { quests: 15, gold: -8 }, major: false, reputation: -5, chains: null, rumorText: 'Word spreads that your guild chose city gold over guild principle.', factions: { 'city-guard': 'allied', 'merchants': 'opposed' } },
-      { label: 'Stay neutral', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -97,7 +96,6 @@ export const politicalCards = [
     situation: 'Two noble houses are in open dispute over a trade route. Both have approached your guild for support. Backing either side means enemies — but also powerful friends.',
     choices: [
       { label: 'Side with House Osric', deltas: { gold: 20, adventurers: -8 }, major: false, reputation: -5, chains: null, rumorText: 'House Vayne will not forget your choice.', factions: { 'noble-north': 'allied', 'noble-south': 'opposed' } },
-      { label: 'Side with House Vayne', deltas: { quests: 12, equipment: 8 }, major: false, reputation: -5, chains: null, rumorText: 'House Osric marks you as an enemy.', factions: { 'noble-south': 'allied', 'noble-north': 'opposed' } },
       { label: 'Offer to mediate', deltas: { adventurers: -5, quests: 5 }, major: false, reputation: 10, chains: null, rumorText: null },
     ],
   },
@@ -109,7 +107,6 @@ export const politicalCards = [
     choices: [
       { label: 'Host them lavishly', deltas: { gold: -20, quests: 15 }, major: false, reputation: 10, chains: null, rumorText: null, modifiers: [{ id: 'foreign-contacts', label: 'Foreign Contacts', effects: { quests: 8 }, duration: 3 }] },
       { label: 'Offer modest hospitality', deltas: { gold: -8, quests: 5 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Send a polite refusal', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -120,7 +117,6 @@ export const politicalCards = [
     choices: [
       { label: 'Lobby for the reform', deltas: { gold: -10, quests: 8 }, major: false, reputation: 5, chains: 'chain-tax-reform-passed', rumorText: null, factions: { 'merchants': 'allied' } },
       { label: 'Lobby against it', deltas: { gold: -10, equipment: 5 }, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'city-guard': 'allied' } },
-      { label: 'Stay out of it', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -131,7 +127,6 @@ export const politicalCards = [
     choices: [
       { label: 'Fund a portion', deltas: { gold: -18, quests: 12 }, major: false, reputation: 10, chains: null, rumorText: null },
       { label: 'Contribute a small sum', deltas: { gold: -6, quests: 5 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Decline', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -141,7 +136,6 @@ export const politicalCards = [
     situation: 'The crown is holding a grand ceremony to celebrate a military victory. Guilds that parade under the royal banner gain prestige — but the mandatory donation is steep.',
     choices: [
       { label: 'Participate fully', deltas: { gold: -22, quests: 14 }, major: false, reputation: 15, chains: null, rumorText: null },
-      { label: 'Send a token delegation', deltas: { gold: -8, quests: 5 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Skip the ceremony', deltas: {}, major: false, reputation: -10, chains: null, rumorText: 'Your absence at the royal parade did not go unnoticed at court.' },
     ],
   },
@@ -152,7 +146,6 @@ export const politicalCards = [
     situation: 'One of your adventurers caused a scene at a foreign consul\'s dinner — insults were exchanged and a vase was broken. The consul demands a formal apology and restitution.',
     choices: [
       { label: 'Apologise and pay restitution', deltas: { gold: -15 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Apologise without paying', deltas: { quests: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
       { label: 'Dismiss the complaint', deltas: { quests: -12 }, major: false, reputation: -10, chains: null, rumorText: 'The consul made certain everyone heard how your guild handles its messes.' },
     ],
   },
@@ -164,7 +157,6 @@ export const politicalCards = [
     choices: [
       { label: 'Back the established temple', deltas: { gold: -10, quests: 10 }, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'temple': 'allied', 'thieves-guild': 'opposed' } },
       { label: 'Back the smaller sect', deltas: { quests: 8, adventurers: 5 }, major: false, reputation: -5, chains: null, rumorText: 'Your support of the minor sect raised eyebrows across the city.', factions: { 'thieves-guild': 'allied', 'temple': 'opposed' } },
-      { label: 'Declare the matter outside guild affairs', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -174,7 +166,6 @@ export const politicalCards = [
     situation: 'Skirmishes along the eastern border are disrupting trade routes your guild relies on. The border legion requests guild support — mercenaries or supplies — to resolve things faster.',
     choices: [
       { label: 'Send adventurers to assist', deltas: { adventurers: -10, quests: 12 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Donate supplies instead', deltas: { equipment: -10, gold: -8, reputation: 5 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Wait it out', deltas: { quests: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
@@ -185,7 +176,6 @@ export const politicalCards = [
     situation: 'A new royal decree requires all guilds to register a secondary office in the capital within two months — or pay a hefty annual exemption fee. The capital is far and costly.',
     choices: [
       { label: 'Open the capital office', deltas: { gold: -25, adventurers: -8, quests: 15 }, major: true, reputation: 10, chains: null, rumorText: null, modifiers: [{ id: 'capital-presence', label: 'Capital Presence', effects: { quests: 12 }, duration: 5 }] },
-      { label: 'Pay the exemption fee', deltas: { gold: -18 }, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Contest the decree legally', deltas: { gold: -10, quests: -8 }, major: false, reputation: 5, chains: 'chain-decree-contested', rumorText: 'Your guild\'s legal challenge to the crown drew attention — for better and worse.' },
     ],
   },
@@ -196,7 +186,6 @@ export const politicalCards = [
     situation: 'A minor noble family proposes a symbolic "guild alliance" to coincide with a high-profile marriage — your guild crest alongside theirs in public ceremony, in exchange for introductions to their merchant network.',
     choices: [
       { label: 'Accept the alliance', deltas: { gold: -10, quests: 14 }, major: false, reputation: 8, chains: null, rumorText: null, factions: { 'noble-south': 'allied' } },
-      { label: 'Negotiate better terms first', deltas: { gold: -5, quests: 8 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Decline gracefully', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
@@ -207,7 +196,6 @@ export const politicalCards = [
     situation: 'A notorious merchant is on public trial for fraud. Several of your guild\'s past clients are entangled. The judge asks whether your guild will submit testimony — it could expose uncomfortable dealings.',
     choices: [
       { label: 'Testify fully and honestly', deltas: { quests: -10, gold: -5 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Submit a partial statement', deltas: { quests: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Decline to testify', deltas: { quests: 8 }, major: false, reputation: -10, chains: null, rumorText: 'Rumours swirl that your guild has something to hide from the trial.' },
     ],
   },
@@ -219,7 +207,6 @@ export const politicalCards = [
     choices: [
       { label: 'Accept the council seat', deltas: { gold: -20, adventurers: -10, quests: 18 }, major: true, reputation: 15, chains: null, rumorText: null, modifiers: [{ id: 'council-seat', label: 'Council Seat', effects: { quests: 10, gold: 5 }, duration: 4 }] },
       { label: 'Decline and recommend an ally', deltas: { quests: 5 }, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'merchants': 'allied' } },
-      { label: 'Decline outright', deltas: {}, major: false, reputation: -8, chains: null, rumorText: null },
     ],
   },
   {
@@ -230,7 +217,6 @@ export const politicalCards = [
     choices: [
       { label: 'Pull the strings', deltas: { quests: 12 }, major: false, reputation: -8, chains: null, rumorText: 'Whispers suggest your guild has ties to the criminal underworld.', factions: { 'thieves-guild': 'allied', 'city-guard': 'opposed' } },
       { label: 'Refuse firmly', deltas: {}, major: false, reputation: 5, chains: null, rumorText: null, factions: { 'thieves-guild': 'opposed' } },
-      { label: 'Offer information instead of action', deltas: { quests: 5, gold: -6 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -241,7 +227,6 @@ export const politicalCards = [
     choices: [
       { label: 'Report accurately', deltas: { gold: -15, quests: 8 }, major: false, reputation: 8, chains: null, rumorText: null },
       { label: 'Underreport slightly', deltas: { gold: -5 }, major: false, reputation: -5, chains: 'chain-census-fraud', rumorText: null },
-      { label: 'Delay and stall', deltas: { quests: -8 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -252,7 +237,6 @@ export const politicalCards = [
     choices: [
       { label: 'Negotiate a fair agreement', deltas: { quests: 12, gold: -8 }, major: false, reputation: 10, chains: null, rumorText: null },
       { label: 'Drive a hard bargain', deltas: { gold: 15, quests: 5 }, major: false, reputation: -5, chains: null, rumorText: 'The rival town delegation left with a bitter taste — and long memories.' },
-      { label: 'Reject the talks', deltas: { quests: -8 }, major: false, reputation: -8, chains: null, rumorText: null },
     ],
   },
 ]

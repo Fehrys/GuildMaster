@@ -16,7 +16,7 @@ export const guildLifeCards = [
     situation: 'A bright-eyed kid walks in off the street wanting to join your guild. No skills to speak of, but plenty of enthusiasm.',
     choices: [
       { label: 'Take a chance', deltas: { adventurers: 8, gold: -3 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Send them away', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Send them away', deltas: {}, major: false, reputation: -3, chains: null, rumorText: 'Word gets out that your guild turned away an eager young recruit.' },
     ],
   },
   {
@@ -26,7 +26,7 @@ export const guildLifeCards = [
     situation: 'An old man sells maps of uncharted ruins — supposedly equipment-rich. It\'s a gamble: could be gold or a waste of lives.',
     choices: [
       { label: 'Fund the expedition', deltas: { gold: -18, adventurers: -8, equipment: 22 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Pass', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Pass', deltas: { quests: -3 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -42,11 +42,11 @@ export const guildLifeCards = [
   {
     id: 'std-training-master',
     type: 'standard',
-    npc: { emoji: '🏋️', name: 'Sergeant Brek', role: 'Combat Instructor' },
+    npc: { emoji: '🏋️', name: 'Drill Sergeant Varn', role: 'Combat Trainer' },
     situation: 'A retired soldier offers to train your roster for a month. It costs upfront but your people come out sharper.',
     choices: [
       { label: 'Hire him', deltas: { gold: -12, adventurers: 15 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Pass', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Decline the offer', deltas: { adventurers: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -66,7 +66,7 @@ export const guildLifeCards = [
     situation: 'An alchemist wants to run experiments on some of your equipment — temporarily. In return: upgraded gear when done.',
     choices: [
       { label: 'Agree', deltas: { equipment: -10 }, major: false, reputation: 0, chains: 'chain-alchemist-done', rumorText: null },
-      { label: 'Decline', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Decline', deltas: {}, major: false, reputation: -3, chains: null, rumorText: null },
     ],
   },
   {
@@ -76,7 +76,7 @@ export const guildLifeCards = [
     situation: 'A scholar needs an escort to a remote ruin for research. The pay is modest, but he promises useful maps of the region.',
     choices: [
       { label: 'Take the contract', deltas: { gold: 8, adventurers: -5, quests: 8 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Too low-paying', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Too low-paying', deltas: {}, major: false, reputation: -3, chains: null, rumorText: null },
     ],
   },
   {
@@ -86,7 +86,7 @@ export const guildLifeCards = [
     situation: 'A builder proposes renovating your hall to fit more adventurers. Expensive, but your current space is cramped.',
     choices: [
       { label: 'Expand the hall', deltas: { gold: -20, adventurers: 20 }, major: true, reputation: 0, chains: null, rumorText: 'The hammering from the guild hall renovation can be heard across the district.' },
-      { label: 'Not yet', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Not yet', deltas: { quests: -3 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -122,8 +122,8 @@ export const guildLifeCards = [
   {
     id: 'std-brek-drills',
     type: 'standard',
-    npc: { emoji: '⚔️', name: 'Sergeant Brek', role: 'Combat Instructor' },
-    situation: 'Brek wants to run a week of dawn-to-dusk combat drills. The roster will be exhausted and unavailable for quests, but he promises they\'ll be noticeably sharper afterward.',
+    npc: { emoji: '⚔️', name: 'Drill Sergeant Varn', role: 'Combat Trainer' },
+    situation: 'Varn wants to run a week of dawn-to-dusk combat drills. The roster will be exhausted and unavailable for quests, but he promises they\'ll be noticeably sharper afterward.',
     choices: [
       { label: 'Approve the drills', deltas: { quests: -8, adventurers: 12 }, major: false, reputation: 0, chains: null, rumorText: null, relationships: { 'sergeant-brek': 1 } },
       { label: 'Too much downtime', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null, relationships: { 'sergeant-brek': -1 } },
@@ -152,8 +152,8 @@ export const guildLifeCards = [
   {
     id: 'std-maren-blessing',
     type: 'standard',
-    npc: { emoji: '🕊️', name: 'Sister Maren', role: 'Temple Healer' },
-    situation: 'Sister Maren offers to bless the guild hall and tend to any injuries free of charge — she asks only that your members donate a day of labor to the temple district in return.',
+    npc: { emoji: '🕊️', name: 'Healer Josse', role: 'Temple Volunteer' },
+    situation: 'A temple healer offers to bless the guild hall and tend to any injuries free of charge — she asks only that your members donate a day of labor to the temple district in return.',
     choices: [
       { label: 'Accept graciously', deltas: { adventurers: -5, equipment: 8 }, major: false, reputation: 5, chains: null, rumorText: null, relationships: { 'sister-maren': 1 } },
       { label: 'Politely decline', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null, relationships: { 'sister-maren': -1 } },
@@ -182,10 +182,10 @@ export const guildLifeCards = [
   {
     id: 'std-jolen-tip',
     type: 'standard',
-    npc: { emoji: '🕵️', name: 'Jolen', role: 'City Fence' },
-    situation: 'Jolen slips you a tip: a rival guild is poaching your clients with undercut prices. He can spread counter-rumors for a fee, or you can simply outperform them on your next jobs.',
+    npc: { emoji: '🕵️', name: 'Daveth the Ear', role: 'City Gossip' },
+    situation: 'An informant slips you a tip: a rival guild is poaching your clients with undercut prices. He can spread counter-rumors for a fee, or you can simply outperform them on your next jobs.',
     choices: [
-      { label: 'Pay Jolen to spread word', deltas: { gold: -10 }, major: false, reputation: 5, chains: null, rumorText: 'Word around the taverns is that the other guild has been cutting corners.', relationships: { 'jolen-fence': 1 } },
+      { label: 'Pay him to spread word', deltas: { gold: -10 }, major: false, reputation: 5, chains: null, rumorText: 'Word around the taverns is that the other guild has been cutting corners.', relationships: { 'jolen-fence': 1 } },
       { label: 'Win on merit alone', deltas: { quests: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
@@ -196,7 +196,7 @@ export const guildLifeCards = [
     situation: 'Wren has found a trove of old expedition logs in the city archive. Sending a few members to study them would cost time away from active duty, but could improve planning on future quests.',
     choices: [
       { label: 'Send the research team', deltas: { adventurers: -5, quests: 12 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'No time for books', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'No time for books', deltas: { quests: -3 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -242,11 +242,11 @@ export const guildLifeCards = [
   {
     id: 'std-farwick-inspection',
     type: 'standard',
-    npc: { emoji: '🎩', name: 'Lord Farwick', role: 'City Overseer' },
-    situation: 'Lord Farwick announces a formal inspection of all licensed guilds next week. You can spend gold polishing the hall and briefing your people, or take your chances with what you have.',
+    npc: { emoji: '🎩', name: 'Overseer Cayne', role: 'City Guild Overseer' },
+    situation: 'The city guild overseer announces a formal inspection of all licensed guilds next week. You can spend gold polishing the hall and briefing your people, or take your chances with what you have.',
     choices: [
-      { label: 'Prepare thoroughly', deltas: { gold: -10, quests: 10 }, major: false, reputation: 10, chains: null, rumorText: 'Lord Farwick left the guild hall looking quietly impressed.', relationships: { 'lord-farwick': 1 } },
-      { label: 'Wing it', deltas: { quests: -5 }, major: false, reputation: -8, chains: null, rumorText: 'Farwick\'s inspection notes were... not favorable.', relationships: { 'lord-farwick': -1 } },
+      { label: 'Prepare thoroughly', deltas: { gold: -10, quests: 10 }, major: false, reputation: 10, chains: null, rumorText: 'The overseer left the guild hall looking quietly impressed.', relationships: { 'lord-farwick': 1 } },
+      { label: 'Wing it', deltas: { quests: -5 }, major: false, reputation: -8, chains: null, rumorText: 'The inspection notes were... not favorable.', relationships: { 'lord-farwick': -1 } },
     ],
   },
   {
@@ -256,14 +256,14 @@ export const guildLifeCards = [
     situation: 'Kira has spare capacity in her forge and offers to craft custom weapons for a few of your best fighters at a discounted rate. It\'s still a significant cost, but the quality is exceptional.',
     choices: [
       { label: 'Commission the weapons', deltas: { gold: -20, equipment: 20 }, major: true, reputation: 0, chains: null, rumorText: 'Kira\'s blades have been turning heads at the practice yard.' },
-      { label: 'Standard issue is fine', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Standard issue is fine', deltas: { equipment: -5 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
     id: 'std-injury-recovery',
     type: 'standard',
     npc: { emoji: '🦽', name: 'Renn', role: 'Recovering Fighter' },
-    situation: 'Renn was badly hurt on the last job. Sister Maren says a proper recovery will take three weeks — paid downtime. Pushing him back into the field risks permanent damage.',
+    situation: 'Renn was badly hurt on the last job. Your healer says a proper recovery will take three weeks — paid downtime. Pushing him back into the field risks permanent damage.',
     choices: [
       { label: 'Full paid recovery', deltas: { gold: -8, adventurers: -5 }, major: false, reputation: 5, chains: null, rumorText: null, relationships: { 'sister-maren': 1 } },
       { label: 'Light duty only', deltas: { adventurers: -10 }, major: false, reputation: -5, chains: null, rumorText: 'Renn is limping through jobs. People have noticed.' },

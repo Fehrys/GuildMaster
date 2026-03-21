@@ -6,7 +6,7 @@ export const merchantCards = [
     situation: 'A travelling merchant offers a bulk deal on arms and armour. Quality is good, price is fair — but it cleans out your stock budget.',
     choices: [
       { label: 'Buy the lot', deltas: { gold: -20, equipment: 18 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Pass', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Pass', deltas: { quests: -3 }, major: false, reputation: 0, chains: null, rumorText: 'The merchant sold to your rival guild instead.' },
     ],
   },
   {
@@ -26,7 +26,7 @@ export const merchantCards = [
     situation: 'A wealthy trade consortium needs a full escort across dangerous roads. High pay, high cost in manpower.',
     choices: [
       { label: 'Take the contract', deltas: { gold: 30, adventurers: -18 }, major: true, reputation: 5, chains: null, rumorText: null },
-      { label: 'Decline', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Decline', deltas: { quests: -5 }, major: false, reputation: -5, chains: null, rumorText: 'The consortium hired another guild. Word gets around who turns down high-profile work.' },
     ],
   },
   {
@@ -46,7 +46,7 @@ export const merchantCards = [
     situation: 'Scavengers found a cache of arms abandoned in the forest — origin unknown. They\'ll sell cheap. Might be stolen, might be cursed, might be a windfall.',
     choices: [
       { label: 'Buy the cache', deltas: { gold: -10, equipment: 22 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Leave it', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Leave it', deltas: {}, major: false, reputation: 0, chains: null, rumorText: 'The scavengers sold the cache to another buyer by morning.' },
     ],
   },
   {
@@ -62,11 +62,11 @@ export const merchantCards = [
   {
     id: 'std-fence',
     type: 'standard',
-    npc: { emoji: '🤫', name: 'Jolen the Fence', role: 'Black Market Contact' },
+    npc: { emoji: '🕶️', name: 'Aldis Greyhand', role: 'Black Market Dealer' },
     situation: 'A shady contact offers discounted arms — clearly stolen, but functional. Cheap equipment, high risk.',
     choices: [
       { label: 'Buy anyway', deltas: { gold: -8, equipment: 20 }, major: false, reputation: -5, chains: null, rumorText: 'Some of your new equipment has unfamiliar maker\'s marks on it.' },
-      { label: 'Refuse', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Refuse', deltas: {}, major: false, reputation: 3, chains: null, rumorText: null },
     ],
   },
   {
@@ -76,7 +76,7 @@ export const merchantCards = [
     situation: 'A prospector claims to have found signs of a buried hoard. He wants your muscle; you split the take. High risk, potential windfall.',
     choices: [
       { label: 'Fund the dig', deltas: { gold: -8, adventurers: -8, equipment: -5 }, major: true, reputation: 0, chains: 'chain-treasure-dig', rumorText: 'A team was spotted heading north with shovels and high hopes.' },
-      { label: 'Pass', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
+      { label: 'Pass', deltas: { quests: -3 }, major: false, reputation: 0, chains: null, rumorText: 'Word spread you turned down the dig. Some think you know something.' },
     ],
   },
   {
@@ -87,7 +87,6 @@ export const merchantCards = [
     choices: [
       { label: 'Send scouts', deltas: { gold: 8, adventurers: -5 }, major: false, reputation: 10, chains: null, rumorText: null },
       { label: 'Offer a full armed escort instead', deltas: { gold: 22, adventurers: -12 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Decline', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -98,7 +97,6 @@ export const merchantCards = [
     choices: [
       { label: 'Buy a resale stake', deltas: { gold: -20, quests: 12 }, major: false, reputation: 5, chains: null, rumorText: null, modifiers: [{ id: 'spice-trade-windfall', label: 'Spice Trade', effects: { gold: 10 }, duration: 3 }] },
       { label: 'Negotiate a smaller cut', deltas: { gold: -8, quests: 5 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Pass', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -109,7 +107,6 @@ export const merchantCards = [
     choices: [
       { label: 'Side with the larger house', deltas: { gold: 18, quests: 8 }, major: false, reputation: -5, chains: null, rumorText: 'Word is the guild chose coin over principle.' },
       { label: 'Side with the smaller house', deltas: { gold: 5, quests: 5 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Declare no ruling and exit', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -119,7 +116,6 @@ export const merchantCards = [
     situation: 'A road collapse has cut off your primary equipment supplier for two weeks. Brenn can source replacements from a rival supplier — at a 30% markup.',
     choices: [
       { label: 'Pay the markup', deltas: { gold: -18, equipment: 15 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Wait out the shortage', deltas: { equipment: -10 }, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Send adventurers to clear the road', deltas: { adventurers: -6, equipment: 8 }, major: false, reputation: 5, chains: null, rumorText: null },
     ],
   },
@@ -131,7 +127,6 @@ export const merchantCards = [
     choices: [
       { label: 'Sign the agreement', deltas: { equipment: 15, adventurers: -8 }, major: false, reputation: 5, chains: null, rumorText: null, modifiers: [{ id: 'foreign-trade-pact', label: 'Foreign Trade Pact', effects: { gold: 8 }, duration: 4 }] },
       { label: 'Counter-offer: equipment only, no commitment', deltas: { equipment: 8 }, major: false, reputation: -5, chains: null, rumorText: null },
-      { label: 'Decline', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -142,7 +137,6 @@ export const merchantCards = [
     choices: [
       { label: 'Speculate on the crash', deltas: { gold: 25, reputation: -10 }, major: false, reputation: -10, chains: null, rumorText: 'Rumours fly that some guilds profited suspiciously from the grain crash.' },
       { label: 'Donate surplus gold to food relief', deltas: { gold: -12 }, major: false, reputation: 15, chains: null, rumorText: null },
-      { label: 'Stay out of it', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -153,7 +147,6 @@ export const merchantCards = [
     choices: [
       { label: 'Take the deal', deltas: { gold: 20 }, major: false, reputation: -10, chains: null, rumorText: 'Strange crates were seen being moved into the guild hall after dark.', factions: { 'thieves-guild': 'allied' } },
       { label: 'Report it to the watch', deltas: {}, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Decline without reporting', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -164,7 +157,6 @@ export const merchantCards = [
     choices: [
       { label: 'Bid aggressively', deltas: { gold: -22, equipment: 18 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Place a modest bid', deltas: { gold: -10, equipment: 8 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Let the rivals exhaust each other, then bid at the end', deltas: { gold: -12, equipment: 14 }, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -175,7 +167,6 @@ export const merchantCards = [
     choices: [
       { label: 'Scout a new route (fast)', deltas: { gold: 20, adventurers: -10 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Clear the original road instead', deltas: { gold: 15, adventurers: -14, equipment: -8 }, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Decline', deltas: {}, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -185,7 +176,6 @@ export const merchantCards = [
     situation: 'The crown has quietly debased its coinage — your guild\'s treasury is worth less than it was yesterday. Orveth offers a scheme to convert your gold into foreign currency before the news becomes public.',
     choices: [
       { label: 'Convert gold now', deltas: { gold: -15 }, major: false, reputation: 0, chains: null, rumorText: null, modifiers: [{ id: 'currency-hedge', label: 'Currency Hedge', effects: { gold: 20 }, duration: 2 }] },
-      { label: 'Hold and absorb the loss', deltas: { gold: -8 }, major: false, reputation: 5, chains: null, rumorText: null },
       { label: 'Report the insider tip to the magistrate', deltas: {}, major: false, reputation: 12, chains: null, rumorText: 'The guild refused to profit from royal financial manipulation.' },
     ],
   },
@@ -197,7 +187,6 @@ export const merchantCards = [
     choices: [
       { label: 'Investigate the arson', deltas: { adventurers: -5, quests: 8 }, major: false, reputation: 8, chains: 'chain-arson-investigation', rumorText: null },
       { label: 'Accept the loss and move on', deltas: { equipment: -12 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Confront the rival house directly', deltas: { gold: 10, equipment: -8, quests: -5 }, major: false, reputation: -5, chains: null, rumorText: 'The guild made enemies at the Velthorn trading house.' },
     ],
   },
   {
@@ -208,7 +197,6 @@ export const merchantCards = [
     choices: [
       { label: 'Invest heavily', deltas: { gold: -20, quests: 10 }, major: true, reputation: 5, chains: null, rumorText: null, modifiers: [{ id: 'trade-district-investment', label: 'Trade District Stake', effects: { gold: 18 }, duration: 5 }] },
       { label: 'Invest modestly', deltas: { gold: -10, quests: 5 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Pass', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -219,7 +207,6 @@ export const merchantCards = [
     choices: [
       { label: 'Endorse the reformist', deltas: { quests: 10, gold: 8 }, major: false, reputation: -5, chains: null, rumorText: 'The guild has thrown its weight behind the reformist merchant faction.' },
       { label: 'Endorse the incumbent', deltas: { quests: 5, gold: 5 }, major: false, reputation: 5, chains: null, rumorText: null },
-      { label: 'Stay neutral', deltas: {}, major: false, reputation: 5, chains: null, rumorText: null },
     ],
   },
   {
@@ -230,7 +217,6 @@ export const merchantCards = [
     choices: [
       { label: 'Handle the transfer', deltas: { gold: 22, adventurers: -6 }, major: false, reputation: -8, chains: null, rumorText: 'Strange growling sounds were heard from the guild\'s stable last night.', factions: { 'thieves-guild': 'allied' } },
       { label: 'Report the illegal import', deltas: {}, major: false, reputation: 10, chains: null, rumorText: null },
-      { label: 'Decline and stay quiet', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -241,7 +227,6 @@ export const merchantCards = [
     choices: [
       { label: 'Send a search party', deltas: { adventurers: -7, equipment: 14 }, major: false, reputation: 8, chains: null, rumorText: null },
       { label: 'Buy replacement stock locally', deltas: { gold: -15, equipment: 10 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'File it as a loss', deltas: { equipment: -10 }, major: false, reputation: -5, chains: null, rumorText: null },
     ],
   },
   {
@@ -252,7 +237,6 @@ export const merchantCards = [
     choices: [
       { label: 'Buy the whole cart', deltas: { gold: -10, equipment: 12, quests: 6 }, major: false, reputation: 0, chains: null, rumorText: null },
       { label: 'Haggle for just the weapons', deltas: { gold: -5, equipment: 10 }, major: false, reputation: 0, chains: null, rumorText: null },
-      { label: 'Let him pass', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
   {
@@ -262,7 +246,6 @@ export const merchantCards = [
     situation: 'The city\'s main temple is tendering out its annual supply contract — pilgrimage supplies, candles, and provisions. A modest but steady job, and the temple\'s favour opens other doors.',
     choices: [
       { label: 'Bid for the contract', deltas: { gold: 12, quests: 8 }, major: false, reputation: 8, chains: null, rumorText: null, factions: { 'temple': 'allied' } },
-      { label: 'Refer a smaller guild and earn goodwill', deltas: {}, major: false, reputation: 10, chains: null, rumorText: 'The guild earned quiet praise from the temple for its generosity.' },
       { label: 'Skip it — not worth the admin', deltas: {}, major: false, reputation: 0, chains: null, rumorText: null },
     ],
   },
