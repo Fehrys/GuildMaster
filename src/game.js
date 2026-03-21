@@ -11,7 +11,7 @@ import { renderCard, renderCardResult, renderRumorCard } from './ui/card-view.js
 import { tryStartMusic, toggleMusic, isMusicEnabled, playClick } from './ui/audio.js'
 import { renderGuildIntro, renderArcIntro, renderGuildNaming, renderNpcSelection } from './ui/intro-view.js'
 import { renderLedgerScreen, renderTraitSelection } from './ui/ledger-view.js'
-import { buildBasePool } from './data/cards/registry.js'
+import { buildBasePool, worldEventCards } from './data/cards/registry.js'
 import { chainedCards as standardChained } from './data/cards/standard.js'
 import { crisisCards } from './data/cards/crisis.js'
 import { banditWar } from './data/arcs/bandit-war.js'
@@ -27,7 +27,7 @@ import { thievesGuildAllied, thievesGuildOpposed } from './data/cards/factions/t
 import { templeAllied, templeOpposed } from './data/cards/factions/temple.js'
 
 const ALL_ARCS = { 'bandit-war': banditWar }
-const ALL_CHAINED = [...standardChained, ...Object.values(ALL_ARCS).flatMap(a => a.chainedCards ?? [])]
+const ALL_CHAINED = [...standardChained, ...Object.values(ALL_ARCS).flatMap(a => a.chainedCards ?? []), ...worldEventCards]
 
 const FACTION_CARDS = {
   'thieves-guild': { allied: thievesGuildAllied, opposed: thievesGuildOpposed },
@@ -160,6 +160,13 @@ function initializeRun() {
   poolState = createPoolState(buildBasePool())
   factionState = createFactionState(['thieves-guild', 'temple'])
   npcEncounterCount = 0
+
+  // Schedule 3 random world events at turns 15, 30, 45
+  const shuffledEvents = [...worldEventCards].sort(() => Math.random() - 0.5).slice(0, 3)
+  const EVENT_TURNS = [15, 30, 45]
+  shuffledEvents.forEach((event, i) => {
+    queueState = queueChained(queueState, event.id, EVENT_TURNS[i])
+  })
 
   showGuildIntro()
 }
