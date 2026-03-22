@@ -75,7 +75,7 @@ Scenario ID will be added to `RunConfig` in Spec B when scenario selection is im
 - `buildHeader()` replaces `<button id="music-toggle">` with `<button id="options-btn">⚙️</button>`
 - Remove imports of `toggleMusic` and `isMusicEnabled` from `audio.js` — these functions are retired
 
-**`stopGame()` contract:** captures the same 12 run-state variables that the existing `autoSave()` function captures (`gameState`, `queueState`, `ledger`, `arcId`, `guildName`, `selectedNpcs`, `npcEncounterCount`, `roster`, `relationshipState`, `poolState`, `factionState`, `currentCard`, `currentIsArc`), serializes via `serializeRunState()`, and writes to `localStorage` under key `guildmaster_run`. No event listeners or timers need teardown — all game click handlers are attached inline per `mount()` call and are automatically replaced when the shell overwrites `#app`.
+**`stopGame()` contract:** captures the same 12 run-state variables that the existing `autoSave()` function captures (`gameState`, `queueState`, `ledger`, `arcId`, `guildName`, `selectedNpcs`, `npcEncounterCount`, `relationshipState`, `poolState`, `factionState`, `currentCard`, `currentIsArc`), serializes via `serializeRunState()`, and writes to `localStorage` under key `guildmaster_run`. `roster` is not serialized (the existing `autoSave()` does not save it; roster is rebuilt on each new run from progress). No event listeners or timers need teardown — all game click handlers are attached inline per `mount()` call and are automatically replaced when the shell overwrites `#app`.
 
 ---
 
@@ -110,7 +110,7 @@ A version/credit line appears at the bottom of the viewport.
 
 ### 3.4 Continue detection and execution
 
-On shell init, attempt to read `localStorage` key `guildmaster_run` and call `deserializeRunState()` from `src/engine/save.js`. If the result is non-null, Continue is enabled; otherwise it is disabled. Using `deserializeRunState()` ensures the `poolState.playedThisCycle` Set/Array conversion is handled correctly and corrupt saves return `null`.
+On shell init, read `localStorage` key `guildmaster_run`. If the raw value is `null` (no save exists), Continue is disabled immediately — `deserializeRunState()` is not called. If the raw value is a non-null string, call `deserializeRunState()` from `src/engine/save.js`. If the result is non-null, Continue is enabled; otherwise it is disabled. Using `deserializeRunState()` ensures the `poolState.playedThisCycle` Set/Array conversion is handled correctly and corrupt saves return `null`.
 
 When `shell.continueGame()` is called, `deserializeRunState()` is called again (not cached) to re-validate. If it returns `null` (e.g., storage was cleared between init and click), the shell silently falls back to `shell.showMenu()` with Continue disabled.
 
@@ -185,7 +185,7 @@ Settings are loaded by `audio.js` on module init and applied immediately. The `s
 
 `src/ui/options-view.js` exports:
 - `renderOptions(context)` — where `context` is `'menu'` or `'overlay'`; controls which action buttons appear
-- `mountOptions(context, shell)` — wires all event listeners (sliders, mute icons, checkbox, action buttons) after the HTML is injected into the DOM
+- `mountOptions(context, shell)` — wires all event listeners (sliders, mute icons, checkbox, action buttons) after the HTML is injected into the DOM. The `shell` object must expose: `hideOverlay()` (Resume button), `saveAndQuit()` (Save & Quit button), `showMenu()` (Back button in menu context)
 
 ---
 
@@ -230,7 +230,7 @@ const clickSfx = new Audio('assets/sound/Short_UI_click_sound_%234-1773952800612
 // New exports:
 export function playMenuMusic()      // start menuMusic looped, pause gameMusic
 export function playGameMusic()      // start gameMusic looped, pause menuMusic
-export function tryStartMusic()      // kept — called on first user interaction
+export function tryStartMusic()      // kept — resumes whichever track is currently active (menu or game); no-op if already playing or if the active track has not been set yet
 export function playClick()          // kept unchanged
 
 export function setMusicVolume(v)    // 0–100; updates both tracks' .volume proportionally
