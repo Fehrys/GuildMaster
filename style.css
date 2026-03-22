@@ -1,8 +1,26 @@
 @font-face {
-  font-family: 'Augusta';
-  src: url('assets/font/Augusta.ttf') format('truetype');
+  font-family: 'MontereyFLF';
+  src: url('assets/font/MontereyFLF.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+@font-face {
+  font-family: 'MontereyFLF';
+  src: url('assets/font/MontereyFLF-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MontereyFLF';
+  src: url('assets/font/MontereyFLF-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'MontereyFLF';
+  src: url('assets/font/MontereyFLF-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -11,7 +29,7 @@ input, button, select, textarea { font-family: inherit; }
 html { font-size: 22px; }
 
 body {
-  font-family: 'Augusta', system-ui, sans-serif;
+  font-family: 'MontereyFLF', system-ui, sans-serif;
   background: #0e0c0a;
   color: #e8d5b7;
   min-height: 100vh;
@@ -287,7 +305,7 @@ body.font-standard * {
   background: rgba(10, 8, 4, 0.85);
   border: 1px solid #6a5a38;
   color: #e8d5b7;
-  font-family: 'Augusta', system-ui, sans-serif;
+  font-family: 'MontereyFLF', system-ui, sans-serif;
   font-size: 1rem;
   padding: 12px 0;
   min-width: 200px;

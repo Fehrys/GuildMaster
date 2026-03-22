@@ -89,7 +89,7 @@ The menu content (logo + buttons) is centered vertically and horizontally over t
 
 ### 3.2 Logo
 
-Rendered using Augusta-Shadow (bold weight) at large size (`3rem+`), gold-toned color (`#c9a84c`), with a subtle `text-shadow` for depth. Decorative dividers (ornamental line with sword emojis) appear above and below the title block.
+Rendered using Angelina-Shadow (bold weight) at large size (`3rem+`), gold-toned color (`#c9a84c`), with a subtle `text-shadow` for depth. Decorative dividers (ornamental line with sword emojis) appear above and below the title block.
 
 ```
     ⚔️ ─────────────────── ⚔️
@@ -164,7 +164,7 @@ When rendered from in-game overlay, `renderOptions('overlay')` adds two buttons 
 - A checkbox labeled "Use standard font"
 - When checked: adds class `font-standard` to `<body>`, which overrides `font-family` to `system-ui, sans-serif` via CSS
 - Effect is immediate — no page reload
-- When unchecked: removes the class, Augusta font is restored
+- When unchecked: removes the class, Angelina font is restored
 
 ### 4.5 Persistence
 
