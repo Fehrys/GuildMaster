@@ -48,15 +48,19 @@ applyVolume()
 export function playMenuMusic() {
   activeTrack = 'menu'
   gameMusic.pause()
-  menuMusic.currentTime = 0
-  menuMusic.play().catch(() => {})
+  if (menuMusic.paused) {
+    menuMusic.currentTime = 0
+    menuMusic.play().catch(() => {})
+  }
 }
 
 export function playGameMusic() {
   activeTrack = 'game'
   menuMusic.pause()
-  gameMusic.currentTime = 0
-  gameMusic.play().catch(() => {})
+  if (gameMusic.paused) {
+    gameMusic.currentTime = 0
+    gameMusic.play().catch(() => {})
+  }
 }
 
 export function tryStartMusic() {
@@ -73,6 +77,7 @@ export function setMusicVolume(v) {
   settings = { ...settings, musicVolume: v }
   saveSettings(settings)
   applyVolume()
+  if (v > 0) tryStartMusic()
 }
 
 export function setSfxVolume(v) {
