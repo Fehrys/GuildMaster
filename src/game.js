@@ -147,7 +147,7 @@ function initializeRun() {
 }
 
 function showGuildIntro() {
-  mount(buildHeader() + renderGuildIntro())
+  mount(buildHeader() + renderGuildIntro(guildName))
   document.getElementById('continue-btn').onclick = () => { tryStartMusic(); showArcIntro() }
 }
 

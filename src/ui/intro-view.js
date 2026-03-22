@@ -1,7 +1,7 @@
-export function renderGuildIntro() {
+export function renderGuildIntro(guildName) {
   return `<div class="card intro-card" id="current-card">
     <div class="npc-portrait">🏰</div>
-    <div class="npc-name">Iron Hearth Guild</div>
+    <div class="npc-name">${guildName}</div>
     <div class="situation">
       Your hall smells of old leather and ambition.<br><br>
       Four things keep you in business:<br>
