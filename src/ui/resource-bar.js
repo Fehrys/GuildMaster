@@ -12,7 +12,7 @@ function dangerClass(value) {
 }
 
 export function renderResourceBar(resources) {
-  const items = RESOURCES.map(({ key, icon }) => {
+  const items = RESOURCES.map(({ key, icon, label }) => {
     const value = resources[key]
     const cls = dangerClass(value)
     return `<div class="resource ${cls}">
@@ -21,6 +21,7 @@ export function renderResourceBar(resources) {
         <div class="resource-fill" style="width:${value}%"></div>
       </div>
       <span class="resource-value">${value}</span>
+      <span class="resource-label">${label}</span>
     </div>`
   }).join('')
   return `<div class="resource-bar">${items}</div>`
