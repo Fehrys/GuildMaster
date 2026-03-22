@@ -22,7 +22,10 @@ function hasSave() {
 if (getStandardFont()) document.body.classList.add('font-standard')
 
 // Shell public API (exposed as named exports so game.js can reference them)
+let gameActive = false
+
 export function showMenu() {
+  gameActive = false
   playMenuMusic()
   mount(renderMenu(hasSave()))
   document.getElementById('menu-new-game').onclick  = () => startSetup()
@@ -32,7 +35,7 @@ export function showMenu() {
 
 function showMenuOptions() {
   mount(renderOptions('menu'))
-  mountOptions('menu', { showMenu, hideOverlay, saveAndQuit })
+  mountOptions('menu', { showMenu, hideOverlay })
 }
 
 export function startSetup() {
@@ -46,6 +49,7 @@ export function startSetup() {
 }
 
 export function startGame(config) {
+  gameActive = true
   playGameMusic()
   game.startGame(config, {
     onEnd: () => showMenu(),
@@ -58,6 +62,7 @@ export function continueGame() {
   if (!raw) { showMenu(); return }
   const restored = deserializeRunState(raw)
   if (!restored) { showMenu(); return }
+  gameActive = true
   playGameMusic()
   game.continueRun(restored, {
     onEnd: () => showMenu(),
@@ -68,6 +73,8 @@ export function continueGame() {
 let escListener = null
 
 export function showOverlay() {
+  if (!gameActive) return
+  if (document.getElementById('overlay-backdrop')) return
   const backdrop = document.createElement('div')
   backdrop.id = 'overlay-backdrop'
   backdrop.innerHTML = `<div class="overlay-panel">${renderOptions('overlay')}</div>`
