@@ -69,13 +69,6 @@ body {
   font-size: 0.85rem;
   color: #7a6a50;
 }
-
-.resource-label {
-  font-size: 0.5rem;
-  color: #6a5a40;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
 .resource.warning .resource-value { color: #f5a623; }
 .resource.danger .resource-value { color: #e74c3c; }
 
