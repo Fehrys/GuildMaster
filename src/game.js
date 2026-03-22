@@ -6,8 +6,8 @@ import { createQueueState, advanceQueue, recordStandardCardPlayed, resetMileston
 import { getRepTier, applyRepShift } from './engine/reputation.js'
 import { createLedger, recordEvent, updateAdventurerStatus, buildLedgerText } from './engine/ledger.js'
 import { loadProgress, saveProgress, unlockArc, completeArc, setLegacyTrait, addAdventurer } from './engine/progression.js'
-import { renderResourceBar } from './ui/resource-bar.js'
-import { renderCard, renderCardResult, renderRumorCard } from './ui/card-view.js'
+import { renderResourceBar, syncResourceBar, updateResourceBar } from './ui/resource-bar.js'
+import { renderCard, renderRumorCard } from './ui/card-view.js'
 import { tryStartMusic, playClick } from './ui/audio.js'
 import { renderGuildIntro, renderArcIntro } from './ui/intro-view.js'
 import { renderLedgerScreen, renderTraitSelection } from './ui/ledger-view.js'
@@ -52,18 +52,38 @@ let onEndCallback = null
 let shellRef = null
 
 const app = document.getElementById('app')
+let gameMain = null
+let gameHeader = null
 
-function mount(html) { app.innerHTML = html }
+function mountGameWrapper() {
+  app.innerHTML = '<div id="game-header"></div><div id="game-main"></div>'
+  gameHeader = document.getElementById('game-header')
+  gameMain = document.getElementById('game-main')
+}
+
+function mountHeader() {
+  gameHeader.innerHTML = `<div class="guild-name">⚜️ ${guildName}<button id="options-btn" class="music-btn" title="Options">⚙️</button></div>`
+    + renderResourceBar(gameState.resources)
+  syncResourceBar(gameState.resources)
+}
+
+function mount(html) { gameMain.innerHTML = html }
+
+function fadeOutCard(callback) {
+  const cardEl = document.getElementById('current-card')
+  if (cardEl) {
+    cardEl.style.transition = 'opacity 0.25s ease, transform 0.25s ease'
+    cardEl.style.opacity = '0'
+    cardEl.style.transform = 'translateY(-6px)'
+    setTimeout(callback, 260)
+  } else {
+    callback()
+  }
+}
 
 app.addEventListener('click', e => {
   if (e.target.id === 'options-btn' && shellRef) shellRef.showOverlay()
 })
-
-function renderBar() {
-  const existing = document.querySelector('.resource-bar')
-  if (existing) existing.outerHTML = renderResourceBar(gameState.resources)
-  else app.insertAdjacentHTML('afterbegin', renderResourceBar(gameState.resources))
-}
 
 function pickArc() {
   const unlocked = progress.unlockedArcs.map(id => ALL_ARCS[id]).filter(Boolean)
@@ -75,12 +95,6 @@ function pickArc() {
     if (r <= 0) return unlocked[i]
   }
   return unlocked[unlocked.length - 1]
-}
-
-function buildHeader() {
-  const guildLine = `<div class="guild-name">⚜️ ${guildName}<button id="options-btn" class="music-btn" title="Options">⚙️</button></div>`
-  const resBar = renderResourceBar(gameState.resources)
-  return guildLine + resBar
 }
 
 export function startGame(config, { onEnd, shell } = {}) {
@@ -95,6 +109,7 @@ export function startGame(config, { onEnd, shell } = {}) {
   progress = { ...progress, lastGuildName: guildName }
   saveProgress(progress)
 
+  mountGameWrapper()
   arc = pickArc()
   initializeRun()
 }
@@ -143,16 +158,17 @@ function initializeRun() {
     queueState = queueChained(queueState, event.id, EVENT_TURNS[i])
   })
 
+  mountHeader()
   showGuildIntro()
 }
 
 function showGuildIntro() {
-  mount(buildHeader() + renderGuildIntro())
+  mount(renderGuildIntro(guildName))
   document.getElementById('continue-btn').onclick = () => { tryStartMusic(); showArcIntro() }
 }
 
 function showArcIntro() {
-  mount(buildHeader() + renderArcIntro(arc))
+  mount(renderArcIntro(arc))
   document.getElementById('continue-btn').onclick = () => nextTurn()
 }
 
@@ -253,8 +269,7 @@ function showCard(card, isArc) {
   currentIsArc = isArc
   autoSave()
 
-  const html = buildHeader() + renderCard(card, null)
-  mount(html)
+  mount(renderCard(card, null))
 
   if (isArc) {
     const badge = document.createElement('div')
@@ -273,12 +288,19 @@ function showCard(card, isArc) {
 }
 
 function showRumor(text) {
-  mount(buildHeader() + renderRumorCard(text))
+  mount(renderRumorCard(text))
   document.getElementById('continue-btn').onclick = () => nextTurn()
 }
 
 function handleChoice(card, chosenIdx, isArc) {
   const choice = card.choices[chosenIdx]
+
+  // Mark chosen/unchosen buttons immediately and lock input
+  document.querySelectorAll('#current-card .choice-btn').forEach(btn => {
+    btn.disabled = true
+    const idx = parseInt(btn.dataset.idx)
+    btn.classList.add(idx === chosenIdx ? 'chosen' : 'not-chosen')
+  })
 
   gameState = applyChoice(gameState, choice.deltas, {})
 
@@ -342,27 +364,19 @@ function handleChoice(card, chosenIdx, isArc) {
 
   // Auto-save
   autoSave()
+  updateResourceBar(gameState.resources)
 
-  // Arc completion check (win overrides loss)
-  if (isArc && card.isFinal) {
-    handleWin(choice)
-    return
-  }
-
-  // Show result then advance
-  mount(buildHeader() + renderCardResult(card, chosenIdx))
-  document.getElementById('continue-btn').onclick = () => {
-    if (isArc && queueState.milestonesCompleted >= arc.totalMilestones) {
-      handleWin(choice)
-      return
-    }
+  // Determine what happens after the transition
+  const advance = () => {
+    if (isArc && card.isFinal) { handleWin(choice); return }
+    if (isArc && queueState.milestonesCompleted >= arc.totalMilestones) { handleWin(choice); return }
     const endCond = checkEndCondition(gameState)
-    if (endCond) {
-      handleLoss(endCond)
-    } else {
-      nextTurn()
-    }
+    if (endCond) handleLoss(endCond)
+    else nextTurn()
   }
+
+  // Short pause for selection feedback, then fade out and advance
+  setTimeout(() => fadeOutCard(advance), 450)
 }
 
 function autoSave() {
@@ -466,6 +480,9 @@ export function continueRun(restored, { onEnd, shell } = {}) {
   currentCard       = restored.currentCard ?? null
   currentIsArc      = restored.currentIsArc ?? false
   progress          = loadProgress()
+
+  mountGameWrapper()
+  mountHeader()
 
   if (currentCard) {
     showCard(currentCard, currentIsArc)
