@@ -8,7 +8,7 @@ import { createLedger, recordEvent, updateAdventurerStatus, buildLedgerText } fr
 import { loadProgress, saveProgress, unlockArc, completeArc, setLegacyTrait, addAdventurer } from './engine/progression.js'
 import { renderResourceBar } from './ui/resource-bar.js'
 import { renderCard, renderCardResult, renderRumorCard } from './ui/card-view.js'
-import { tryStartMusic, playGameMusic, playClick } from './ui/audio.js'
+import { tryStartMusic, playClick } from './ui/audio.js'
 import { renderGuildIntro, renderArcIntro } from './ui/intro-view.js'
 import { renderLedgerScreen, renderTraitSelection } from './ui/ledger-view.js'
 import { buildBasePool, worldEventCards } from './data/cards/registry.js'
@@ -100,6 +100,8 @@ export function startGame(config, { onEnd, shell } = {}) {
 
 export function stopGame() {
   autoSave()
+  onEndCallback = null
+  shellRef = null
 }
 
 function initializeRun() {
@@ -449,6 +451,7 @@ export function continueRun(restored, { onEnd, shell } = {}) {
   // restored is the output of deserializeRunState()
   onEndCallback = onEnd ?? null
   shellRef = shell ?? null
+  tryStartMusic()
   gameState         = restored.gameState
   queueState        = restored.queueState
   relationshipState = restored.relationshipState
