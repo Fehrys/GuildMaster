@@ -8,8 +8,8 @@ import { createLedger, recordEvent, updateAdventurerStatus, buildLedgerText } fr
 import { loadProgress, saveProgress, unlockArc, completeArc, setLegacyTrait, addAdventurer } from './engine/progression.js'
 import { renderResourceBar } from './ui/resource-bar.js'
 import { renderCard, renderCardResult, renderRumorCard } from './ui/card-view.js'
-import { tryStartMusic, toggleMusic, isMusicEnabled, playClick } from './ui/audio.js'
-import { renderGuildIntro, renderArcIntro, renderGuildNaming, renderNpcSelection } from './ui/intro-view.js'
+import { tryStartMusic, playClick } from './ui/audio.js'
+import { renderGuildIntro, renderArcIntro } from './ui/intro-view.js'
 import { renderLedgerScreen, renderTraitSelection } from './ui/ledger-view.js'
 import { buildBasePool, worldEventCards } from './data/cards/registry.js'
 import { chainedCards as standardChained } from './data/cards/standard.js'
@@ -21,7 +21,7 @@ import { createRelationshipState, updateRelationship, getLevel, getFlags, resolv
 import { createPoolState, drawCard, markPlayed, injectCards, removeCards, resetCycle, checkThirdChoice } from './engine/pool.js'
 import { createFactionState, updateStance, getStance } from './engine/factions.js'
 import { serializeRunState, deserializeRunState } from './engine/save.js'
-import { npcRegistry, allNpcIds } from './data/cards/npcs/index.js'
+import { npcRegistry } from './data/cards/npcs/index.js'
 import { banditWarThirdChoices } from './data/cards/third-choices.js'
 import { thievesGuildAllied, thievesGuildOpposed } from './data/cards/factions/thieves-guild.js'
 import { templeAllied, templeOpposed } from './data/cards/factions/temple.js'
@@ -48,17 +48,15 @@ let selectedNpcs = []
 let npcEncounterCount = 0
 let currentCard = null
 let currentIsArc = false
+let onEndCallback = null
+let shellRef = null
 
 const app = document.getElementById('app')
 
 function mount(html) { app.innerHTML = html }
 
 app.addEventListener('click', e => {
-  if (e.target.id === 'music-toggle') {
-    toggleMusic()
-    const btn = document.getElementById('music-toggle')
-    if (btn) btn.textContent = isMusicEnabled() ? '🎵' : '🔇'
-  }
+  if (e.target.id === 'options-btn' && shellRef) shellRef.showOverlay()
 })
 
 function renderBar() {
@@ -80,54 +78,31 @@ function pickArc() {
 }
 
 function buildHeader() {
-  const musicIcon = isMusicEnabled() ? '🎵' : '🔇'
-  const guildLine = `<div class="guild-name">⚜️ ${guildName}<button id="music-toggle" class="music-btn" title="Toggle music">${musicIcon}</button></div>`
+  const guildLine = `<div class="guild-name">⚜️ ${guildName}<button id="options-btn" class="music-btn" title="Options">⚙️</button></div>`
   const resBar = renderResourceBar(gameState.resources)
   return guildLine + resBar
 }
 
-function startRun() {
+export function startGame(config, { onEnd, shell } = {}) {
+  onEndCallback = onEnd ?? null
+  shellRef = shell ?? null
+  clearRunSave()
   progress = loadProgress()
+  guildName = config.guildName
+  selectedNpcs = config.selectedNpcs
+
+  // Persist guild name
+  progress = { ...progress, lastGuildName: guildName }
+  saveProgress(progress)
+
   arc = pickArc()
-  showGuildNaming()
+  initializeRun()
 }
 
-function showGuildNaming() {
-  const prev = progress.lastGuildName || 'Iron Hearth Guild'
-  mount(renderGuildNaming(prev))
-  document.getElementById('continue-btn').onclick = () => {
-    guildName = document.getElementById('guild-name-input').value.trim() || prev
-    progress = { ...progress, lastGuildName: guildName }
-    saveProgress(progress)
-    showNpcSelection()
-  }
-}
-
-function showNpcSelection() {
-  const npcList = allNpcIds.map(id => npcRegistry[id])
-  mount(renderNpcSelection(npcList))
-
-  let selected = []
-  document.querySelectorAll('.npc-select-card').forEach(card => {
-    card.onclick = () => {
-      const npcId = card.dataset.npcId
-      if (selected.includes(npcId)) {
-        selected = selected.filter(id => id !== npcId)
-        card.classList.remove('selected')
-      } else if (selected.length < 2) {
-        selected.push(npcId)
-        card.classList.add('selected')
-      }
-      const btn = document.getElementById('npc-confirm-btn')
-      btn.disabled = selected.length !== 2
-      btn.textContent = selected.length === 2 ? 'Begin →' : 'Select 2 to continue →'
-    }
-  })
-
-  document.getElementById('npc-confirm-btn').onclick = () => {
-    selectedNpcs = selected
-    initializeRun()
-  }
+export function stopGame() {
+  autoSave()
+  onEndCallback = null
+  shellRef = null
 }
 
 function initializeRun() {
@@ -449,7 +424,9 @@ function handleLoss(endCond) {
 
   saveProgress(progress)
   mount(renderLedgerScreen(ledgerText, 'lost'))
-  document.getElementById('play-again-btn').onclick = () => startRun()
+  document.getElementById('play-again-btn').onclick = () => {
+    if (onEndCallback) onEndCallback()
+  }
 }
 
 function showTraitSelection() {
@@ -462,41 +439,37 @@ function showTraitSelection() {
   document.getElementById('trait-a').onclick = () => {
     progress = setLegacyTrait(progress, traitA.id)
     saveProgress(progress)
-    startRun()
+    if (onEndCallback) onEndCallback()
   }
   document.getElementById('trait-b').onclick = () => {
     progress = setLegacyTrait(progress, traitB.id)
     saveProgress(progress)
-    startRun()
+    if (onEndCallback) onEndCallback()
   }
 }
 
-// Boot
-const savedRun = localStorage.getItem('guildmaster_run')
-if (savedRun) {
-  const restored = deserializeRunState(savedRun)
-  if (restored) {
-    gameState = restored.gameState
-    queueState = restored.queueState
-    relationshipState = restored.relationshipState
-    poolState = restored.poolState
-    factionState = restored.factionState
-    ledger = restored.ledger
-    guildName = restored.guildName
-    selectedNpcs = restored.selectedNpcs
-    npcEncounterCount = restored.npcEncounterCount
-    arc = ALL_ARCS[restored.arcId]
-    currentCard = restored.currentCard ?? null
-    currentIsArc = restored.currentIsArc ?? false
-    progress = loadProgress()
-    if (currentCard) {
-      showCard(currentCard, currentIsArc)
-    } else {
-      nextTurn()
-    }
+export function continueRun(restored, { onEnd, shell } = {}) {
+  // restored is the output of deserializeRunState()
+  onEndCallback = onEnd ?? null
+  shellRef = shell ?? null
+  tryStartMusic()
+  gameState         = restored.gameState
+  queueState        = restored.queueState
+  relationshipState = restored.relationshipState
+  poolState         = restored.poolState
+  factionState      = restored.factionState
+  ledger            = restored.ledger
+  guildName         = restored.guildName
+  selectedNpcs      = restored.selectedNpcs
+  npcEncounterCount = restored.npcEncounterCount
+  arc               = ALL_ARCS[restored.arcId]
+  currentCard       = restored.currentCard ?? null
+  currentIsArc      = restored.currentIsArc ?? false
+  progress          = loadProgress()
+
+  if (currentCard) {
+    showCard(currentCard, currentIsArc)
   } else {
-    startRun()
+    nextTurn()
   }
-} else {
-  startRun()
 }
