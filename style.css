@@ -415,3 +415,8 @@ body.font-standard * {
 }
 
 .setup-back-link:hover { color: #c9a84c; }
+
+.btn-danger {
+  color: #c08060 !important;
+  border-color: #6a3820 !important;
+}

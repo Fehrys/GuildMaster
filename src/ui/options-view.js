@@ -19,7 +19,7 @@ export function renderOptions(context) {
 
   const actions = context === 'overlay'
     ? `<button class="choice-btn" id="options-resume">Resume</button>
-       <button class="choice-btn" id="options-save-quit" style="color:#c08060;border-color:#6a3820">Save &amp; Quit</button>`
+       <button class="choice-btn btn-danger" id="options-save-quit">Save &amp; Quit</button>`
     : `<button class="choice-btn" id="options-back">← Back</button>`
 
   return `
