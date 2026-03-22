@@ -86,6 +86,7 @@ function buildHeader() {
 export function startGame(config, { onEnd, shell } = {}) {
   onEndCallback = onEnd ?? null
   shellRef = shell ?? null
+  clearRunSave()
   progress = loadProgress()
   guildName = config.guildName
   selectedNpcs = config.selectedNpcs

@@ -50,7 +50,10 @@ export function playMenuMusic() {
   gameMusic.pause()
   if (menuMusic.paused) {
     menuMusic.currentTime = 0
-    menuMusic.play().catch(() => {})
+    menuMusic.play().catch(() => {
+      // Autoplay blocked — resume on first user interaction
+      document.addEventListener('click', tryStartMusic, { once: true })
+    })
   }
 }
 
@@ -59,7 +62,9 @@ export function playGameMusic() {
   menuMusic.pause()
   if (gameMusic.paused) {
     gameMusic.currentTime = 0
-    gameMusic.play().catch(() => {})
+    gameMusic.play().catch(() => {
+      document.addEventListener('click', tryStartMusic, { once: true })
+    })
   }
 }
 
