@@ -242,9 +242,11 @@ body.font-standard * {
   background-color: #0a0808;
 }
 
-.menu-logo {
-  text-align: center;
+.menu-logo-img {
+  max-width: 420px;
+  width: 80%;
   margin-bottom: 2.5rem;
+  image-rendering: pixelated;
 }
 
 .menu-divider {

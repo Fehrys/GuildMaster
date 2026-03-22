@@ -103,12 +103,7 @@ export function saveAndQuit() {
 function showSplash() {
   mount(`
     <div class="splash-screen">
-      <div class="menu-logo">
-        <div class="menu-divider">⚔️ ─────────────── ⚔️</div>
-        <div class="menu-title">GUILDMASTER</div>
-        <div class="menu-subtitle">Guild Management</div>
-        <div class="menu-divider">⚔️ ─────────────── ⚔️</div>
-      </div>
+      <img class="menu-logo-img" src="assets/image/guildmaster_logo.png" alt="GuildMaster">
       <div class="splash-prompt">Click anywhere to begin</div>
     </div>
   `)

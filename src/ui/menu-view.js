@@ -2,12 +2,7 @@ export function renderMenu(saveExists) {
   const continueDisabled = saveExists ? '' : 'disabled'
   return `
     <div class="menu-screen">
-      <div class="menu-logo">
-        <div class="menu-divider">⚔️ ─────────────── ⚔️</div>
-        <div class="menu-title">GUILDMASTER</div>
-        <div class="menu-subtitle">Guild Management</div>
-        <div class="menu-divider">⚔️ ─────────────── ⚔️</div>
-      </div>
+      <img class="menu-logo-img" src="assets/image/guildmaster_logo.png" alt="GuildMaster">
       <div class="menu-buttons">
         <button class="menu-btn" id="menu-new-game">New Game</button>
         <button class="menu-btn" id="menu-continue" ${continueDisabled}>Continue</button>
