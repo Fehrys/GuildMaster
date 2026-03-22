@@ -5,7 +5,7 @@ export function renderGuildIntro(guildName) {
     <div class="situation">
       Your hall smells of old leather and ambition.<br><br>
       Four things keep you in business:<br>
-      <strong>💰 Gold · ⚔️ Adventurers · 📜 Quests · 🛡️ Equipment</strong><br><br>
+      <strong>💰 Gold · ⚔️ Adventurers <br>📜 Quests · 🛡️ Equipment</strong><br><br>
       Let none reach ruin — or excess.
     </div>
     <button class="continue-btn" id="continue-btn">Begin →</button>
