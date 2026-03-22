@@ -55,7 +55,7 @@ Each run plays as a **narrative card game**:
 |---|---|
 | **Language** | Vanilla JavaScript (ES modules, no framework) |
 | **Rendering** | Pure DOM manipulation — no canvas, no React |
-| **Styling** | Plain CSS with Augusta custom font |
+| **Styling** | Plain CSS with Angelina custom font |
 | **Audio** | Web Audio API via HTMLAudioElement |
 | **Persistence** | localStorage (run state + settings + meta-progression) |
 | **Tests** | Vitest (balance audit scripts) |

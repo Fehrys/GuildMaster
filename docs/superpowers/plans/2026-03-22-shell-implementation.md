@@ -249,7 +249,7 @@ body.font-standard * {
   background: rgba(10, 8, 4, 0.85);
   border: 1px solid #6a5a38;
   color: #e8d5b7;
-  font-family: 'Augusta', system-ui, sans-serif;
+  font-family: 'Angelina', system-ui, sans-serif;
   font-size: 1rem;
   padding: 12px 0;
   min-width: 200px;
@@ -1058,7 +1058,7 @@ git commit -m "feat: change entry point to shell.js"
 Open `index.html` directly (or via a local server). Run through each scenario:
 
 **Menu:**
-- [ ] Main menu shows background image, Augusta font logo, 3 buttons
+- [ ] Main menu shows background image, Angelina font logo, 3 buttons
 - [ ] "Continue" is disabled on first load (no save)
 - [ ] Menu music plays (Moonlight in the Castle Garden)
 
