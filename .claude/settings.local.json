@@ -25,11 +25,9 @@
       "Bash(python3:*)",
       "Bash(echo \"Exit code: $?\")",
       "Bash(echo \"exit: $?\")",
-      "Bash(find /c/Projets/GuildMaster -type d -not -path */node_modules*)",
-      "Bash(scripts/start-server.sh --project-dir /c/Projets/GuildMaster)",
-      "Bash(sort -t- -k2 -n)",
-      "Bash(ls /c/Projets/GuildMaster/src/*.css)",
-      "Bash(ls /c/Projets/GuildMaster/*.css)"
+      "Bash(C:/Users/micka/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.5/skills/brainstorming/scripts/start-server.sh --project-dir C:/Projets/GuildMaster)",
+      "Bash(cat \"C:/Projets/GuildMaster/.superpowers/brainstorm\"/*/. server-info)",
+      "Bash(python scripts/gen-mockup.py)"
     ]
   }
 }

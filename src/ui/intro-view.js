@@ -1,11 +1,11 @@
-export function renderGuildIntro() {
+export function renderGuildIntro(guildName) {
   return `<div class="card intro-card" id="current-card">
     <div class="npc-portrait">🏰</div>
-    <div class="npc-name">Iron Hearth Guild</div>
+    <div class="npc-name">${guildName}</div>
     <div class="situation">
       Your hall smells of old leather and ambition.<br><br>
       Four things keep you in business:<br>
-      <strong>💰 Gold · ⚔️ Adventurers · 📜 Quests · 🛡️ Equipment</strong><br><br>
+      <strong>💰 Gold · ⚔️ Adventurers <br>📜 Quests · 🛡️ Equipment</strong><br><br>
       Let none reach ruin — or excess.
     </div>
     <button class="continue-btn" id="continue-btn">Begin →</button>
