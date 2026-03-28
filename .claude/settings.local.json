@@ -24,7 +24,12 @@
       "Bash(find C:/Projets/GuildMaster -name audit* -o -name *audit*)",
       "Bash(python3:*)",
       "Bash(echo \"Exit code: $?\")",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(find /c/Projets/GuildMaster -type d -not -path */node_modules*)",
+      "Bash(scripts/start-server.sh --project-dir /c/Projets/GuildMaster)",
+      "Bash(sort -t- -k2 -n)",
+      "Bash(ls /c/Projets/GuildMaster/src/*.css)",
+      "Bash(ls /c/Projets/GuildMaster/*.css)"
     ]
   }
 }
