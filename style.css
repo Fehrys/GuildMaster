@@ -492,3 +492,26 @@ body.font-standard * {
   color: #c08060 !important;
   border-color: #6a3820 !important;
 }
+
+/* Unlock toast */
+@keyframes toast-shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-4px) rotate(-5deg); }
+  40%       { transform: translateX(4px) rotate(5deg); }
+  60%       { transform: translateX(-3px) rotate(-3deg); }
+  80%       { transform: translateX(3px) rotate(3deg); }
+}
+
+.unlock-toast-icon {
+  font-size: 1.4rem;
+}
+
+.unlock-toast-name {
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.unlock-toast-status {
+  font-size: 0.8rem;
+  color: #aaa;
+}
