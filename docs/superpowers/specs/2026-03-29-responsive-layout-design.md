@@ -35,7 +35,7 @@ The game view mounts two children into `#app`:
 
 Setup screens (tutorial, scenario, guild naming, NPC selection) and Discoveries are rendered directly into `#app` as a single `.card` child. The `justify-content: center` on `#app` keeps them vertically centered.
 
-Splash and menu screens already use `position: fixed; inset: 0` — no change needed.
+Splash and menu screens already use `position: fixed; inset: 0` — their sizing is fine. See Section 6 for the background image fix.
 
 ---
 
@@ -134,11 +134,31 @@ The card must never overflow `#game-main`:
 
 ---
 
-## 6. Files to Change
+## 6. Menu & Splash Background Image
+
+### Problem
+Both `.splash-screen` and `.menu-screen` use `background-size: contain`. The background image is wide landscape pixel art — on portrait mobile this leaves large black bars top and bottom.
+
+### Fix
+Switch to `background-size: cover` so the image always fills the full viewport, cropping edges instead of letterboxing. `background-position: center` keeps the guild building (image focal point) centered on any aspect ratio.
+
+```css
+.splash-screen,
+.menu-screen {
+  background-size: cover;      /* was: contain */
+  background-position: center; /* unchanged */
+}
+```
+
+The logo `<img>` (`menu-logo-img`) already uses `width: 80%; max-width: 720px` and adapts fine — no change needed there.
+
+---
+
+## 7. Files to Change
 
 | File | Changes |
 |------|---------|
-| `style.css` | Font clamp, root layout, inline resource bar, compact breakpoint rules, card constraints |
+| `style.css` | Font clamp, root layout, inline resource bar, compact breakpoint rules, card constraints, background-size fix |
 | `src/ui/resource-bar.js` | HTML structure: icon + value inline, bar below |
 
 No other JS files need changes — the DOM structure of cards, setup screens, and discoveries is already correct; only CSS rules change.
