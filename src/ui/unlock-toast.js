@@ -9,6 +9,7 @@ const TOAST_DURATION_MS = 2500
 let _queue = []
 let _running = false
 let _active = true
+let _activeToast = null
 
 /**
  * Show an unlock toast. If another toast is playing, queues this one.
@@ -25,6 +26,10 @@ export function setActive(active) {
   if (!active) {
     _queue = []
     _running = false
+    if (_activeToast) {
+      _activeToast.remove()
+      _activeToast = null
+    }
   }
 }
 
@@ -67,6 +72,7 @@ function _animate(entry, onDone) {
     box-shadow: 0 4px 16px rgba(0,0,0,0.5);
   `
   document.body.appendChild(toast)
+  _activeToast = toast
 
   // Slide in
   void toast.offsetHeight
@@ -99,6 +105,7 @@ function _animate(entry, onDone) {
 
   setTimeout(() => {
     toast.remove()
+    _activeToast = null
     onDone()
   }, TOAST_DURATION_MS)
 }
