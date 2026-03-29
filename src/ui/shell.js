@@ -1,8 +1,11 @@
+// src/ui/shell.js
 import { renderMenu } from './menu-view.js'
 import { renderOptions, mountOptions } from './options-view.js'
 import { playMenuMusic, playGameMusic, getStandardFont } from './audio.js'
 import { loadProgress } from '../engine/progression.js'
 import { deserializeRunState } from '../engine/save.js'
+import { renderDiscoveriesMenu } from './unlock-menu.js'
+import * as unlockToast from './unlock-toast.js'
 import * as game from '../game.js'
 import * as setupFlow from './setup-flow.js'
 
@@ -21,21 +24,28 @@ function hasSave() {
 // Apply font setting before first render
 if (getStandardFont()) document.body.classList.add('font-standard')
 
-// Shell public API (exposed as named exports so game.js can reference them)
 let gameActive = false
 
 export function showMenu() {
   gameActive = false
+  unlockToast.setActive(false)
   playMenuMusic()
   mount(renderMenu(hasSave()))
-  document.getElementById('menu-new-game').onclick  = () => startSetup()
-  document.getElementById('menu-continue').onclick  = () => continueGame()
-  document.getElementById('menu-options').onclick   = () => showMenuOptions()
+  document.getElementById('menu-new-game').onclick    = () => startSetup()
+  document.getElementById('menu-continue').onclick   = () => continueGame()
+  document.getElementById('menu-discoveries').onclick = () => showDiscoveries()
+  document.getElementById('menu-options').onclick    = () => showMenuOptions()
 }
 
 function showMenuOptions() {
   mount(renderOptions('menu'))
   mountOptions('menu', { showMenu, hideOverlay })
+}
+
+function showDiscoveries() {
+  const progress = loadProgress()
+  mount(renderDiscoveriesMenu(progress))
+  document.getElementById('discoveries-back-btn').onclick = () => showMenu()
 }
 
 export function startSetup() {
@@ -50,6 +60,7 @@ export function startSetup() {
 
 export function startGame(config) {
   gameActive = true
+  unlockToast.setActive(true)
   playGameMusic()
   game.startGame(config, {
     onEnd: () => showMenu(),
@@ -63,6 +74,7 @@ export function continueGame() {
   const restored = deserializeRunState(raw)
   if (!restored) { showMenu(); return }
   gameActive = true
+  unlockToast.setActive(true)
   playGameMusic()
   game.continueRun(restored, {
     onEnd: () => showMenu(),
