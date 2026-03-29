@@ -54,19 +54,6 @@ function showScenarioSelection({ progress, mount, onComplete, onBack }) {
 
   let selectedArcId = null
 
-  // Auto-select if there is exactly one unlocked arc
-  const unlockedArcs = arcEntries.filter(e => progress.unlockedContent.includes(e.id))
-  if (unlockedArcs.length === 1) {
-    selectedArcId = unlockedArcs[0].contentId
-    const btn = document.getElementById('arc-confirm-btn')
-    if (btn) {
-      btn.disabled = false
-      btn.textContent = `Play ${unlockedArcs[0].name} →`
-    }
-    const card = document.querySelector(`[data-arc-id="${selectedArcId}"]`)
-    if (card) card.classList.add('selected')
-  }
-
   document.querySelectorAll('.arc-select-card').forEach(card => {
     card.onclick = () => {
       if (card.dataset.locked === 'true') return

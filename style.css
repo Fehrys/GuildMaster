@@ -222,6 +222,20 @@ body {
 .npc-select-role { font-size: 0.75rem; color: #7a6a50; }
 .npc-select-flavor { font-size: 0.75rem; color: #9a8a70; margin-top: 0.4rem; font-style: italic; }
 
+/* ===== ARC SELECTION ===== */
+.arc-select-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1rem; }
+.arc-select-card {
+  background: #1e1b14; border: 1px solid #4a3a20; border-radius: 10px;
+  padding: 1rem; text-align: center; cursor: pointer; transition: border-color 0.15s;
+}
+.arc-select-card:hover:not(.arc-select-card--locked) { border-color: #c9a84c; }
+.arc-select-card.selected { border: 2px solid #c9a84c; }
+.arc-select-card--locked { opacity: 0.45; cursor: default; }
+.arc-select-portrait { font-size: 2rem; margin-bottom: 0.3rem; }
+.arc-select-name { font-weight: 600; font-size: 0.95rem; color: #e8d5b7; }
+.arc-select-flavor { font-size: 0.75rem; color: #9a8a70; margin-top: 0.4rem; font-style: italic; }
+.arc-select-condition { font-size: 0.7rem; color: #7a6a50; margin-top: 0.3rem; font-style: italic; }
+
 /* ===== TRANSITIONS ===== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
