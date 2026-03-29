@@ -1,0 +1,67 @@
+// src/data/unlocks.js
+// Pure data. No imports, no side effects.
+// condition: null means pre-unlocked (seeded into unlockedContent on createProgress).
+// contentId maps to the NPC/arc registry id (strips the type prefix convention).
+
+export const unlocks = [
+  {
+    id: 'npc-sister-maren',
+    type: 'npc',
+    contentId: 'sister-maren',
+    name: 'Sister Maren',
+    emoji: '🙏',
+    flavor: 'A temple priest who walks the line between faith and pragmatism.',
+    hint: null,
+    secret: false,
+    condition: null,
+    conditionHint: null,
+  },
+  {
+    id: 'npc-sergeant-brek',
+    type: 'npc',
+    contentId: 'sergeant-brek',
+    name: 'Sergeant Brek',
+    emoji: '🏋️',
+    flavor: 'A combat instructor who demands more than gold for his knowledge.',
+    hint: null,
+    secret: false,
+    condition: null,
+    conditionHint: null,
+  },
+  {
+    id: 'npc-jolen-fence',
+    type: 'npc',
+    contentId: 'jolen-fence',
+    name: 'Jolen the Fence',
+    emoji: '🤫',
+    flavor: 'Crime pays, and Jolen knows all the rates.',
+    hint: 'A shadowy contact who deals in things better left unasked.',
+    secret: false,
+    condition: { type: 'run-win' },
+    conditionHint: 'Win any run.',
+  },
+  {
+    id: 'npc-lord-farwick',
+    type: 'npc',
+    contentId: 'lord-farwick',
+    name: 'Lord Farwick',
+    emoji: '👑',
+    flavor: 'A minor nobleman who trades favors like coin.',
+    hint: 'A minor nobleman with powerful connections.',
+    secret: false,
+    condition: { type: 'arc-complete', arc: 'bandit-war' },
+    conditionHint: 'Complete the Bandit War arc.',
+  },
+  {
+    id: 'arc-bandit-war',
+    type: 'arc',
+    contentId: 'bandit-war',
+    name: 'The Bandit War',
+    emoji: '⚔️',
+    flavor: 'Merchants on the eastern road have stopped arriving. The last one who made it through said one word before collapsing: bandits.',
+    hint: null,
+    secret: false,
+    condition: null,
+    conditionHint: null,
+  },
+]
