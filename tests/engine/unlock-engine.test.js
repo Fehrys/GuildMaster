@@ -2,6 +2,10 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { createProgress } from '../../src/engine/progression.js'
 import { initUnlockEngine, checkAfterChoice, checkOnRunEnd } from '../../src/engine/unlock-engine.js'
 
+beforeEach(() => {
+  initUnlockEngine(null)
+})
+
 function makeProgress(extra = {}) {
   return { ...createProgress(), ...extra }
 }

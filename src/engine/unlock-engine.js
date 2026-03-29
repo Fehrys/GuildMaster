@@ -59,8 +59,10 @@ function _check(condition, context, flags) {
     case 'flag':
       return flags != null && flags.has(condition.flag)
 
-    case 'resource-threshold':
-      return context.resources[condition.resource] >= condition.threshold
+    case 'resource-threshold': {
+      const val = context.resources?.[condition.resource]
+      return val != null && val >= condition.threshold
+    }
 
     case 'run-win': {
       if (context.result !== 'win') return false
