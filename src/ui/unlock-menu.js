@@ -19,9 +19,7 @@ export function renderDiscoveriesMenu(progress) {
   const sections = CATEGORIES.map(cat => _renderSection(cat, progress)).join('')
   return `
     <div class="discoveries-screen">
-      <div class="discoveries-header">
-        <h2 class="discoveries-title">Discoveries</h2>
-      </div>
+      <h2 class="discoveries-title">Discoveries</h2>
       ${sections}
       <div class="discoveries-footer">
         <button class="menu-btn" id="discoveries-back-btn">← Back</button>
@@ -33,12 +31,14 @@ export function renderDiscoveriesMenu(progress) {
 function _renderSection({ type, label }, progress) {
   if (PLACEHOLDER_TYPES.has(type)) {
     return `
-      <details class="discoveries-section" open>
-        <summary class="discoveries-section-title">${label}</summary>
-        <div class="discoveries-entries">
-          <div class="discoveries-placeholder">More content coming soon.</div>
+      <div class="discoveries-section">
+        <div class="discoveries-section-label">${label}</div>
+        <div class="discoveries-grid">
+          <div class="disc-card disc-card--locked" style="grid-column: 1 / -1;">
+            <div class="disc-card-flavor">More content coming soon.</div>
+          </div>
         </div>
-      </details>
+      </div>
     `
   }
 
@@ -46,12 +46,12 @@ function _renderSection({ type, label }, progress) {
   const items = entries.map(entry => _renderEntry(entry, progress)).join('')
 
   return `
-    <details class="discoveries-section" open>
-      <summary class="discoveries-section-title">${label}</summary>
-      <div class="discoveries-entries">
+    <div class="discoveries-section">
+      <div class="discoveries-section-label">${label}</div>
+      <div class="discoveries-grid">
         ${items}
       </div>
-    </details>
+    </div>
   `
 }
 
@@ -60,34 +60,28 @@ function _renderEntry(entry, progress) {
 
   if (unlocked) {
     return `
-      <div class="discoveries-entry unlocked">
-        <span class="discoveries-entry-icon">${entry.emoji}</span>
-        <div class="discoveries-entry-info">
-          <div class="discoveries-entry-name">${entry.name}</div>
-          <div class="discoveries-entry-flavor">${entry.flavor}</div>
-        </div>
+      <div class="disc-card disc-card--unlocked">
+        <div class="disc-card-portrait">${entry.emoji}</div>
+        <div class="disc-card-name">${entry.name}</div>
+        <div class="disc-card-flavor">${entry.flavor}</div>
       </div>
     `
   }
 
   if (entry.secret) {
     return `
-      <div class="discoveries-entry locked secret">
-        <span class="discoveries-entry-icon">🔒</span>
-        <div class="discoveries-entry-info">
-          <div class="discoveries-entry-name">???</div>
-        </div>
+      <div class="disc-card disc-card--locked disc-card--secret">
+        <div class="disc-card-portrait">🔒</div>
+        <div class="disc-card-name">???</div>
       </div>
     `
   }
 
   return `
-    <div class="discoveries-entry locked">
-      <span class="discoveries-entry-icon">🔒</span>
-      <div class="discoveries-entry-info">
-        <div class="discoveries-entry-name">${entry.name}</div>
-        <div class="discoveries-entry-condition">${entry.hint ?? entry.conditionHint ?? ''}</div>
-      </div>
+    <div class="disc-card disc-card--locked">
+      <div class="disc-card-portrait">🔒</div>
+      <div class="disc-card-name">${entry.name}</div>
+      <div class="disc-card-hint">${entry.hint ?? entry.conditionHint ?? ''}</div>
     </div>
   `
 }

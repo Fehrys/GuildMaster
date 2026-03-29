@@ -18,10 +18,14 @@ export function loadProgress() {
     const raw = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null
     if (!raw) return createProgress()
     const saved = JSON.parse(raw)
-    // Backfill fields missing from older saves
+    const defaults = createProgress()
+    // Backfill fields missing from older saves.
+    // unlockedContent is merged (not replaced) so new default unlocks
+    // are always present even in saves predating them.
     return {
-      ...createProgress(),
+      ...defaults,
       ...saved,
+      unlockedContent: [...new Set([...defaults.unlockedContent, ...(saved.unlockedContent ?? [])])],
     }
   } catch {
     return createProgress()
