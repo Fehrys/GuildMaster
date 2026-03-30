@@ -127,3 +127,40 @@ export function renderRumorCard(text, onContinue) {
     <button class="continue-btn" id="continue-btn">Continue →</button>
   </div>`
 }
+
+/**
+ * Fades out the choices block and fades in result text on the current card.
+ * Call immediately after a choice is made. No-op if #current-card is absent.
+ * @param {string} resultText  Narrative result text for the chosen option.
+ */
+export function showChoiceResult(resultText) {
+  const cardEl = document.getElementById('current-card')
+  if (!cardEl) return
+
+  const choicesEl = cardEl.querySelector('.choices')
+  if (choicesEl) {
+    choicesEl.style.transition = 'opacity 0.2s ease'
+    choicesEl.style.opacity = '0'
+  }
+
+  setTimeout(() => {
+    if (choicesEl) choicesEl.style.display = 'none'
+
+    const resultEl = document.createElement('div')
+    resultEl.className = 'card-result-text'
+    resultEl.style.opacity = '0'
+    resultEl.style.transition = 'opacity 0.35s ease'
+    resultEl.textContent = resultText
+
+    const situationEl = cardEl.querySelector('.situation')
+    if (situationEl) {
+      situationEl.after(resultEl)
+    } else {
+      cardEl.appendChild(resultEl)
+    }
+
+    // Force reflow so the transition fires
+    void resultEl.offsetHeight
+    resultEl.style.opacity = '1'
+  }, 200)
+}

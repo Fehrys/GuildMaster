@@ -5,18 +5,19 @@ import { createQueueState, advanceQueue, recordStandardCardPlayed, resetMileston
          scheduleNpc, clearNpcSchedule } from './engine/queue.js'
 import { getRepTier, applyRepShift } from './engine/reputation.js'
 import { createLedger, recordEvent, updateAdventurerStatus, buildLedgerText } from './engine/ledger.js'
-import { loadProgress, saveProgress, unlockArc, completeArc, setLegacyTrait, addAdventurer } from './engine/progression.js'
+import { loadProgress, saveProgress, unlockArc, completeArc, addAdventurer } from './engine/progression.js'
+import { initUnlockEngine, checkAfterChoice, checkOnRunEnd } from './engine/unlock-engine.js'
 import { renderResourceBar, syncResourceBar, updateResourceBar } from './ui/resource-bar.js'
-import { renderCard, renderRumorCard } from './ui/card-view.js'
+import { renderCard, renderRumorCard, showChoiceResult } from './ui/card-view.js'
+import * as unlockToast from './ui/unlock-toast.js'
 import { tryStartMusic, playClick } from './ui/audio.js'
 import { renderGuildIntro, renderArcIntro } from './ui/intro-view.js'
-import { renderLedgerScreen, renderTraitSelection } from './ui/ledger-view.js'
+import { renderLedgerScreen } from './ui/ledger-view.js'
 import { buildBasePool, worldEventCards } from './data/cards/registry.js'
 import { chainedCards as standardChained } from './data/cards/standard.js'
 import { crisisCards } from './data/cards/crisis.js'
 import { banditWar } from './data/arcs/bandit-war.js'
 import { baseAdventurers } from './data/adventurers.js'
-import { traits } from './data/traits.js'
 import { createRelationshipState, updateRelationship, getLevel, getFlags, resolveNpcCard, getNextNpc } from './engine/relationships.js'
 import { createPoolState, drawCard, markPlayed, injectCards, removeCards, resetCycle, checkThirdChoice } from './engine/pool.js'
 import { createFactionState, updateStance, getStance } from './engine/factions.js'
@@ -45,6 +46,7 @@ let poolState = null
 let factionState = null
 let guildName = 'Iron Hearth Guild'
 let selectedNpcs = []
+let runFlags = new Set()
 let npcEncounterCount = 0
 let currentCard = null
 let currentIsArc = false
@@ -85,18 +87,6 @@ app.addEventListener('click', e => {
   if (e.target.id === 'options-btn' && shellRef) shellRef.showOverlay()
 })
 
-function pickArc() {
-  const unlocked = progress.unlockedArcs.map(id => ALL_ARCS[id]).filter(Boolean)
-  const weights = unlocked.map(a => progress.completedArcs.includes(a.id) ? 0.5 : 1.0)
-  const total = weights.reduce((s, w) => s + w, 0)
-  let r = Math.random() * total
-  for (let i = 0; i < unlocked.length; i++) {
-    r -= weights[i]
-    if (r <= 0) return unlocked[i]
-  }
-  return unlocked[unlocked.length - 1]
-}
-
 export function startGame(config, { onEnd, shell } = {}) {
   onEndCallback = onEnd ?? null
   shellRef = shell ?? null
@@ -110,7 +100,8 @@ export function startGame(config, { onEnd, shell } = {}) {
   saveProgress(progress)
 
   mountGameWrapper()
-  arc = pickArc()
+  arc = ALL_ARCS[config.arcId]
+  initUnlockEngine(entry => unlockToast.show(entry))
   initializeRun()
 }
 
@@ -122,18 +113,7 @@ export function stopGame() {
 
 function initializeRun() {
   gameState = createState()
-
-  // Apply legacy trait
-  if (progress.activeLegacyTrait) {
-    const trait = traits.find(t => t.id === progress.activeLegacyTrait)
-    if (trait?.effect) {
-      const deltas = { ...trait.effect }
-      const repShift = deltas.reputation ?? 0
-      delete deltas.reputation
-      gameState = applyChoice(gameState, deltas, {})
-      gameState = { ...gameState, turnCount: 0, reputation: applyRepShift(50, repShift) }
-    }
-  }
+  runFlags = new Set()
 
   // Build roster
   const pool = [...baseAdventurers, ...progress.unlockedAdventurers]
@@ -362,6 +342,13 @@ function handleChoice(card, chosenIdx, isArc) {
     queueState = scheduleReplacement(queueState, replacementCard, gameState.turnCount)
   }
 
+  // Track named flags for unlock conditions
+  if (choice.flags) choice.flags.forEach(f => runFlags.add(f))
+
+  // Check for unlocks after choice
+  const { progress: updatedProgress } = checkAfterChoice(progress, gameState, runFlags)
+  progress = updatedProgress
+
   // Auto-save
   autoSave()
   updateResourceBar(gameState.resources)
@@ -375,8 +362,12 @@ function handleChoice(card, chosenIdx, isArc) {
     else nextTurn()
   }
 
-  // Short pause for selection feedback, then fade out and advance
-  setTimeout(() => fadeOutCard(advance), 450)
+  if (choice.resultText) {
+    showChoiceResult(choice.resultText)
+    setTimeout(() => fadeOutCard(advance), 2000)
+  } else {
+    setTimeout(() => fadeOutCard(advance), 450)
+  }
 }
 
 function autoSave() {
@@ -397,15 +388,17 @@ function handleWin(lastChoice) {
   clearRunSave()
   progress = completeArc(progress, arc.id)
 
-  // Unlock new arcs
+  // Unlock new arcs and adventurers
   arc.unlocks?.forEach(id => { progress = unlockArc(progress, id) })
-
-  // Unlock adventurers
   arc.adventurerUnlocks?.forEach(name => { progress = addAdventurer(progress, name) })
 
   saveProgress(progress)
 
-  // Build ledger
+  // Check content unlocks on win
+  const outcome = { result: 'win', arc: arc.id, finalResources: gameState.resources }
+  const { progress: p } = checkOnRunEnd(progress, outcome)
+  progress = p
+
   const arcLedger = Object.assign({}, ledger, {
     arcName: arc.title,
     arcOutcome: 'won',
@@ -418,13 +411,17 @@ function handleWin(lastChoice) {
   const ledgerText = buildLedgerText(arcLedger)
 
   mount(renderLedgerScreen(ledgerText, 'won'))
-
-  // Trait selection before play again
-  document.getElementById('play-again-btn').onclick = () => showTraitSelection()
+  document.getElementById('play-again-btn').onclick = () => { if (onEndCallback) onEndCallback() }
 }
 
 function handleLoss(endCond) {
   clearRunSave()
+
+  // Check content unlocks on loss
+  const outcome = { result: 'loss', arc: arc.id, finalResources: gameState.resources }
+  const { progress: p } = checkOnRunEnd(progress, outcome)
+  progress = p
+
   const arcLedger = Object.assign({}, ledger, {
     arcName: arc.title,
     arcOutcome: 'abandoned',
@@ -439,25 +436,6 @@ function handleLoss(endCond) {
   saveProgress(progress)
   mount(renderLedgerScreen(ledgerText, 'lost'))
   document.getElementById('play-again-btn').onclick = () => {
-    if (onEndCallback) onEndCallback()
-  }
-}
-
-function showTraitSelection() {
-  const available = traits.filter(t => t.id !== progress.activeLegacyTrait)
-  const shuffled = available.sort(() => Math.random() - 0.5)
-  const [traitA, traitB] = shuffled
-
-  mount(renderTraitSelection(traitA, traitB))
-
-  document.getElementById('trait-a').onclick = () => {
-    progress = setLegacyTrait(progress, traitA.id)
-    saveProgress(progress)
-    if (onEndCallback) onEndCallback()
-  }
-  document.getElementById('trait-b').onclick = () => {
-    progress = setLegacyTrait(progress, traitB.id)
-    saveProgress(progress)
     if (onEndCallback) onEndCallback()
   }
 }

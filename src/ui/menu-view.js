@@ -6,9 +6,10 @@ export function renderMenu(saveExists) {
       <div class="menu-buttons">
         <button class="menu-btn" id="menu-new-game">New Game</button>
         <button class="menu-btn" id="menu-continue" ${continueDisabled}>Continue</button>
+        <button class="menu-btn" id="menu-discoveries">Discoveries</button>
         <button class="menu-btn" id="menu-options">Options</button>
       </div>
-      <div class="menu-version">v3.0 · 2026</div>
+      <div class="menu-version">v4.0 · 2026</div>
     </div>
   `
 }
