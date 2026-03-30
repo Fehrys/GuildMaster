@@ -145,7 +145,7 @@ export const merchantCards = [
     npc: { emoji: '🚢', name: 'Captain Lirenne Voss', role: 'Ship Captain' },
     situation: 'A ship captain asks your guild to warehouse "unregistered cargo" for three nights — no questions asked. The fee is generous, but the city watch has been patrolling the docks.',
     choices: [
-      { label: 'Take the deal', deltas: { gold: 20, quests: -18 }, major: false, reputation: -10, chains: null, rumorText: 'Strange crates were seen being moved into the guild hall after dark.', factions: { 'thieves-guild': 'allied' }, resultText: "Three nights of careful movement and held breath, then Voss collects her cargo before dawn. The fee is generous. Your people stop talking about those nights, which is the right instinct." },
+      { label: 'Take the deal', deltas: { gold: 20, quests: -18 }, major: false, reputation: -10, chains: null, rumorText: 'Strange crates were seen being moved into the guild hall after dark.', resultText: "Three nights of careful movement and held breath, then Voss collects her cargo before dawn. The fee is generous. Your people stop talking about those nights, which is the right instinct." },
       { label: 'Report it to the watch', deltas: { quests: 8, gold: -5 }, major: false, reputation: 10, chains: null, rumorText: null, resultText: "Voss is gone before the watch arrives, but the tip is noted and the guild's name goes down as cooperative. Work from the port authority follows quietly — not glamorous, but steady." },
     ],
   },
@@ -215,7 +215,7 @@ export const merchantCards = [
     npc: { emoji: '🦎', name: 'Zoologist Fenna Marsh', role: 'Exotic Animal Trader' },
     situation: 'A trader has imported a caged wyvern hatchling — highly illegal, extraordinarily valuable. She asks your guild to quietly arrange its transfer to a private buyer outside the city.',
     choices: [
-      { label: 'Handle the transfer', deltas: { gold: 18, adventurers: -10, quests: -5 }, major: false, reputation: -8, chains: null, rumorText: 'Strange growling sounds were heard from the guild\'s stable last night.', factions: { 'thieves-guild': 'allied' }, resultText: "Ten of your people spend a nerve-shredding two days keeping a hatchling wyvern quiet in the back stable. It leaves before anyone important notices. The fee is very good. Nobody speaks of it." },
+      { label: 'Handle the transfer', deltas: { gold: 18, adventurers: -10, quests: -5 }, major: false, reputation: -8, chains: null, rumorText: 'Strange growling sounds were heard from the guild\'s stable last night.', resultText: "Ten of your people spend a nerve-shredding two days keeping a hatchling wyvern quiet in the back stable. It leaves before anyone important notices. The fee is very good. Nobody speaks of it." },
       { label: 'Report the illegal import', deltas: { quests: 8, gold: -5 }, major: false, reputation: 10, chains: null, rumorText: null, resultText: "Marsh and her cargo vanish before the city wardens arrive, but your report goes on record and earns the right kind of attention. Contracts from the warden's district start appearing on the board." },
     ],
   },
