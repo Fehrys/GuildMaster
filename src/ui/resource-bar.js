@@ -30,12 +30,14 @@ export function renderResourceBar(resources) {
   const items = RESOURCES.map(({ key, icon }) => {
     const v = resources[key]
     return `<div class="resource ${dangerClass(v)}" data-res="${key}">
-      <span class="resource-icon">${icon}</span>
+      <div class="resource-row">
+        <span class="resource-icon">${icon}</span>
+        <span class="resource-value"><span class="resource-num">${v}</span><span class="resource-delta-label"></span></span>
+      </div>
       <div class="resource-track">
         <div class="resource-fill" style="width:${v}%"></div>
         <div class="resource-delta"></div>
       </div>
-      <span class="resource-value"><span class="resource-num">${v}</span><span class="resource-delta-label"></span></span>
     </div>`
   }).join('')
   return `<div class="resource-bar">${items}</div>`
