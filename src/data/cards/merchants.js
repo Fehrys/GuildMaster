@@ -245,7 +245,7 @@ export const merchantCards = [
     npc: { emoji: '⛪', name: 'Steward Aldric', role: 'Temple Quartermaster' },
     situation: 'The city\'s main temple is tendering out its annual supply contract — pilgrimage supplies, candles, and provisions. A modest but steady job, and the temple\'s favour opens other doors.',
     choices: [
-      { label: 'Bid for the contract', deltas: { gold: 8, quests: -5 }, major: false, reputation: 8, chains: null, rumorText: null, factions: { 'temple': 'allied' }, resultText: "Candles and pilgrim provisions aren't glamorous cargo, but the temple pays on time and the steward introduces you to people who don't usually speak to adventuring guilds. Steady work, useful contacts." },
+      { label: 'Bid for the contract', deltas: { gold: 8, quests: -5 }, major: false, reputation: 8, chains: null, rumorText: null, resultText: "Candles and pilgrim provisions aren't glamorous cargo, but the temple pays on time and the steward introduces you to people who don't usually speak to adventuring guilds. Steady work, useful contacts." },
       { label: 'Skip it — not worth the admin', deltas: { quests: -8, adventurers: 6 }, major: false, reputation: -5, chains: null, rumorText: null, resultText: "Paperwork avoided, opportunity missed — the temple contract goes to a competitor who now has a quiet line into the city's religious institutions. Your people are rested, for what that's worth." },
     ],
   },
