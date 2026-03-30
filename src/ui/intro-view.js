@@ -35,7 +35,7 @@ export function renderScenarioSelection(arcEntries, unlockedContent) {
       : ''
     return `
       <div class="arc-select-card ${lockedClass}" data-arc-id="${entry.contentId}" data-locked="${!isUnlocked}">
-        <div class="arc-select-emoji">${entry.emoji}</div>
+        <div class="arc-select-portrait">${isUnlocked ? entry.emoji : '🔒'}</div>
         <div class="arc-select-name">${entry.name}</div>
         <div class="arc-select-flavor">${entry.flavor}</div>
         ${condition}
