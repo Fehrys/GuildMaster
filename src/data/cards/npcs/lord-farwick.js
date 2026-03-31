@@ -12,7 +12,7 @@ export const lordFarwickCards = {
       choices: [
         {
           label: 'Accept the gala contract',
-          deltas: { adventurers: -3, quests: 10 },
+          deltas: { adventurers: -10, quests: 10 },
           major: false,
           reputation: 5,
           chains: null,
@@ -22,7 +22,7 @@ export const lordFarwickCards = {
         },
         {
           label: 'Decline — you\'re not for hire by nobles',
-          deltas: { gold: 5 },
+          deltas: { gold: 5, quests: -10 },
           major: false,
           reputation: -5,
           chains: null,
@@ -46,7 +46,7 @@ export const lordFarwickCards = {
       choices: [
         {
           label: 'Sign the exclusive supply contract',
-          deltas: { gold: 10, quests: -5 },
+          deltas: { gold: 10, quests: -8 },
           major: false,
           reputation: 0,
           chains: null,
@@ -56,7 +56,7 @@ export const lordFarwickCards = {
         },
         {
           label: 'Handle Lady Caston yourself',
-          deltas: { gold: -10, quests: 5 },
+          deltas: { gold: -10, quests: 8 },
           major: false,
           reputation: 5,
           chains: null,
@@ -87,7 +87,7 @@ export const lordFarwickCards = {
         },
         {
           label: 'Stay out of politics',
-          deltas: { equipment: 5 },
+          deltas: { equipment: 5, gold: 5 },
           major: false,
           reputation: 5,
           chains: null,
@@ -111,7 +111,7 @@ export const lordFarwickCards = {
       choices: [
         {
           label: 'Intimidate the witness, take the property',
-          deltas: { gold: 20, quests: 5 },
+          deltas: { gold: 25, quests: 10 },
           major: true,
           reputation: -15,
           chains: null,
@@ -121,7 +121,7 @@ export const lordFarwickCards = {
         },
         {
           label: 'Let him lose on his own terms',
-          deltas: { quests: 5 },
+          deltas: { quests: -10 },
           major: false,
           reputation: 10,
           chains: null,
@@ -142,7 +142,7 @@ export const lordFarwickCards = {
       choices: [
         {
           label: 'Accept the trade and patrol arrangement',
-          deltas: { adventurers: -3, gold: 15 },
+          deltas: { adventurers: -8, gold: 15 },
           major: false,
           reputation: 5,
           chains: null,
@@ -152,7 +152,7 @@ export const lordFarwickCards = {
         },
         {
           label: 'You prefer to source provisions independently',
-          deltas: { equipment: 5 },
+          deltas: { equipment: 15 },
           major: false,
           reputation: 0,
           chains: null,
@@ -173,7 +173,7 @@ export const lordFarwickCards = {
       choices: [
         {
           label: 'Secure the merchant guild headquarters',
-          deltas: { gold: 25, quests: 10, adventurers: -8 },
+          deltas: { gold: 25, quests: 10, adventurers: -10 },
           major: true,
           reputation: -10,
           chains: null,
@@ -183,7 +183,7 @@ export const lordFarwickCards = {
         },
         {
           label: 'This is where you draw the line',
-          deltas: { adventurers: 5 },
+          deltas: { adventurers: 15, gold: -10 },
           major: false,
           reputation: 10,
           chains: null,

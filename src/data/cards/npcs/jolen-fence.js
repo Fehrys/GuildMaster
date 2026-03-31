@@ -22,7 +22,7 @@ export const jolenFenceCards = {
         },
         {
           label: 'Tell him you run a legitimate operation',
-          deltas: { equipment: -3 },
+          deltas: { equipment: -8 },
           major: false,
           reputation: 5,
           chains: null,
@@ -46,7 +46,7 @@ export const jolenFenceCards = {
       choices: [
         {
           label: 'Sell him monster parts from your hunts',
-          deltas: { gold: 15, quests: -5 },
+          deltas: { gold: 20, quests: -5, adventurers: -5 },
           major: false,
           reputation: 0,
           chains: null,
@@ -56,7 +56,7 @@ export const jolenFenceCards = {
         },
         {
           label: 'You don\'t need a middleman for legal goods',
-          deltas: { quests: 5 },
+          deltas: { quests: 5, adventurers: 5 },
           major: false,
           reputation: 5,
           chains: null,
@@ -77,7 +77,7 @@ export const jolenFenceCards = {
       choices: [
         {
           label: 'Send a crew to empty the warehouse',
-          deltas: { gold: 20, adventurers: -3 },
+          deltas: { gold: 25, adventurers: -9 },
           major: false,
           reputation: -10,
           chains: null,
@@ -87,7 +87,7 @@ export const jolenFenceCards = {
         },
         {
           label: 'Too risky — pass on this one',
-          deltas: { gold: -5 },
+          deltas: { gold: -10, quests: 5 },
           major: false,
           reputation: 0,
           chains: null,
@@ -111,7 +111,7 @@ export const jolenFenceCards = {
       choices: [
         {
           label: 'Buy his entire stock at cost',
-          deltas: { gold: -25, equipment: 15, quests: 10 },
+          deltas: { gold: -30, equipment: 10, quests: 10, adventurers: 10 },
           major: false,
           reputation: -5,
           chains: null,
@@ -121,7 +121,7 @@ export const jolenFenceCards = {
         },
         {
           label: 'Let him sort out his own problems',
-          deltas: { quests: -5 },
+          deltas: { gold: 20, quests: -10, adventurers: -10 },
           major: false,
           reputation: 5,
           chains: null,
@@ -142,7 +142,7 @@ export const jolenFenceCards = {
       choices: [
         {
           label: 'Hire out adventurers as caravan guards',
-          deltas: { adventurers: -5, gold: 20 },
+          deltas: { adventurers: -10, gold: 30 },
           major: false,
           reputation: 0,
           chains: null,
@@ -152,7 +152,7 @@ export const jolenFenceCards = {
         },
         {
           label: 'Decline — you need all hands on deck',
-          deltas: { adventurers: 3 },
+          deltas: { adventurers: 10 },
           major: false,
           reputation: 0,
           chains: null,
@@ -173,7 +173,7 @@ export const jolenFenceCards = {
       choices: [
         {
           label: 'Plan the heist together',
-          deltas: { gold: 25, adventurers: -5, equipment: -10 },
+          deltas: { gold: 25, adventurers: -10, equipment: -10 },
           major: true,
           reputation: -15,
           chains: null,
@@ -183,7 +183,7 @@ export const jolenFenceCards = {
         },
         {
           label: 'You\'ve gone far enough — walk away',
-          deltas: { equipment: 5 },
+          deltas: { equipment: 5, gold: -10 },
           major: false,
           reputation: 5,
           chains: null,
