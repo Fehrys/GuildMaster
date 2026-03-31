@@ -75,7 +75,7 @@ export const politicalCards = [
     npc: { emoji: '🔍', name: 'Inquisitor Fenn', role: 'City Inspector' },
     situation: 'A city inspector arrives to audit your guild\'s records. Everything is probably fine — but cooperating takes time, and a small "fee" might hurry things along.',
     choices: [
-      { label: 'Full cooperation', deltas: { adventurers: -8, quests: -5, gold: 10 }, major: false, reputation: 5, chains: null, rumorText: null, resultText: 'Fenn leaves satisfied, marking your file with a clean seal. You lost a week of productive time, but the record now says exactly what you need it to say.' },
+      { label: 'Full cooperation', deltas: { adventurers: -8, quests: -5, gold: 10 }, major: false, reputation: 5, chains: null, rumorText: null, resultText: 'Fenn leaves satisfied, marking your file with a clean seal. Between the interviews and the cross-referencing, your people had no time for contracts — and the quest board shows it. At least the records are compliant.' },
       { label: 'Grease his palm', deltas: { gold: -12, quests: 10 }, major: false, reputation: 0, chains: null, rumorText: null, resultText: 'The inspector pocketed the coins and the audit ended in under an hour. Clean, quick, and just uncomfortable enough to remember.' },
     ],
   },
