@@ -175,7 +175,7 @@ export const politicalCards = [
     npc: { emoji: '📋', name: 'Royal Envoy Mira', role: 'Crown Messenger' },
     situation: 'A new royal decree requires all guilds to register a secondary office in the capital within two months — or pay a hefty annual exemption fee. The capital is far and costly.',
     choices: [
-      { label: 'Open the capital office', deltas: { gold: -25, adventurers: -8, quests: 15, equipment: 15 }, major: true, reputation: 10, chains: null, rumorText: null, resultText: 'Eight of your people spend a month setting up a cramped room near the capital registrar\'s office. It\'s barely functional, but it\'s yours — and the crown\'s paperwork says so.' },
+      { label: 'Open the capital office', deltas: { gold: -20, adventurers: -8, quests: 15, equipment: 15 }, major: true, reputation: 10, chains: null, rumorText: null, resultText: 'Eight of your people spend a month setting up a cramped room near the capital registrar\'s office. It\'s barely functional, but it\'s yours — and the crown\'s paperwork says so.' },
       { label: 'Contest the decree legally', deltas: { gold: -10, quests: -8, adventurers: 15 }, major: false, reputation: 5, chains: 'chain-decree-contested', rumorText: 'Your guild\'s legal challenge to the crown drew attention — for better and worse.', resultText: 'Lawyers are expensive and slow. The challenge winds through the courts while your guild quietly becomes known as the one brave or foolish enough to push back against a royal decree.' },
     ],
   },

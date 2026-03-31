@@ -12,7 +12,7 @@ export const sergeantBrekCards = {
       choices: [
         {
           label: 'Let him train your recruits his way',
-          deltas: { adventurers: -3, equipment: 8 },
+          deltas: { adventurers: -8, equipment: 13 },
           major: false,
           reputation: 5,
           chains: null,
@@ -22,7 +22,7 @@ export const sergeantBrekCards = {
         },
         {
           label: 'Your guild trains its own people, thanks',
-          deltas: { adventurers: 3 },
+          deltas: { adventurers: 13, equipment: -8 },
           major: false,
           reputation: 0,
           chains: null,
@@ -46,7 +46,7 @@ export const sergeantBrekCards = {
       choices: [
         {
           label: 'Send a squad under Brek\'s command',
-          deltas: { adventurers: -5, gold: 15, quests: 5 },
+          deltas: { adventurers: -10, gold: 20, quests: 10 },
           major: false,
           reputation: 5,
           chains: null,
@@ -56,7 +56,7 @@ export const sergeantBrekCards = {
         },
         {
           label: 'Too dangerous for green fighters',
-          deltas: { equipment: 5 },
+          deltas: { equipment: 10, quests: -15 },
           major: false,
           reputation: 0,
           chains: null,
@@ -77,7 +77,7 @@ export const sergeantBrekCards = {
       choices: [
         {
           label: 'Authorize the live combat trial',
-          deltas: { adventurers: -5, equipment: 12 },
+          deltas: { adventurers: -15, equipment: 15 },
           major: false,
           reputation: 5,
           chains: null,
@@ -87,7 +87,7 @@ export const sergeantBrekCards = {
         },
         {
           label: 'Drills are one thing, but this is too far',
-          deltas: { adventurers: 3 },
+          deltas: { adventurers: 15 },
           major: false,
           reputation: 0,
           chains: null,
@@ -111,7 +111,7 @@ export const sergeantBrekCards = {
       choices: [
         {
           label: 'Take the contract — pure business',
-          deltas: { gold: 20, adventurers: -8, quests: 10 },
+          deltas: { gold: 25, adventurers: -13, quests: 13 },
           major: false,
           reputation: 5,
           chains: null,
@@ -121,7 +121,7 @@ export const sergeantBrekCards = {
         },
         {
           label: 'Not worth the casualties',
-          deltas: { quests: 5 },
+          deltas: { quests: 14, adventurers: 10 },
           major: false,
           reputation: 0,
           chains: null,
@@ -142,7 +142,7 @@ export const sergeantBrekCards = {
       choices: [
         {
           label: 'Assign fighters to garrison duty',
-          deltas: { adventurers: -5, gold: 15, equipment: 5 },
+          deltas: { adventurers: -10, gold: 20, equipment: 10 },
           major: false,
           reputation: 10,
           chains: null,
@@ -152,7 +152,7 @@ export const sergeantBrekCards = {
         },
         {
           label: 'Keep your people independent',
-          deltas: { quests: 5 },
+          deltas: { adventurers: -18, quests: -10 },
           major: false,
           reputation: 0,
           chains: null,
@@ -173,7 +173,7 @@ export const sergeantBrekCards = {
       choices: [
         {
           label: 'Commit your best fighters to the campaign',
-          deltas: { adventurers: -10, equipment: -10, quests: 15 },
+          deltas: { adventurers: -12, equipment: -12, quests: 25 },
           major: true,
           reputation: 15,
           chains: null,
@@ -183,7 +183,7 @@ export const sergeantBrekCards = {
         },
         {
           label: 'Your guild isn\'t an army — refuse',
-          deltas: { adventurers: 5 },
+          deltas: { adventurers: 20, quests: -25 },
           major: false,
           reputation: -5,
           chains: null,

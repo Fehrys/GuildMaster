@@ -25,7 +25,7 @@ export const merchantCards = [
     npc: { emoji: '🐪', name: 'Merchant Consortium', role: 'Trade Guild' },
     situation: 'A wealthy trade consortium needs a full escort across dangerous roads. High pay, high cost in manpower.',
     choices: [
-      { label: 'Take the contract', deltas: { gold: 25, adventurers: -18, equipment: -5 }, major: true, reputation: 5, chains: null, rumorText: null, resultText: "Most of your roster rides out heavy and comes back lighter — gear worn, tempers frayed, purses full. The consortium pays exactly what was agreed, which is more than most clients manage." },
+      { label: 'Take the contract', deltas: { gold: 20, adventurers: -18, equipment: -5 }, major: true, reputation: 5, chains: null, rumorText: null, resultText: "Most of your roster rides out heavy and comes back lighter — gear worn, tempers frayed, purses full. The consortium pays exactly what was agreed, which is more than most clients manage." },
       { label: 'Decline', deltas: { quests: -8, adventurers: 6 }, major: false, reputation: -5, chains: null, rumorText: 'The consortium hired another guild. Word gets around who turns down high-profile work.', resultText: "Your people stay rested, and the work goes to someone else. The consortium's name comes up twice in the next month — both times attached to a guild that isn't yours." },
     ],
   },
@@ -135,7 +135,7 @@ export const merchantCards = [
     npc: { emoji: '📊', name: 'Investor Torvan', role: 'Market Speculator' },
     situation: 'The city\'s grain futures have collapsed overnight. Torvan says some guilds saw it coming and shorted the market — he hints your guild could profit from the chaos if you act fast.',
     choices: [
-      { label: 'Speculate on the crash', deltas: { gold: 25, quests: -22 }, major: false, reputation: -10, chains: null, rumorText: 'Rumours fly that some guilds profited suspiciously from the grain crash.', resultText: "The trades close fast and the returns are significant. Your treasurer notes the figures without expression. Outside, the grain stalls are empty and people are asking questions nobody wants to answer." },
+      { label: 'Speculate on the crash', deltas: { gold: 20, quests: -22 }, major: false, reputation: -10, chains: null, rumorText: 'Rumours fly that some guilds profited suspiciously from the grain crash.', resultText: "The trades close fast and the returns are significant. Your treasurer notes the figures without expression. Outside, the grain stalls are empty and people are asking questions nobody wants to answer." },
       { label: 'Donate surplus gold to food relief', deltas: { gold: -12, quests: 10 }, major: false, reputation: 15, chains: null, rumorText: null, resultText: "Torvan looks baffled; half the city looks grateful. Contracts follow from quarters you'd never have reached otherwise — it turns out a visible act of decency is worth more than a short position in grain." },
     ],
   },

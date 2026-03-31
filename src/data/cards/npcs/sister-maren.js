@@ -12,7 +12,7 @@ export const sisterMarenCards = {
       choices: [
         {
           label: 'Send a team to help the villages',
-          deltas: { adventurers: -5, quests: 5 },
+          deltas: { adventurers: -9, quests: 12 },
           major: false,
           reputation: 10,
           chains: null,
@@ -46,7 +46,7 @@ export const sisterMarenCards = {
       choices: [
         {
           label: 'Buy the salves at her asking price',
-          deltas: { gold: -10, equipment: 10 },
+          deltas: { gold: -14, equipment: 16 },
           major: false,
           reputation: 0,
           chains: null,
@@ -56,7 +56,7 @@ export const sisterMarenCards = {
         },
         {
           label: 'Haggle — she needs the money more than you need the salves',
-          deltas: { gold: -5, equipment: 8 },
+          deltas: { gold: 12, equipment: -18 },
           major: false,
           reputation: -5,
           chains: null,
@@ -77,7 +77,7 @@ export const sisterMarenCards = {
       choices: [
         {
           label: 'Accept the council seat',
-          deltas: { quests: -5, adventurers: 5 },
+          deltas: { quests: -13, adventurers: 17 },
           major: false,
           reputation: 10,
           chains: null,
@@ -87,7 +87,7 @@ export const sisterMarenCards = {
         },
         {
           label: 'Decline respectfully — too many commitments',
-          deltas: { quests: -5 },
+          deltas: { quests: -15 },
           major: false,
           reputation: -5,
           chains: null,
@@ -111,7 +111,7 @@ export const sisterMarenCards = {
       choices: [
         {
           label: 'Take the relics and hide the refugees',
-          deltas: { equipment: 15, adventurers: 3 },
+          deltas: { equipment: 20, adventurers: 10 },
           major: true,
           reputation: -10,
           chains: null,
@@ -121,7 +121,7 @@ export const sisterMarenCards = {
         },
         {
           label: 'Refuse — too much heat for any price',
-          deltas: { quests: -3 },
+          deltas: { quests: -20 },
           major: false,
           reputation: 5,
           chains: null,
@@ -142,7 +142,7 @@ export const sisterMarenCards = {
       choices: [
         {
           label: 'Send adventurers for healer training',
-          deltas: { adventurers: -3, equipment: 8 },
+          deltas: { adventurers: -16, equipment: 16 },
           major: false,
           reputation: 5,
           chains: null,
@@ -152,7 +152,7 @@ export const sisterMarenCards = {
         },
         {
           label: 'Decline — can\'t spare anyone right now',
-          deltas: { quests: 5 },
+          deltas: { adventurers: 9, quests: 8 },
           major: false,
           reputation: 0,
           chains: null,
@@ -173,7 +173,7 @@ export const sisterMarenCards = {
       choices: [
         {
           label: 'Excavate the crypt in secret',
-          deltas: { gold: 20, equipment: 10, quests: -10 },
+          deltas: { gold: 25, equipment: 22, quests: -15, adventurers: -8 },
           major: true,
           reputation: -5,
           chains: null,
@@ -183,7 +183,7 @@ export const sisterMarenCards = {
         },
         {
           label: 'Report the crypt to the city council',
-          deltas: { quests: 10 },
+          deltas: { quests: 20, adventurers: 20, equipment: 10, gold: -10 },
           major: false,
           reputation: 15,
           chains: null,
