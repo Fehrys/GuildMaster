@@ -203,6 +203,7 @@ body {
 /* ===== LEDGER / INTRO ===== */
 .intro-card .situation { font-size: 1.05rem; }
 .ledger-card .situation { display: none; }
+.ledger-card { overflow-y: auto; }
 .ledger-text { font-size: 1rem; line-height: 1.8; color: #c0b09a; margin: 1rem 0; font-style: italic; }
 .ledger-win { color: #4a4; }
 .ledger-loss { color: #e74c3c; }

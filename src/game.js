@@ -355,11 +355,11 @@ function handleChoice(card, chosenIdx, isArc) {
 
   // Determine what happens after the transition
   const advance = () => {
+    const endCond = checkEndCondition(gameState)
+    if (endCond) { handleLoss(endCond); return }
     if (isArc && card.isFinal) { handleWin(choice); return }
     if (isArc && queueState.milestonesCompleted >= arc.totalMilestones) { handleWin(choice); return }
-    const endCond = checkEndCondition(gameState)
-    if (endCond) handleLoss(endCond)
-    else nextTurn()
+    nextTurn()
   }
 
   if (choice.resultText) {
