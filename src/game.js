@@ -364,7 +364,7 @@ function handleChoice(card, chosenIdx, isArc) {
 
   if (choice.resultText) {
     showChoiceResult(choice.resultText)
-    setTimeout(() => fadeOutCard(advance), 2000)
+    setTimeout(() => fadeOutCard(advance), 5000)
   } else {
     setTimeout(() => fadeOutCard(advance), 450)
   }
