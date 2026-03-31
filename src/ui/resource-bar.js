@@ -5,8 +5,8 @@ const RESOURCES = [
   { key: 'equipment', icon: '🛡️' },
 ]
 
-const PREVIEW_MS = 2000
-const ANIM_MS = 500
+const PREVIEW_MS = 3000
+const ANIM_MS = 1000
 
 function dangerClass(value) {
   if (value < 20 || value > 80) return 'danger'
