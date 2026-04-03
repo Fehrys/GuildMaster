@@ -359,6 +359,12 @@ function handleChoice(card, chosenIdx, isArc) {
     if (endCond) { handleLoss(endCond); return }
     if (isArc && card.isFinal) { handleWin(choice); return }
     if (isArc && queueState.milestonesCompleted >= arc.totalMilestones) { handleWin(choice); return }
+    // After a crisis resolves, snapshot the current tension zone so resources pushed into
+    // crisis by the card's own deltas don't immediately trigger a follow-up crisis next turn.
+    if (card.type === 'crisis') {
+      const RESOURCES = ['gold', 'adventurers', 'quests', 'equipment']
+      queueState = { ...queueState, prevTensionZone: RESOURCES.filter(r => isInTensionZone(gameState.resources[r])) }
+    }
     nextTurn()
   }
 
