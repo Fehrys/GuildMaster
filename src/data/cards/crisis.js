@@ -51,8 +51,8 @@ export const crisisCards = {
       npc: { emoji: '📢', name: 'Town Crier', role: 'Public Messenger' },
       situation: 'The guild is being called idle — pamphlets mock you in the market. A public display of capability is needed.',
       choices: [
-        { label: 'Run a charitable quest', deltas: { adventurers: -10, quests: 18 }, major: true, reputation: 10, chains: null, rumorText: null, resultText: "Ten of your people spend three days on a job that pays nothing. Your board fills back up within the week. The pamphlets find something else to mock by morning." },
-        { label: 'Ignore the gossip', deltas: { quests: -8 }, major: false, reputation: -5, chains: null, rumorText: null, resultText: "You've heard worse said about better guilds. The pamphlets are unsigned, the ink is cheap — but the board gets eight quests thinner while the city watches and wonders." },
+        { label: 'Run a charitable quest', deltas: { adventurers: -20, quests: 15 }, major: true, reputation: 10, chains: null, rumorText: null, resultText: "Ten of your people spend three days on a job that pays nothing. Your board fills back up within the week. The pamphlets find something else to mock by morning." },
+        { label: 'Ignore the gossip', deltas: { quests: -10 }, major: false, reputation: -5, chains: null, rumorText: null, resultText: "You've heard worse said about better guilds. The pamphlets are unsigned, the ink is cheap — but the board gets eight quests thinner while the city watches and wonders." },
       ],
     },
     high: {
@@ -61,7 +61,7 @@ export const crisisCards = {
       npc: { emoji: '📋', name: 'Overburdened Clerk', role: 'Guild Administrator' },
       situation: 'Your quest board is chaos. Clients are fighting each other for adventurers. Something must give.',
       choices: [
-        { label: 'Turn away new clients', deltas: { quests: -20, gold: -10 }, major: true, reputation: 0, chains: null, rumorText: null, resultText: "The word goes out: board closed, temporarily. Twenty quests go elsewhere and so does the coin they'd have brought. Your people stop bleeding. That's what this costs." },
+        { label: 'Turn away new clients', deltas: { quests: -20, adventurers: 10, gold: -10 }, major: true, reputation: 0, chains: null, rumorText: null, resultText: "The word goes out: board closed, temporarily. Twenty quests go elsewhere and so does the coin they'd have brought. Your people stop bleeding. That's what this costs." },
         { label: 'Hire temporary help', deltas: { gold: -20, adventurers: 12 }, major: true, reputation: 0, chains: null, rumorText: null, resultText: "The new hands arrive by afternoon — some better than expected, some exactly as bad as feared. The board clears. The ledger doesn't. You'll sort out which cost more later." },
       ],
     },
@@ -73,7 +73,7 @@ export const crisisCards = {
       npc: { emoji: '🛡️', name: 'Lead Adventurer', role: 'Roster Senior' },
       situation: 'Your best crew refuses to take the next quest without proper arms. They\'re not wrong.',
       choices: [
-        { label: 'Emergency procurement', deltas: { gold: -25, equipment: 20 }, major: true, reputation: 0, chains: null, rumorText: null, resultText: "The supplier knows they have you. The price reflects that. You pay considerably more than the gear is worth and hand it out before dawn. Your lead adventurer inspects it, nods, and says nothing. That's enough." },
+        { label: 'Emergency procurement', deltas: { gold: -25, equipment: 15 }, major: true, reputation: 0, chains: null, rumorText: null, resultText: "The supplier knows they have you. The price reflects that. You pay considerably more than the gear is worth and hand it out before dawn. Your lead adventurer inspects it, nods, and says nothing. That's enough." },
         { label: 'Force the issue', deltas: { adventurers: -10, quests: -5 }, major: true, reputation: -5, chains: null, rumorText: null, resultText: "The quest goes out with the wrong gear. Two adventurers refuse and walk. Three come back bruised. You resolve to never let the stores run this low again." },
       ],
     },
